@@ -8,7 +8,7 @@ import { UI_IMAGE_HEIGHT, UI_IMAGE_WIDTH } from './constants';
 import { svgToDataURI } from './svgToDataUri';
 import { SvgGsConversionImg } from './SvgGsConversionImg';
 import { ArduinoDgsrOutputView } from './ArduinoDgsrOutputView';
-import { DgsrFileManager } from './DgsrFileManager';
+import { DgsrFileManager } from './file-manager/DgsrFileManager';
 
 
 interface ImageOutputViewProps {
@@ -90,7 +90,7 @@ export const ImageOutputView = (props: ImageOutputViewProps) => {
   // console.log(props.svgImageText)
   // console.log(props.componentState.svgImageText);
 
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = React.useState(3);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);

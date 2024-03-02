@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react"
-import { IComponentState } from "./ComponentState"
-import { createDgsrImageFileBytes } from "./dgsr_file_bytes_factory"
+import { createDgsrImageFileBytes } from "../dgsr_file_bytes_factory"
+import { IComponentState } from "../ComponentState"
 
 
-export interface IDgsrFileManagerProps {
+export interface IDgsrFileDownloadToPcProps {
+  isBusy: boolean
+  setIsBusy: (busy: boolean) => void
+  fileNameRoot: string
+
   componentState: IComponentState
 }
 
 
-export const DgsrFileManager = (props: IDgsrFileManagerProps) => {
-  const [loading, setLoading] = useState(false);
-
+export const DgsrFileDownloadToPc = (props: IDgsrFileDownloadToPcProps) => {
+  const { isBusy, setIsBusy, fileNameRoot } = props;
+  
   var [svgDownloadDataUrl, setSvgDownloadDataUrl] = useState("");
   var [dgsrDownloadDataUrl, setDgsrDownloadDataUrl] = useState("");
-
-  const imageDataFileBytes = createDgsrImageFileBytes(props.componentState.grayscaleData);
-
-  const fileNameRoot = "blob";
 
   useEffect(() => {
     const imageSvgText = props.componentState.svgImageText;
@@ -41,11 +41,10 @@ export const DgsrFileManager = (props: IDgsrFileManagerProps) => {
 
   }, [props.componentState.grayscaleData, props.componentState.svgImageText]);
 
-  
   const handleDownloadSvgClick = () => {
   
     const fileName = fileNameRoot + ".svg";
-    setLoading(true);
+    setIsBusy(true);
 
     const element = document.createElement("a");
     element.href= svgDownloadDataUrl;
@@ -54,15 +53,16 @@ export const DgsrFileManager = (props: IDgsrFileManagerProps) => {
     element.click();
     
     setTimeout(() => {
-      setLoading(false);
+      setIsBusy(false);
       document.body.removeChild(element);
     }, 2000);
   }
 
+
   const handleDownloadDgsrClick = () => {
 
     const fileName = fileNameRoot + ".dgsr";
-    setLoading(true);
+    setIsBusy(true);
 
     const element = document.createElement("a");
     element.href= dgsrDownloadDataUrl;
@@ -71,27 +71,22 @@ export const DgsrFileManager = (props: IDgsrFileManagerProps) => {
     element.click();
 
     setTimeout(() => {
-      setLoading(false);
+      setIsBusy(false);
       document.body.removeChild(element);
     }, 2000);
   }
 
 
-  return (
-    <>
-      <div>{imageDataFileBytes.length} bytes</div>
-      <div>
-        <button>Upload DGSR to Hat</button>
-      </div>
-      <div>
-        <button disabled={loading} onClick={handleDownloadSvgClick}>
-          {loading ? "Loading..." : "Download SVG to PC"}
-        </button>
-        {/* <button>Download DGSR to PC</button> */}
-        <button disabled={loading} onClick={handleDownloadDgsrClick}>
-          {loading ? "Loading..." : "Download DGSR to PC"}
-        </button>
-      </div>
-    </>
-  )
+  return (<>
+    <div>
+      <button disabled={isBusy} onClick={handleDownloadSvgClick}>
+        {isBusy ? "Loading..." : "Download SVG to PC"}
+      </button>
+    </div>
+    <div>
+      <button disabled={isBusy} onClick={handleDownloadDgsrClick}>
+        {isBusy ? "Loading..." : "Download DGSR to PC"}
+      </button>
+    </div>
+  </>)
 }
