@@ -6,80 +6,25 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(HelloQromaRequest, HelloQromaRequest, AUTO)
-
-
-PB_BIND(HelloQromaResponse, HelloQromaResponse, AUTO)
-
-
-PB_BIND(MathRequest, MathRequest, AUTO)
-
-
-PB_BIND(MathResult_Add, MathResult_Add, AUTO)
-
-
-PB_BIND(MathResult_Subtract, MathResult_Subtract, AUTO)
-
-
-PB_BIND(MathResult_AddAndSubtract, MathResult_AddAndSubtract, AUTO)
-
-
-PB_BIND(MathResponse, MathResponse, AUTO)
-
-
-PB_BIND(FwUpdateConfiguration, FwUpdateConfiguration, AUTO)
+PB_BIND(UpdateConfiguration, UpdateConfiguration, AUTO)
 
 
 PB_BIND(SetUpdateConfiguration, SetUpdateConfiguration, AUTO)
 
 
-PB_BIND(SetUpdateConfigurationResponse, SetUpdateConfigurationResponse, AUTO)
-
-
-PB_BIND(UptimeUpdateResponse, UptimeUpdateResponse, AUTO)
-
-
-PB_BIND(ProgressIndicatorUpdateResponse, ProgressIndicatorUpdateResponse, AUTO)
-
-
-PB_BIND(UpdateResponse, UpdateResponse, AUTO)
-
-
-PB_BIND(PingRequest, PingRequest, AUTO)
-
-
-PB_BIND(PingResponse, PingResponse, AUTO)
-
-
-PB_BIND(MyProjectDetails, MyProjectDetails, AUTO)
-
-
-PB_BIND(FirmwareDetails, FirmwareDetails, AUTO)
-
-
-PB_BIND(GetBoardDetailsRequest, GetBoardDetailsRequest, AUTO)
-
-
-PB_BIND(GetBoardDetailsResponse, GetBoardDetailsResponse, AUTO)
-
-
-PB_BIND(SetBoardLightColorRequest, SetBoardLightColorRequest, AUTO)
-
-
-PB_BIND(SetBoardLightColorResponse, SetBoardLightColorResponse, AUTO)
-
-
-PB_BIND(LoadBoardConfigurationResponse, LoadBoardConfigurationResponse, AUTO)
+PB_BIND(MyProjectCommand, MyProjectCommand, AUTO)
 
 
 PB_BIND(InvalidCommandResponse, InvalidCommandResponse, AUTO)
 
 
-PB_BIND(MyProjectCommand, MyProjectCommand, AUTO)
+PB_BIND(HatDetailsResponse, HatDetailsResponse, AUTO)
+
+
+PB_BIND(UpdateResponse, UpdateResponse, AUTO)
 
 
 PB_BIND(MyProjectResponse, MyProjectResponse, AUTO)
-
 
 
 
