@@ -23,7 +23,7 @@ export const createInitialComponentState = (
     fontSize: 170,
     borderWidth: 20, 
 
-    imageTypesFilePath: "../../images/image_types.h",
+    imageTypesFilePath: "image_types.h",
     imageGroupNameRoot: "frank_hats_season2",
     // imageGroupNameRoot: "ajb",
   } as ISvgTemplateInputs;

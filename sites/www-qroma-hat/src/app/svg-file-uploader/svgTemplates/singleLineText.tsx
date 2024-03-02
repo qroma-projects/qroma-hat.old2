@@ -16,8 +16,7 @@ const DEFAULT_FONT_FAMILY = "Arial, Helvetica, sans-serif";
 const DEFAULT_FONT_SIZE = 160;
 
 
-const LINE_1_TEXT = "LINE1";
-// const LINE_1_TEXT = "";
+const LINE_1_TEXT = "QROMA";
 
 
 const SingleLineSvg = ({line1, svgTemplateInputs}: {line1: string, svgTemplateInputs: ISvgTemplateInputs}) => (

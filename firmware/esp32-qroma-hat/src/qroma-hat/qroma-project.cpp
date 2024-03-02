@@ -1,8 +1,9 @@
 #include "qroma-project.h"
 #include "qroma-commands.h"
 #include "qroma/qroma.h"
-#include "eink/image_types.h"
+#include "images/image_types.h"
 #include "eink/eink-screen.h"
+#include "images/data/images_data.h"
 
 
 AppCommandProcessor<
@@ -17,12 +18,12 @@ extern UpdateConfiguration updateConfiguration;
 
 int vref = 1100;
 
-HatImageData activeImage = {
-  .imageWidth = EINK_WIDTH,
-  .imageHeight = EINK_HEIGHT,
-  .imageData = NULL,
-  .imageLabel = "IMAGE NOT SET",
-};
+// HatImageData activeImage = {
+//   .imageWidth = EINK_WIDTH,
+//   .imageHeight = EINK_HEIGHT,
+//   .imageData = NULL,
+//   .imageLabel = "IMAGE NOT SET",
+// };
 
 
 void qromaProjectSetup()
@@ -41,7 +42,7 @@ void qromaProjectSetup()
 
   myQromaApp.startupQroma();
 
-  updateConfiguration.updateIntervalInMs = 1000;
+  updateConfiguration.updateIntervalInMs = 10000;
   // updateConfiguration.updateType = UpdateType_UpdateType_Interval;
   updateConfiguration.updateType = UpdateType_UpdateType_None;
 
@@ -82,7 +83,7 @@ void qromaProjectSetup()
     logInfo("POST-EPDINIT");
 
     uint8_t * activeImageBuffer = initActiveImageBuffer();
-    activeImage.imageData = activeImageBuffer;
+    _activeImage.imageData = activeImageBuffer;
 
   if (!doesFileExist(QROMA_PROJECT_CONFIG_FILENAME)) {
     bool saved = savePbToPersistence(&updateConfiguration, QROMA_PROJECT_CONFIG_FILENAME, UpdateConfiguration_fields);
@@ -90,6 +91,12 @@ void qromaProjectSetup()
       logError("ERROR SAVING INITIAL UPDATE CONFIG");
     }
   }
+
+  HatImagePointer hatImagePointer = {
+    .dgsrImage = dgsr_image_qroma_hat_def
+  };
+
+  showImageFromInternalDgsrData(HIE_DGSR, &hatImagePointer, &_activeImage);
 }
 
 

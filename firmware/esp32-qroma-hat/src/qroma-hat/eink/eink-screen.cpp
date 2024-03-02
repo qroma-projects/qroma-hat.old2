@@ -3,6 +3,14 @@
 #include <qroma/qroma.h>
 
 
+HatImageData _activeImage = {
+  .imageWidth = EINK_WIDTH,
+  .imageHeight = EINK_HEIGHT,
+  .imageData = NULL,
+  .imageLabel = "IMAGE NOT SET",
+};
+
+
 uint8_t * initActiveImageBuffer() {
   uint32_t bufferSize = (EINK_WIDTH * EINK_HEIGHT) / 2;
   uint8_t * buffer = (uint8_t*) calloc(bufferSize, sizeof(uint8_t)); // allocate memory, save address
@@ -45,3 +53,51 @@ void clearScreenToBlack() {
   
   epd_poweroff();
 }
+
+
+void showImageFromFile(const char * filePath) {
+
+}
+
+
+bool showImageFromInternalDgsrData(HatImageEncoding encoding, HatImagePointer * imgPointer, HatImageData * hatImageData) {
+
+// bool loadImageData(uint8_t imageIndex, HatImageData * hatImageData) {
+  logInfo("showImageFromInternalDgsrData");
+
+  // HatImageDef * hatImageDef = &(_hatImageDefinitions[imageIndex]);
+  // logInfoInt((uint32_t)hatImageDef);
+  // logInfoInt((uint32_t)hatImageDef->hatImageEncoding);
+
+  switch (encoding) {
+    case HIE_GS_BMP:
+      mapGsBmpImageToHatData(imgPointer->gsBmpImage, hatImageData);
+      break;
+    case HIE_DGSR:
+      mapDgsrImageToHatData(imgPointer->dgsrImage, hatImageData);
+      break;
+    default:
+      logError("NO IMAGE ENCODING SET");
+      // logErrorInt(imageIndex);
+      return false;
+  }
+
+  Rect_t area = {
+      .x = 0,
+      .y = 0,
+      .width = hatImageData->imageWidth,
+      .height = hatImageData->imageHeight,
+  };
+
+  epd_poweron();
+  epd_clear();
+  epd_draw_grayscale_image(area, (uint8_t *)hatImageData->imageData);
+  // epd_draw_image(area, (uint8_t *)activeImage.imageData, BLACK_ON_WHITE);
+  
+  delay(500);
+  
+  epd_poweroff();
+
+  return true;
+}
+

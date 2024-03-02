@@ -188,9 +188,9 @@ export const ImageOutputView = (props: ImageOutputViewProps) => {
           <Tab label="SVG Text" {...a11yProps(0)} />
           <Tab label="SVG Image" {...a11yProps(1)} />
           <Tab label="Grayscale" {...a11yProps(2)} />
-          {/* <Tab label="Arduino" {...a11yProps(3)} />
-          <Tab label="Arduino/DGSR" {...a11yProps(4)} /> */}
+          {/* <Tab label="Arduino" {...a11yProps(3)} /> */}
           <Tab label="Manage DGSR" {...a11yProps(3)} />
+          <Tab label="Arduino/DGSR" {...a11yProps(4)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -233,6 +233,12 @@ export const ImageOutputView = (props: ImageOutputViewProps) => {
         /> */}
         <DgsrFileManager
           componentState={props.componentState}
+          />
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        <ArduinoDgsrOutputView 
+          gsData={props.componentState.grayscaleData}
+          svgTemplateInputs={props.componentState.svgTemplateInputs}
           />
       </TabPanel>
     </Box>
