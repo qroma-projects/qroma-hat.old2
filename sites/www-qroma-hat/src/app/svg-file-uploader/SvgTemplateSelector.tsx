@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useState } from 'react';
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, Box, Button, Grid, Stack } from '@mui/material';
 import { ISvgTemplateInputs, ISvgToGrayscaleTemplate } from './svgTemplates/ISvgToGrayscaleTemplate';
 import { SvgToGrayscaleTemplates } from './SvgToGrayscaleTemplates';
@@ -78,7 +78,6 @@ export const SvgTemplateSelector = (props: ISvgTemplateSelectorProps) => {
                 }
               </Select>
             </FormControl>
-          {/* </Item> */}
           
           </Grid>
           <Grid item xs={4}>
@@ -87,40 +86,39 @@ export const SvgTemplateSelector = (props: ISvgTemplateSelectorProps) => {
           {
             showSettings ? 
               <Grid item xs={12}>
-              {/* <Button>Settings</Button> */}
-              <Stack spacing={2} >
-                
-                <div>
-                Font Size: {props.svgTemplateInputs.fontSize} 
-                <button onClick={() => {
-                  const newFontSize = window.prompt("Choose new font size (20-300)", props.svgTemplateInputs.fontSize.toString());
-                  console.log("NEW FONT SIZE: " + newFontSize);
-                  const validated = validateNumericInputs(newFontSize, 20, 300);
-                  if (validated !== null) {
-                    props.onNewSvgTemplateInputs({
-                      ...props.svgTemplateInputs,
-                      fontSize: validated,
-                    });
-                  }
-                }}>
-                Change
-                </button>
-                </div>
-                <div>
-                Border Thickness: {props.svgTemplateInputs.borderWidth}
-                <button onClick={() => {
-                  const newBorderWidth = window.prompt("Choose new border thickness (20-300)", props.svgTemplateInputs.borderWidth.toString());
-                  console.log("NEW BORDER THICKNESS: " + newBorderWidth);
-                  const validated = validateNumericInputs(newBorderWidth, 20, 300);
-                  if (validated !== null) {
-                    props.onNewSvgTemplateInputs({
-                      ...props.svgTemplateInputs,
-                      borderWidth: validated,
-                    });
-                  }
-                }}>
-                Change
-                </button>
+                <Stack spacing={2}>
+                  
+                  <div>
+                  Font Size: {props.svgTemplateInputs.fontSize} 
+                  <button onClick={() => {
+                    const newFontSize = window.prompt("Choose new font size (20-300)", props.svgTemplateInputs.fontSize.toString());
+                    console.log("NEW FONT SIZE: " + newFontSize);
+                    const validated = validateNumericInputs(newFontSize, 20, 300);
+                    if (validated !== null) {
+                      props.onNewSvgTemplateInputs({
+                        ...props.svgTemplateInputs,
+                        fontSize: validated,
+                      });
+                    }
+                  }}>
+                  Change
+                  </button>
+                  </div>
+                  <div>
+                  Border Thickness: {props.svgTemplateInputs.borderWidth}
+                  <button onClick={() => {
+                    const newBorderWidth = window.prompt("Choose new border thickness (20-300)", props.svgTemplateInputs.borderWidth.toString());
+                    console.log("NEW BORDER THICKNESS: " + newBorderWidth);
+                    const validated = validateNumericInputs(newBorderWidth, 20, 300);
+                    if (validated !== null) {
+                      props.onNewSvgTemplateInputs({
+                        ...props.svgTemplateInputs,
+                        borderWidth: validated,
+                      });
+                    }
+                  }}>
+                  Change
+                  </button>
                 </div>
                 
 

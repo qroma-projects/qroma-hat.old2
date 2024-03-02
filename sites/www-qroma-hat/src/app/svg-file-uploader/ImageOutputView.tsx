@@ -8,6 +8,7 @@ import { UI_IMAGE_HEIGHT, UI_IMAGE_WIDTH } from './constants';
 import { svgToDataURI } from './svgToDataUri';
 import { SvgGsConversionImg } from './SvgGsConversionImg';
 import { ArduinoDgsrOutputView } from './ArduinoDgsrOutputView';
+import { DgsrFileManager } from './DgsrFileManager';
 
 
 interface ImageOutputViewProps {
@@ -189,7 +190,7 @@ export const ImageOutputView = (props: ImageOutputViewProps) => {
           <Tab label="Grayscale" {...a11yProps(2)} />
           {/* <Tab label="Arduino" {...a11yProps(3)} />
           <Tab label="Arduino/DGSR" {...a11yProps(4)} /> */}
-          <Tab label="Upload" {...a11yProps(3)} />
+          <Tab label="Manage DGSR" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -230,7 +231,9 @@ export const ImageOutputView = (props: ImageOutputViewProps) => {
         gsData={props.componentState.grayscaleData}
         svgTemplateInputs={props.componentState.svgTemplateInputs}
         /> */}
-        <div>Upload</div>
+        <DgsrFileManager
+          componentState={props.componentState}
+          />
       </TabPanel>
     </Box>
     </>

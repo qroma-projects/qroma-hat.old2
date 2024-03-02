@@ -3,8 +3,6 @@ from tkinter import filedialog
 
 from dgsr_loader import load_dgsr_file
 
-FILE_NAME = "qroma_hat.dgsr"
-
 image_refs = []
 
 
