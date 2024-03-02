@@ -2,7 +2,7 @@
 displayed_sidebar: getStartedSidebar
 ---
 
-# Get started with qroma-hat
+# Get Started with qroma-hat
 
 This is the intro page for readers to:
 * discover what your qroma-hat project _is_
