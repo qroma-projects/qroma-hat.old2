@@ -72,3 +72,107 @@ DGSR_OP_LONG_RUN
 │ 1  1 │  Run length bits (30)                         │
 └────────────────────────┴─────────┴─────────┴─────────┘
 ```
+
+### ImHex Pattern (dgsr.hexpat)
+
+[https://github.com/WerWolv/ImHex](https://github.com/WerWolv/ImHex)
+
+```
+#pragma description DGSR (Devalbo Grayscale Run image format)
+
+#pragma endian big
+
+import type.magic;
+import type.size;
+
+import std.mem;
+
+
+struct DgsrHeader {
+  type::Magic<"\x64\x67\x73\x72"> magic;
+  be u32 width;
+  be u32 height;
+};
+
+
+fn find_op_codes_start() {
+  return std::mem::size() - 12;
+};
+
+fn get_op_codes_length() {
+  return std::mem::size() - (12 + 8);
+};
+
+fn get_final_bytes_start() {
+  return std::mem::size() - 8;
+};
+
+u32 opCodesStart = find_op_codes_start();
+u32 opCodesLength = get_op_codes_length();
+u32 finalBytesStart = get_final_bytes_start();
+
+enum OpCodeType : u8 {
+  PlacePixel = 0b00000000 ... 0b00111111,
+  ShortRun   = 0b01000000 ... 0b01111111,
+  MediumRun  = 0b10000000 ... 0b10111111,
+  LongRun    = 0b11000000 ... 0b11111111
+};
+
+
+bitfield OpCodePlacePixel {
+  tag : 2;
+  grayscale: 6;
+};
+
+bitfield OpCodeShortRun {
+  tag : 2;
+  runLength: 6;
+};
+
+bitfield OpCodeMediumRun {
+  tag : 2;
+  runLength: 14;
+};
+
+bitfield OpCodeLongRun {
+  tag : 2;
+  runLength: 30;
+};
+
+
+u8 opCodeDef;
+fn get_opCodeDef() {
+    opCodeDef = std::mem::read_unsigned($, 1);
+    opCodeDef &= 0b11000000;
+};
+
+struct OpCode {
+    get_opCodeDef();
+    if      (opCodeDef == OpCodeType::PlacePixel) OpCodePlacePixel;
+    else if (opCodeDef == OpCodeType::ShortRun)  OpCodeShortRun;
+    else if (opCodeDef == OpCodeType::MediumRun)  OpCodeMediumRun;
+    else if (opCodeDef == OpCodeType::LongRun)   OpCodeLongRun;
+};
+
+struct FinalBytes {
+  u8 f1  [[name("fb1")]];
+	u8 f2  [[name("fb2")]];
+	u8 f3  [[name("fb3")]];
+	u8 f4  [[name("fb4")]];
+	u8 f5  [[name("fb5")]];
+	u8 f6  [[name("fb6")]];
+	u8 f7  [[name("fb7")]];
+	u8 f8  [[name("fb8")]];
+};
+
+
+struct DgsrFile {
+  DgsrHeader header;
+  // OpCode opCodes[while(!std::mem::eof())];
+	OpCode opCodes[while($ < finalBytesStart)];
+  FinalBytes finalBytes;
+};
+
+
+DgsrFile dgsrFile @ 0 [[name("dgsr")]];
+```
