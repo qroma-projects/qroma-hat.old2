@@ -35,13 +35,15 @@ class NoArgCommands extends $pb.ProtobufEnum {
   static const NoArgCommands Nac_ClearScreenToWhite = NoArgCommands._(1, _omitEnumNames ? '' : 'Nac_ClearScreenToWhite');
   static const NoArgCommands Nac_ClearScreenToBlack = NoArgCommands._(2, _omitEnumNames ? '' : 'Nac_ClearScreenToBlack');
   static const NoArgCommands Nac_GetHatDetails = NoArgCommands._(3, _omitEnumNames ? '' : 'Nac_GetHatDetails');
-  static const NoArgCommands Nac_RestartDevice = NoArgCommands._(4, _omitEnumNames ? '' : 'Nac_RestartDevice');
+  static const NoArgCommands Nac_GetFirmwareDetails = NoArgCommands._(4, _omitEnumNames ? '' : 'Nac_GetFirmwareDetails');
+  static const NoArgCommands Nac_RestartDevice = NoArgCommands._(5, _omitEnumNames ? '' : 'Nac_RestartDevice');
 
   static const $core.List<NoArgCommands> values = <NoArgCommands> [
     Nac_NotSet,
     Nac_ClearScreenToWhite,
     Nac_ClearScreenToBlack,
     Nac_GetHatDetails,
+    Nac_GetFirmwareDetails,
     Nac_RestartDevice,
   ];
 

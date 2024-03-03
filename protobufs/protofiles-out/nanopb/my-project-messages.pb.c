@@ -12,6 +12,12 @@ PB_BIND(UpdateConfiguration, UpdateConfiguration, AUTO)
 PB_BIND(SetUpdateConfiguration, SetUpdateConfiguration, AUTO)
 
 
+PB_BIND(HatConfiguration, HatConfiguration, AUTO)
+
+
+PB_BIND(SetHatConfiguration, SetHatConfiguration, AUTO)
+
+
 PB_BIND(MyProjectCommand, MyProjectCommand, AUTO)
 
 
@@ -19,6 +25,9 @@ PB_BIND(InvalidCommandResponse, InvalidCommandResponse, AUTO)
 
 
 PB_BIND(HatDetailsResponse, HatDetailsResponse, AUTO)
+
+
+PB_BIND(FirmwareDetailsResponse, FirmwareDetailsResponse, AUTO)
 
 
 PB_BIND(UpdateResponse, UpdateResponse, AUTO)

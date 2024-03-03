@@ -4,9 +4,13 @@
 #include "qroma/qroma.h"
 #include "qroma-project.h"
 #include "eink/eink-screen.h"
+#include "lib_ver.h"
 
 
 UpdateConfiguration updateConfiguration = UpdateConfiguration_init_zero; 
+HatConfiguration hatConfiguration = {
+  .rotateImage = true,
+};
 
 
 void handleNoArgCommand(NoArgCommands noArgCommand, MyProjectResponse * response) {
@@ -23,10 +27,15 @@ void handleNoArgCommand(NoArgCommands noArgCommand, MyProjectResponse * response
       clearScreenToBlack();
       break;
 
-    // case NoArgCommands_Nac_GetHatDetails:
-    //   response->which_response = MyProjectResponse_getBoardDetailsResponse_tag;
-    //   populateGetBoardDetailsResponse(&(response->response.getBoardDetailsResponse));
-    //   break;
+    case NoArgCommands_Nac_GetHatDetails:
+      response->which_response = MyProjectResponse_hatDetailsResponse_tag;
+      populateGetHatDetailsResponse(&(response->response.hatDetailsResponse));
+      break;
+
+    case NoArgCommands_Nac_GetFirmwareDetails:
+      response->which_response = MyProjectResponse_firmwareDetailsResponse_tag;
+      populateGetFirmwareDetailsResponse(&(response->response.firmwareDetailsResponse));
+      break;
     
     case NoArgCommands_Nac_RestartDevice:
       // no response to be forthcoming
@@ -42,9 +51,6 @@ void handleNoArgCommand(NoArgCommands noArgCommand, MyProjectResponse * response
 
 
 void onMyProjectCommand(MyProjectCommand * message, MyProjectResponse * response) {
-  // logInfo("ON MY PROJECT COMMAND");
-  // logInfo(message->which_command);
-  // logInfo("<<>>");
 
   // set this so that handler implementations are flagged if they forget to set
   // the response as part of their logic
@@ -66,4 +72,23 @@ void onMyProjectCommand(MyProjectCommand * message, MyProjectResponse * response
       "Unrecognized or unhandled project command",
       sizeof(response->response.invalidCommandResponse.message));
   }
+}
+
+
+void populateGetHatDetailsResponse(HatDetailsResponse * response) {
+  response->has_updateConfiguration = true;
+  response->updateConfiguration.updateIntervalInMs = updateConfiguration.updateIntervalInMs;
+  response->updateConfiguration.updateType = updateConfiguration.updateType;
+
+  response->has_hatConfiguration = true;
+  response->hatConfiguration.rotateImage = hatConfiguration.rotateImage;
+
+  strncpy(response->activeImageFile, LIB_VER, sizeof(response->activeImageFile));
+  strncpy(response->activeImageLabel, __DATE__ " " __TIME__, sizeof(response->activeImageLabel));
+}
+
+
+void populateGetFirmwareDetailsResponse(FirmwareDetailsResponse * response) {
+  strncpy(response->version, LIB_VER, sizeof(response->version));
+  strncpy(response->buildTime, __DATE__ " " __TIME__, sizeof(response->buildTime));
 }

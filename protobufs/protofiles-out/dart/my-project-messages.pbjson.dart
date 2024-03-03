@@ -36,7 +36,8 @@ const NoArgCommands$json = {
     {'1': 'Nac_ClearScreenToWhite', '2': 1},
     {'1': 'Nac_ClearScreenToBlack', '2': 2},
     {'1': 'Nac_GetHatDetails', '2': 3},
-    {'1': 'Nac_RestartDevice', '2': 4},
+    {'1': 'Nac_GetFirmwareDetails', '2': 4},
+    {'1': 'Nac_RestartDevice', '2': 5},
   ],
 };
 
@@ -44,7 +45,7 @@ const NoArgCommands$json = {
 final $typed_data.Uint8List noArgCommandsDescriptor = $convert.base64Decode(
     'Cg1Ob0FyZ0NvbW1hbmRzEg4KCk5hY19Ob3RTZXQQABIaChZOYWNfQ2xlYXJTY3JlZW5Ub1doaX'
     'RlEAESGgoWTmFjX0NsZWFyU2NyZWVuVG9CbGFjaxACEhUKEU5hY19HZXRIYXREZXRhaWxzEAMS'
-    'FQoRTmFjX1Jlc3RhcnREZXZpY2UQBA==');
+    'GgoWTmFjX0dldEZpcm13YXJlRGV0YWlscxAEEhUKEU5hY19SZXN0YXJ0RGV2aWNlEAU=');
 
 @$core.Deprecated('Use updateConfigurationDescriptor instead')
 const UpdateConfiguration$json = {
@@ -76,6 +77,33 @@ final $typed_data.Uint8List setUpdateConfigurationDescriptor = $convert.base64De
     '5VcGRhdGVDb25maWd1cmF0aW9uUhN1cGRhdGVDb25maWd1cmF0aW9uEiwKEXNhdmVDb25maWd1'
     'cmF0aW9uGAIgASgIUhFzYXZlQ29uZmlndXJhdGlvbg==');
 
+@$core.Deprecated('Use hatConfigurationDescriptor instead')
+const HatConfiguration$json = {
+  '1': 'HatConfiguration',
+  '2': [
+    {'1': 'rotateImage', '3': 1, '4': 1, '5': 8, '10': 'rotateImage'},
+  ],
+};
+
+/// Descriptor for `HatConfiguration`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List hatConfigurationDescriptor = $convert.base64Decode(
+    'ChBIYXRDb25maWd1cmF0aW9uEiAKC3JvdGF0ZUltYWdlGAEgASgIUgtyb3RhdGVJbWFnZQ==');
+
+@$core.Deprecated('Use setHatConfigurationDescriptor instead')
+const SetHatConfiguration$json = {
+  '1': 'SetHatConfiguration',
+  '2': [
+    {'1': 'hatConfiguration', '3': 1, '4': 1, '5': 11, '6': '.HatConfiguration', '10': 'hatConfiguration'},
+    {'1': 'saveConfiguration', '3': 2, '4': 1, '5': 8, '10': 'saveConfiguration'},
+  ],
+};
+
+/// Descriptor for `SetHatConfiguration`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List setHatConfigurationDescriptor = $convert.base64Decode(
+    'ChNTZXRIYXRDb25maWd1cmF0aW9uEj0KEGhhdENvbmZpZ3VyYXRpb24YASABKAsyES5IYXRDb2'
+    '5maWd1cmF0aW9uUhBoYXRDb25maWd1cmF0aW9uEiwKEXNhdmVDb25maWd1cmF0aW9uGAIgASgI'
+    'UhFzYXZlQ29uZmlndXJhdGlvbg==');
+
 @$core.Deprecated('Use myProjectCommandDescriptor instead')
 const MyProjectCommand$json = {
   '1': 'MyProjectCommand',
@@ -83,6 +111,7 @@ const MyProjectCommand$json = {
     {'1': 'noArgCommand', '3': 1, '4': 1, '5': 14, '6': '.NoArgCommands', '9': 0, '10': 'noArgCommand'},
     {'1': 'showFileImage', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'showFileImage'},
     {'1': 'setUpdateConfiguration', '3': 3, '4': 1, '5': 11, '6': '.SetUpdateConfiguration', '9': 0, '10': 'setUpdateConfiguration'},
+    {'1': 'setHatConfiguration', '3': 4, '4': 1, '5': 11, '6': '.SetHatConfiguration', '9': 0, '10': 'setHatConfiguration'},
   ],
   '8': [
     {'1': 'command'},
@@ -94,7 +123,9 @@ final $typed_data.Uint8List myProjectCommandDescriptor = $convert.base64Decode(
     'ChBNeVByb2plY3RDb21tYW5kEjQKDG5vQXJnQ29tbWFuZBgBIAEoDjIOLk5vQXJnQ29tbWFuZH'
     'NIAFIMbm9BcmdDb21tYW5kEiYKDXNob3dGaWxlSW1hZ2UYAiABKAlIAFINc2hvd0ZpbGVJbWFn'
     'ZRJRChZzZXRVcGRhdGVDb25maWd1cmF0aW9uGAMgASgLMhcuU2V0VXBkYXRlQ29uZmlndXJhdG'
-    'lvbkgAUhZzZXRVcGRhdGVDb25maWd1cmF0aW9uQgkKB2NvbW1hbmQ=');
+    'lvbkgAUhZzZXRVcGRhdGVDb25maWd1cmF0aW9uEkgKE3NldEhhdENvbmZpZ3VyYXRpb24YBCAB'
+    'KAsyFC5TZXRIYXRDb25maWd1cmF0aW9uSABSE3NldEhhdENvbmZpZ3VyYXRpb25CCQoHY29tbW'
+    'FuZA==');
 
 @$core.Deprecated('Use invalidCommandResponseDescriptor instead')
 const InvalidCommandResponse$json = {
@@ -112,18 +143,34 @@ final $typed_data.Uint8List invalidCommandResponseDescriptor = $convert.base64De
 const HatDetailsResponse$json = {
   '1': 'HatDetailsResponse',
   '2': [
-    {'1': 'isScreenClear', '3': 1, '4': 1, '5': 8, '10': 'isScreenClear'},
-    {'1': 'activeFileImage', '3': 2, '4': 1, '5': 9, '10': 'activeFileImage'},
-    {'1': 'updateConfiguration', '3': 3, '4': 1, '5': 11, '6': '.UpdateConfiguration', '10': 'updateConfiguration'},
+    {'1': 'updateConfiguration', '3': 1, '4': 1, '5': 11, '6': '.UpdateConfiguration', '10': 'updateConfiguration'},
+    {'1': 'hatConfiguration', '3': 2, '4': 1, '5': 11, '6': '.HatConfiguration', '10': 'hatConfiguration'},
+    {'1': 'activeImageFile', '3': 3, '4': 1, '5': 9, '10': 'activeImageFile'},
+    {'1': 'activeImageLabel', '3': 4, '4': 1, '5': 9, '10': 'activeImageLabel'},
   ],
 };
 
 /// Descriptor for `HatDetailsResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List hatDetailsResponseDescriptor = $convert.base64Decode(
-    'ChJIYXREZXRhaWxzUmVzcG9uc2USJAoNaXNTY3JlZW5DbGVhchgBIAEoCFINaXNTY3JlZW5DbG'
-    'VhchIoCg9hY3RpdmVGaWxlSW1hZ2UYAiABKAlSD2FjdGl2ZUZpbGVJbWFnZRJGChN1cGRhdGVD'
-    'b25maWd1cmF0aW9uGAMgASgLMhQuVXBkYXRlQ29uZmlndXJhdGlvblITdXBkYXRlQ29uZmlndX'
-    'JhdGlvbg==');
+    'ChJIYXREZXRhaWxzUmVzcG9uc2USRgoTdXBkYXRlQ29uZmlndXJhdGlvbhgBIAEoCzIULlVwZG'
+    'F0ZUNvbmZpZ3VyYXRpb25SE3VwZGF0ZUNvbmZpZ3VyYXRpb24SPQoQaGF0Q29uZmlndXJhdGlv'
+    'bhgCIAEoCzIRLkhhdENvbmZpZ3VyYXRpb25SEGhhdENvbmZpZ3VyYXRpb24SKAoPYWN0aXZlSW'
+    '1hZ2VGaWxlGAMgASgJUg9hY3RpdmVJbWFnZUZpbGUSKgoQYWN0aXZlSW1hZ2VMYWJlbBgEIAEo'
+    'CVIQYWN0aXZlSW1hZ2VMYWJlbA==');
+
+@$core.Deprecated('Use firmwareDetailsResponseDescriptor instead')
+const FirmwareDetailsResponse$json = {
+  '1': 'FirmwareDetailsResponse',
+  '2': [
+    {'1': 'version', '3': 1, '4': 1, '5': 9, '10': 'version'},
+    {'1': 'buildTime', '3': 2, '4': 1, '5': 9, '10': 'buildTime'},
+  ],
+};
+
+/// Descriptor for `FirmwareDetailsResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List firmwareDetailsResponseDescriptor = $convert.base64Decode(
+    'ChdGaXJtd2FyZURldGFpbHNSZXNwb25zZRIYCgd2ZXJzaW9uGAEgASgJUgd2ZXJzaW9uEhwKCW'
+    'J1aWxkVGltZRgCIAEoCVIJYnVpbGRUaW1l');
 
 @$core.Deprecated('Use updateResponseDescriptor instead')
 const UpdateResponse$json = {
@@ -144,7 +191,8 @@ const MyProjectResponse$json = {
   '2': [
     {'1': 'invalidCommandResponse', '3': 1, '4': 1, '5': 11, '6': '.InvalidCommandResponse', '9': 0, '10': 'invalidCommandResponse'},
     {'1': 'hatDetailsResponse', '3': 2, '4': 1, '5': 11, '6': '.HatDetailsResponse', '9': 0, '10': 'hatDetailsResponse'},
-    {'1': 'updateResponse', '3': 3, '4': 1, '5': 11, '6': '.UpdateResponse', '9': 0, '10': 'updateResponse'},
+    {'1': 'firmwareDetailsResponse', '3': 3, '4': 1, '5': 11, '6': '.FirmwareDetailsResponse', '9': 0, '10': 'firmwareDetailsResponse'},
+    {'1': 'updateResponse', '3': 4, '4': 1, '5': 11, '6': '.UpdateResponse', '9': 0, '10': 'updateResponse'},
   ],
   '8': [
     {'1': 'response'},
@@ -156,6 +204,7 @@ final $typed_data.Uint8List myProjectResponseDescriptor = $convert.base64Decode(
     'ChFNeVByb2plY3RSZXNwb25zZRJRChZpbnZhbGlkQ29tbWFuZFJlc3BvbnNlGAEgASgLMhcuSW'
     '52YWxpZENvbW1hbmRSZXNwb25zZUgAUhZpbnZhbGlkQ29tbWFuZFJlc3BvbnNlEkUKEmhhdERl'
     'dGFpbHNSZXNwb25zZRgCIAEoCzITLkhhdERldGFpbHNSZXNwb25zZUgAUhJoYXREZXRhaWxzUm'
-    'VzcG9uc2USOQoOdXBkYXRlUmVzcG9uc2UYAyABKAsyDy5VcGRhdGVSZXNwb25zZUgAUg51cGRh'
-    'dGVSZXNwb25zZUIKCghyZXNwb25zZQ==');
+    'VzcG9uc2USVAoXZmlybXdhcmVEZXRhaWxzUmVzcG9uc2UYAyABKAsyGC5GaXJtd2FyZURldGFp'
+    'bHNSZXNwb25zZUgAUhdmaXJtd2FyZURldGFpbHNSZXNwb25zZRI5Cg51cGRhdGVSZXNwb25zZR'
+    'gEIAEoCzIPLlVwZGF0ZVJlc3BvbnNlSABSDnVwZGF0ZVJlc3BvbnNlQgoKCHJlc3BvbnNl');
 

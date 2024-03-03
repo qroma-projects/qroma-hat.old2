@@ -2,4 +2,10 @@ MyProjectCommand.showFileImage      max_size:40  fixed_length:true
 
 InvalidCommandResponse.message      max_size:50  fixed_length: false
 
-HatDetailsResponse.activeFileImage  max_size:40  fixed_length:true
+HatDetailsResponse.activeImageFile  max_size:40  fixed_length:true
+HatDetailsResponse.activeImageLabel  max_size:40  fixed_length:true
+
+FirmwareDetailsResponse.version  max_size:30  fixed_length: true
+
+FirmwareDetailsResponse.buildTime  max_size:30  fixed_length: true
+

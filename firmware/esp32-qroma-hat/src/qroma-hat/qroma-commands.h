@@ -5,4 +5,10 @@
 
 void onMyProjectCommand(MyProjectCommand * message, MyProjectResponse * response);
 
+void populateGetHatDetailsResponse(HatDetailsResponse * response);
+void populateGetFirmwareDetailsResponse(FirmwareDetailsResponse * response);
+
+extern UpdateConfiguration updateConfiguration;
+extern HatConfiguration hatConfiguration;
+
 #endif

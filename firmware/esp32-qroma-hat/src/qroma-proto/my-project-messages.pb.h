@@ -21,7 +21,8 @@ typedef enum _NoArgCommands {
     NoArgCommands_Nac_ClearScreenToWhite = 1,
     NoArgCommands_Nac_ClearScreenToBlack = 2,
     NoArgCommands_Nac_GetHatDetails = 3,
-    NoArgCommands_Nac_RestartDevice = 4
+    NoArgCommands_Nac_GetFirmwareDetails = 4,
+    NoArgCommands_Nac_RestartDevice = 5
 } NoArgCommands;
 
 /* Struct definitions */
@@ -36,12 +37,23 @@ typedef struct _SetUpdateConfiguration {
     bool saveConfiguration;
 } SetUpdateConfiguration;
 
+typedef struct _HatConfiguration {
+    bool rotateImage;
+} HatConfiguration;
+
+typedef struct _SetHatConfiguration {
+    bool has_hatConfiguration;
+    HatConfiguration hatConfiguration;
+    bool saveConfiguration;
+} SetHatConfiguration;
+
 typedef struct _MyProjectCommand {
     pb_size_t which_command;
     union {
         NoArgCommands noArgCommand;
         char showFileImage[40];
         SetUpdateConfiguration setUpdateConfiguration;
+        SetHatConfiguration setHatConfiguration;
     } command;
 } MyProjectCommand;
 
@@ -50,11 +62,18 @@ typedef struct _InvalidCommandResponse {
 } InvalidCommandResponse;
 
 typedef struct _HatDetailsResponse {
-    bool isScreenClear;
-    char activeFileImage[40];
     bool has_updateConfiguration;
     UpdateConfiguration updateConfiguration;
+    bool has_hatConfiguration;
+    HatConfiguration hatConfiguration;
+    char activeImageFile[40];
+    char activeImageLabel[40];
 } HatDetailsResponse;
+
+typedef struct _FirmwareDetailsResponse {
+    char version[30];
+    char buildTime[30];
+} FirmwareDetailsResponse;
 
 typedef struct _UpdateResponse {
     uint32_t boardUptimeInMs;
@@ -65,6 +84,7 @@ typedef struct _MyProjectResponse {
     union {
         InvalidCommandResponse invalidCommandResponse;
         HatDetailsResponse hatDetailsResponse;
+        FirmwareDetailsResponse firmwareDetailsResponse;
         UpdateResponse updateResponse;
     } response;
 } MyProjectResponse;
@@ -86,7 +106,10 @@ extern "C" {
 #define UpdateConfiguration_updateType_ENUMTYPE UpdateType
 
 
+
+
 #define MyProjectCommand_command_noArgCommand_ENUMTYPE NoArgCommands
+
 
 
 
@@ -96,16 +119,22 @@ extern "C" {
 /* Initializer values for message structs */
 #define UpdateConfiguration_init_default         {_UpdateType_MIN, 0}
 #define SetUpdateConfiguration_init_default      {false, UpdateConfiguration_init_default, 0}
+#define HatConfiguration_init_default            {0}
+#define SetHatConfiguration_init_default         {false, HatConfiguration_init_default, 0}
 #define MyProjectCommand_init_default            {0, {_NoArgCommands_MIN}}
 #define InvalidCommandResponse_init_default      {""}
-#define HatDetailsResponse_init_default          {0, "", false, UpdateConfiguration_init_default}
+#define HatDetailsResponse_init_default          {false, UpdateConfiguration_init_default, false, HatConfiguration_init_default, "", ""}
+#define FirmwareDetailsResponse_init_default     {"", ""}
 #define UpdateResponse_init_default              {0}
 #define MyProjectResponse_init_default           {0, {InvalidCommandResponse_init_default}}
 #define UpdateConfiguration_init_zero            {_UpdateType_MIN, 0}
 #define SetUpdateConfiguration_init_zero         {false, UpdateConfiguration_init_zero, 0}
+#define HatConfiguration_init_zero               {0}
+#define SetHatConfiguration_init_zero            {false, HatConfiguration_init_zero, 0}
 #define MyProjectCommand_init_zero               {0, {_NoArgCommands_MIN}}
 #define InvalidCommandResponse_init_zero         {""}
-#define HatDetailsResponse_init_zero             {0, "", false, UpdateConfiguration_init_zero}
+#define HatDetailsResponse_init_zero             {false, UpdateConfiguration_init_zero, false, HatConfiguration_init_zero, "", ""}
+#define FirmwareDetailsResponse_init_zero        {"", ""}
 #define UpdateResponse_init_zero                 {0}
 #define MyProjectResponse_init_zero              {0, {InvalidCommandResponse_init_zero}}
 
@@ -114,17 +143,25 @@ extern "C" {
 #define UpdateConfiguration_updateIntervalInMs_tag 2
 #define SetUpdateConfiguration_updateConfiguration_tag 1
 #define SetUpdateConfiguration_saveConfiguration_tag 2
+#define HatConfiguration_rotateImage_tag         1
+#define SetHatConfiguration_hatConfiguration_tag 1
+#define SetHatConfiguration_saveConfiguration_tag 2
 #define MyProjectCommand_noArgCommand_tag        1
 #define MyProjectCommand_showFileImage_tag       2
 #define MyProjectCommand_setUpdateConfiguration_tag 3
+#define MyProjectCommand_setHatConfiguration_tag 4
 #define InvalidCommandResponse_message_tag       1
-#define HatDetailsResponse_isScreenClear_tag     1
-#define HatDetailsResponse_activeFileImage_tag   2
-#define HatDetailsResponse_updateConfiguration_tag 3
+#define HatDetailsResponse_updateConfiguration_tag 1
+#define HatDetailsResponse_hatConfiguration_tag  2
+#define HatDetailsResponse_activeImageFile_tag   3
+#define HatDetailsResponse_activeImageLabel_tag  4
+#define FirmwareDetailsResponse_version_tag      1
+#define FirmwareDetailsResponse_buildTime_tag    2
 #define UpdateResponse_boardUptimeInMs_tag       1
 #define MyProjectResponse_invalidCommandResponse_tag 1
 #define MyProjectResponse_hatDetailsResponse_tag 2
-#define MyProjectResponse_updateResponse_tag     3
+#define MyProjectResponse_firmwareDetailsResponse_tag 3
+#define MyProjectResponse_updateResponse_tag     4
 
 /* Struct field encoding specification for nanopb */
 #define UpdateConfiguration_FIELDLIST(X, a) \
@@ -140,13 +177,27 @@ X(a, STATIC,   SINGULAR, BOOL,     saveConfiguration,   2)
 #define SetUpdateConfiguration_DEFAULT NULL
 #define SetUpdateConfiguration_updateConfiguration_MSGTYPE UpdateConfiguration
 
+#define HatConfiguration_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, BOOL,     rotateImage,       1)
+#define HatConfiguration_CALLBACK NULL
+#define HatConfiguration_DEFAULT NULL
+
+#define SetHatConfiguration_FIELDLIST(X, a) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  hatConfiguration,   1) \
+X(a, STATIC,   SINGULAR, BOOL,     saveConfiguration,   2)
+#define SetHatConfiguration_CALLBACK NULL
+#define SetHatConfiguration_DEFAULT NULL
+#define SetHatConfiguration_hatConfiguration_MSGTYPE HatConfiguration
+
 #define MyProjectCommand_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    UENUM,    (command,noArgCommand,command.noArgCommand),   1) \
 X(a, STATIC,   ONEOF,    STRING,   (command,showFileImage,command.showFileImage),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (command,setUpdateConfiguration,command.setUpdateConfiguration),   3)
+X(a, STATIC,   ONEOF,    MESSAGE,  (command,setUpdateConfiguration,command.setUpdateConfiguration),   3) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (command,setHatConfiguration,command.setHatConfiguration),   4)
 #define MyProjectCommand_CALLBACK NULL
 #define MyProjectCommand_DEFAULT NULL
 #define MyProjectCommand_command_setUpdateConfiguration_MSGTYPE SetUpdateConfiguration
+#define MyProjectCommand_command_setHatConfiguration_MSGTYPE SetHatConfiguration
 
 #define InvalidCommandResponse_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, STRING,   message,           1)
@@ -154,12 +205,20 @@ X(a, STATIC,   SINGULAR, STRING,   message,           1)
 #define InvalidCommandResponse_DEFAULT NULL
 
 #define HatDetailsResponse_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, BOOL,     isScreenClear,     1) \
-X(a, STATIC,   SINGULAR, STRING,   activeFileImage,   2) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  updateConfiguration,   3)
+X(a, STATIC,   OPTIONAL, MESSAGE,  updateConfiguration,   1) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  hatConfiguration,   2) \
+X(a, STATIC,   SINGULAR, STRING,   activeImageFile,   3) \
+X(a, STATIC,   SINGULAR, STRING,   activeImageLabel,   4)
 #define HatDetailsResponse_CALLBACK NULL
 #define HatDetailsResponse_DEFAULT NULL
 #define HatDetailsResponse_updateConfiguration_MSGTYPE UpdateConfiguration
+#define HatDetailsResponse_hatConfiguration_MSGTYPE HatConfiguration
+
+#define FirmwareDetailsResponse_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, STRING,   version,           1) \
+X(a, STATIC,   SINGULAR, STRING,   buildTime,         2)
+#define FirmwareDetailsResponse_CALLBACK NULL
+#define FirmwareDetailsResponse_DEFAULT NULL
 
 #define UpdateResponse_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   boardUptimeInMs,   1)
@@ -169,36 +228,47 @@ X(a, STATIC,   SINGULAR, UINT32,   boardUptimeInMs,   1)
 #define MyProjectResponse_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (response,invalidCommandResponse,response.invalidCommandResponse),   1) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (response,hatDetailsResponse,response.hatDetailsResponse),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (response,updateResponse,response.updateResponse),   3)
+X(a, STATIC,   ONEOF,    MESSAGE,  (response,firmwareDetailsResponse,response.firmwareDetailsResponse),   3) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (response,updateResponse,response.updateResponse),   4)
 #define MyProjectResponse_CALLBACK NULL
 #define MyProjectResponse_DEFAULT NULL
 #define MyProjectResponse_response_invalidCommandResponse_MSGTYPE InvalidCommandResponse
 #define MyProjectResponse_response_hatDetailsResponse_MSGTYPE HatDetailsResponse
+#define MyProjectResponse_response_firmwareDetailsResponse_MSGTYPE FirmwareDetailsResponse
 #define MyProjectResponse_response_updateResponse_MSGTYPE UpdateResponse
 
 extern const pb_msgdesc_t UpdateConfiguration_msg;
 extern const pb_msgdesc_t SetUpdateConfiguration_msg;
+extern const pb_msgdesc_t HatConfiguration_msg;
+extern const pb_msgdesc_t SetHatConfiguration_msg;
 extern const pb_msgdesc_t MyProjectCommand_msg;
 extern const pb_msgdesc_t InvalidCommandResponse_msg;
 extern const pb_msgdesc_t HatDetailsResponse_msg;
+extern const pb_msgdesc_t FirmwareDetailsResponse_msg;
 extern const pb_msgdesc_t UpdateResponse_msg;
 extern const pb_msgdesc_t MyProjectResponse_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define UpdateConfiguration_fields &UpdateConfiguration_msg
 #define SetUpdateConfiguration_fields &SetUpdateConfiguration_msg
+#define HatConfiguration_fields &HatConfiguration_msg
+#define SetHatConfiguration_fields &SetHatConfiguration_msg
 #define MyProjectCommand_fields &MyProjectCommand_msg
 #define InvalidCommandResponse_fields &InvalidCommandResponse_msg
 #define HatDetailsResponse_fields &HatDetailsResponse_msg
+#define FirmwareDetailsResponse_fields &FirmwareDetailsResponse_msg
 #define UpdateResponse_fields &UpdateResponse_msg
 #define MyProjectResponse_fields &MyProjectResponse_msg
 
 /* Maximum encoded size of messages (where known) */
-#define HatDetailsResponse_size                  53
+#define FirmwareDetailsResponse_size             62
+#define HatConfiguration_size                    2
+#define HatDetailsResponse_size                  96
 #define InvalidCommandResponse_size              51
 #define MY_PROJECT_MESSAGES_PB_H_MAX_SIZE        MyProjectResponse_size
 #define MyProjectCommand_size                    41
-#define MyProjectResponse_size                   55
+#define MyProjectResponse_size                   98
+#define SetHatConfiguration_size                 6
 #define SetUpdateConfiguration_size              12
 #define UpdateConfiguration_size                 8
 #define UpdateResponse_size                      6

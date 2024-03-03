@@ -37,6 +37,28 @@ export interface SetUpdateConfiguration {
     saveConfiguration: boolean;
 }
 /**
+ * @generated from protobuf message HatConfiguration
+ */
+export interface HatConfiguration {
+    /**
+     * @generated from protobuf field: bool rotateImage = 1;
+     */
+    rotateImage: boolean;
+}
+/**
+ * @generated from protobuf message SetHatConfiguration
+ */
+export interface SetHatConfiguration {
+    /**
+     * @generated from protobuf field: HatConfiguration hatConfiguration = 1;
+     */
+    hatConfiguration?: HatConfiguration;
+    /**
+     * @generated from protobuf field: bool saveConfiguration = 2;
+     */
+    saveConfiguration: boolean;
+}
+/**
  * @generated from protobuf message MyProjectCommand
  */
 export interface MyProjectCommand {
@@ -62,6 +84,12 @@ export interface MyProjectCommand {
          */
         setUpdateConfiguration: SetUpdateConfiguration;
     } | {
+        oneofKind: "setHatConfiguration";
+        /**
+         * @generated from protobuf field: SetHatConfiguration setHatConfiguration = 4;
+         */
+        setHatConfiguration: SetHatConfiguration;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -79,17 +107,34 @@ export interface InvalidCommandResponse {
  */
 export interface HatDetailsResponse {
     /**
-     * @generated from protobuf field: bool isScreenClear = 1;
-     */
-    isScreenClear: boolean;
-    /**
-     * @generated from protobuf field: string activeFileImage = 2;
-     */
-    activeFileImage: string;
-    /**
-     * @generated from protobuf field: UpdateConfiguration updateConfiguration = 3;
+     * @generated from protobuf field: UpdateConfiguration updateConfiguration = 1;
      */
     updateConfiguration?: UpdateConfiguration;
+    /**
+     * @generated from protobuf field: HatConfiguration hatConfiguration = 2;
+     */
+    hatConfiguration?: HatConfiguration;
+    /**
+     * @generated from protobuf field: string activeImageFile = 3;
+     */
+    activeImageFile: string;
+    /**
+     * @generated from protobuf field: string activeImageLabel = 4;
+     */
+    activeImageLabel: string;
+}
+/**
+ * @generated from protobuf message FirmwareDetailsResponse
+ */
+export interface FirmwareDetailsResponse {
+    /**
+     * @generated from protobuf field: string version = 1;
+     */
+    version: string;
+    /**
+     * @generated from protobuf field: string buildTime = 2;
+     */
+    buildTime: string;
 }
 /**
  * @generated from protobuf message UpdateResponse
@@ -120,9 +165,15 @@ export interface MyProjectResponse {
          */
         hatDetailsResponse: HatDetailsResponse;
     } | {
+        oneofKind: "firmwareDetailsResponse";
+        /**
+         * @generated from protobuf field: FirmwareDetailsResponse firmwareDetailsResponse = 3;
+         */
+        firmwareDetailsResponse: FirmwareDetailsResponse;
+    } | {
         oneofKind: "updateResponse";
         /**
-         * @generated from protobuf field: UpdateResponse updateResponse = 3;
+         * @generated from protobuf field: UpdateResponse updateResponse = 4;
          */
         updateResponse: UpdateResponse;
     } | {
@@ -167,9 +218,13 @@ export enum NoArgCommands {
      */
     Nac_GetHatDetails = 3,
     /**
-     * @generated from protobuf enum value: Nac_RestartDevice = 4;
+     * @generated from protobuf enum value: Nac_GetFirmwareDetails = 4;
      */
-    Nac_RestartDevice = 4
+    Nac_GetFirmwareDetails = 4,
+    /**
+     * @generated from protobuf enum value: Nac_RestartDevice = 5;
+     */
+    Nac_RestartDevice = 5
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class UpdateConfiguration$Type extends MessageType<UpdateConfiguration> {
@@ -281,12 +336,114 @@ class SetUpdateConfiguration$Type extends MessageType<SetUpdateConfiguration> {
  */
 export const SetUpdateConfiguration = new SetUpdateConfiguration$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class HatConfiguration$Type extends MessageType<HatConfiguration> {
+    constructor() {
+        super("HatConfiguration", [
+            { no: 1, name: "rotateImage", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HatConfiguration>): HatConfiguration {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.rotateImage = false;
+        if (value !== undefined)
+            reflectionMergePartial<HatConfiguration>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HatConfiguration): HatConfiguration {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool rotateImage */ 1:
+                    message.rotateImage = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HatConfiguration, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool rotateImage = 1; */
+        if (message.rotateImage !== false)
+            writer.tag(1, WireType.Varint).bool(message.rotateImage);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message HatConfiguration
+ */
+export const HatConfiguration = new HatConfiguration$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SetHatConfiguration$Type extends MessageType<SetHatConfiguration> {
+    constructor() {
+        super("SetHatConfiguration", [
+            { no: 1, name: "hatConfiguration", kind: "message", T: () => HatConfiguration },
+            { no: 2, name: "saveConfiguration", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SetHatConfiguration>): SetHatConfiguration {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.saveConfiguration = false;
+        if (value !== undefined)
+            reflectionMergePartial<SetHatConfiguration>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SetHatConfiguration): SetHatConfiguration {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* HatConfiguration hatConfiguration */ 1:
+                    message.hatConfiguration = HatConfiguration.internalBinaryRead(reader, reader.uint32(), options, message.hatConfiguration);
+                    break;
+                case /* bool saveConfiguration */ 2:
+                    message.saveConfiguration = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SetHatConfiguration, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* HatConfiguration hatConfiguration = 1; */
+        if (message.hatConfiguration)
+            HatConfiguration.internalBinaryWrite(message.hatConfiguration, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* bool saveConfiguration = 2; */
+        if (message.saveConfiguration !== false)
+            writer.tag(2, WireType.Varint).bool(message.saveConfiguration);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message SetHatConfiguration
+ */
+export const SetHatConfiguration = new SetHatConfiguration$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class MyProjectCommand$Type extends MessageType<MyProjectCommand> {
     constructor() {
         super("MyProjectCommand", [
             { no: 1, name: "noArgCommand", kind: "enum", oneof: "command", T: () => ["NoArgCommands", NoArgCommands] },
             { no: 2, name: "showFileImage", kind: "scalar", oneof: "command", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "setUpdateConfiguration", kind: "message", oneof: "command", T: () => SetUpdateConfiguration }
+            { no: 3, name: "setUpdateConfiguration", kind: "message", oneof: "command", T: () => SetUpdateConfiguration },
+            { no: 4, name: "setHatConfiguration", kind: "message", oneof: "command", T: () => SetHatConfiguration }
         ]);
     }
     create(value?: PartialMessage<MyProjectCommand>): MyProjectCommand {
@@ -319,6 +476,12 @@ class MyProjectCommand$Type extends MessageType<MyProjectCommand> {
                         setUpdateConfiguration: SetUpdateConfiguration.internalBinaryRead(reader, reader.uint32(), options, (message.command as any).setUpdateConfiguration)
                     };
                     break;
+                case /* SetHatConfiguration setHatConfiguration */ 4:
+                    message.command = {
+                        oneofKind: "setHatConfiguration",
+                        setHatConfiguration: SetHatConfiguration.internalBinaryRead(reader, reader.uint32(), options, (message.command as any).setHatConfiguration)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -340,6 +503,9 @@ class MyProjectCommand$Type extends MessageType<MyProjectCommand> {
         /* SetUpdateConfiguration setUpdateConfiguration = 3; */
         if (message.command.oneofKind === "setUpdateConfiguration")
             SetUpdateConfiguration.internalBinaryWrite(message.command.setUpdateConfiguration, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* SetHatConfiguration setHatConfiguration = 4; */
+        if (message.command.oneofKind === "setHatConfiguration")
+            SetHatConfiguration.internalBinaryWrite(message.command.setHatConfiguration, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -401,15 +567,16 @@ export const InvalidCommandResponse = new InvalidCommandResponse$Type();
 class HatDetailsResponse$Type extends MessageType<HatDetailsResponse> {
     constructor() {
         super("HatDetailsResponse", [
-            { no: 1, name: "isScreenClear", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "activeFileImage", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "updateConfiguration", kind: "message", T: () => UpdateConfiguration }
+            { no: 1, name: "updateConfiguration", kind: "message", T: () => UpdateConfiguration },
+            { no: 2, name: "hatConfiguration", kind: "message", T: () => HatConfiguration },
+            { no: 3, name: "activeImageFile", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "activeImageLabel", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<HatDetailsResponse>): HatDetailsResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.isScreenClear = false;
-        message.activeFileImage = "";
+        message.activeImageFile = "";
+        message.activeImageLabel = "";
         if (value !== undefined)
             reflectionMergePartial<HatDetailsResponse>(this, message, value);
         return message;
@@ -419,14 +586,17 @@ class HatDetailsResponse$Type extends MessageType<HatDetailsResponse> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* bool isScreenClear */ 1:
-                    message.isScreenClear = reader.bool();
-                    break;
-                case /* string activeFileImage */ 2:
-                    message.activeFileImage = reader.string();
-                    break;
-                case /* UpdateConfiguration updateConfiguration */ 3:
+                case /* UpdateConfiguration updateConfiguration */ 1:
                     message.updateConfiguration = UpdateConfiguration.internalBinaryRead(reader, reader.uint32(), options, message.updateConfiguration);
+                    break;
+                case /* HatConfiguration hatConfiguration */ 2:
+                    message.hatConfiguration = HatConfiguration.internalBinaryRead(reader, reader.uint32(), options, message.hatConfiguration);
+                    break;
+                case /* string activeImageFile */ 3:
+                    message.activeImageFile = reader.string();
+                    break;
+                case /* string activeImageLabel */ 4:
+                    message.activeImageLabel = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -440,15 +610,18 @@ class HatDetailsResponse$Type extends MessageType<HatDetailsResponse> {
         return message;
     }
     internalBinaryWrite(message: HatDetailsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool isScreenClear = 1; */
-        if (message.isScreenClear !== false)
-            writer.tag(1, WireType.Varint).bool(message.isScreenClear);
-        /* string activeFileImage = 2; */
-        if (message.activeFileImage !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.activeFileImage);
-        /* UpdateConfiguration updateConfiguration = 3; */
+        /* UpdateConfiguration updateConfiguration = 1; */
         if (message.updateConfiguration)
-            UpdateConfiguration.internalBinaryWrite(message.updateConfiguration, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            UpdateConfiguration.internalBinaryWrite(message.updateConfiguration, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* HatConfiguration hatConfiguration = 2; */
+        if (message.hatConfiguration)
+            HatConfiguration.internalBinaryWrite(message.hatConfiguration, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string activeImageFile = 3; */
+        if (message.activeImageFile !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.activeImageFile);
+        /* string activeImageLabel = 4; */
+        if (message.activeImageLabel !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.activeImageLabel);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -459,6 +632,61 @@ class HatDetailsResponse$Type extends MessageType<HatDetailsResponse> {
  * @generated MessageType for protobuf message HatDetailsResponse
  */
 export const HatDetailsResponse = new HatDetailsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class FirmwareDetailsResponse$Type extends MessageType<FirmwareDetailsResponse> {
+    constructor() {
+        super("FirmwareDetailsResponse", [
+            { no: 1, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "buildTime", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<FirmwareDetailsResponse>): FirmwareDetailsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.version = "";
+        message.buildTime = "";
+        if (value !== undefined)
+            reflectionMergePartial<FirmwareDetailsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FirmwareDetailsResponse): FirmwareDetailsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string version */ 1:
+                    message.version = reader.string();
+                    break;
+                case /* string buildTime */ 2:
+                    message.buildTime = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: FirmwareDetailsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string version = 1; */
+        if (message.version !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.version);
+        /* string buildTime = 2; */
+        if (message.buildTime !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.buildTime);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message FirmwareDetailsResponse
+ */
+export const FirmwareDetailsResponse = new FirmwareDetailsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class UpdateResponse$Type extends MessageType<UpdateResponse> {
     constructor() {
@@ -512,7 +740,8 @@ class MyProjectResponse$Type extends MessageType<MyProjectResponse> {
         super("MyProjectResponse", [
             { no: 1, name: "invalidCommandResponse", kind: "message", oneof: "response", T: () => InvalidCommandResponse },
             { no: 2, name: "hatDetailsResponse", kind: "message", oneof: "response", T: () => HatDetailsResponse },
-            { no: 3, name: "updateResponse", kind: "message", oneof: "response", T: () => UpdateResponse }
+            { no: 3, name: "firmwareDetailsResponse", kind: "message", oneof: "response", T: () => FirmwareDetailsResponse },
+            { no: 4, name: "updateResponse", kind: "message", oneof: "response", T: () => UpdateResponse }
         ]);
     }
     create(value?: PartialMessage<MyProjectResponse>): MyProjectResponse {
@@ -539,7 +768,13 @@ class MyProjectResponse$Type extends MessageType<MyProjectResponse> {
                         hatDetailsResponse: HatDetailsResponse.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).hatDetailsResponse)
                     };
                     break;
-                case /* UpdateResponse updateResponse */ 3:
+                case /* FirmwareDetailsResponse firmwareDetailsResponse */ 3:
+                    message.response = {
+                        oneofKind: "firmwareDetailsResponse",
+                        firmwareDetailsResponse: FirmwareDetailsResponse.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).firmwareDetailsResponse)
+                    };
+                    break;
+                case /* UpdateResponse updateResponse */ 4:
                     message.response = {
                         oneofKind: "updateResponse",
                         updateResponse: UpdateResponse.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).updateResponse)
@@ -563,9 +798,12 @@ class MyProjectResponse$Type extends MessageType<MyProjectResponse> {
         /* HatDetailsResponse hatDetailsResponse = 2; */
         if (message.response.oneofKind === "hatDetailsResponse")
             HatDetailsResponse.internalBinaryWrite(message.response.hatDetailsResponse, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* UpdateResponse updateResponse = 3; */
+        /* FirmwareDetailsResponse firmwareDetailsResponse = 3; */
+        if (message.response.oneofKind === "firmwareDetailsResponse")
+            FirmwareDetailsResponse.internalBinaryWrite(message.response.firmwareDetailsResponse, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* UpdateResponse updateResponse = 4; */
         if (message.response.oneofKind === "updateResponse")
-            UpdateResponse.internalBinaryWrite(message.response.updateResponse, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            UpdateResponse.internalBinaryWrite(message.response.updateResponse, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

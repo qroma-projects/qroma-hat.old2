@@ -17,6 +17,7 @@ typedef struct _HatImageData {
   uint32_t imageWidth;
   uint32_t imageHeight;
   uint8_t * imageData;
+  const char * imageFile;
   const char * imageLabel;
 } HatImageData;
 

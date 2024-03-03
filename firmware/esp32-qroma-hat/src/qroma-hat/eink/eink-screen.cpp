@@ -1,6 +1,8 @@
 #include "eink-screen.h"
 #include "logo.h"
 #include <qroma/qroma.h>
+#include "../qroma-commands.h"
+#include "rotateHatImage.h"
 
 
 HatImageData _activeImage = {
@@ -85,9 +87,13 @@ bool showImageFromInternalDgsrData(HatImageEncoding encoding, HatImagePointer * 
   Rect_t area = {
     .x = 0,
     .y = 0,
-    .width = hatImageData->imageWidth,
-    .height = hatImageData->imageHeight,
+    .width = (int32_t)hatImageData->imageWidth,
+    .height = (int32_t)hatImageData->imageHeight,
   };
+
+  if (hatConfiguration.rotateImage) {
+    rotateHatImage(hatImageData);
+  }
 
   epd_poweron();
   epd_clear();

@@ -147,10 +147,127 @@ class SetUpdateConfiguration extends $pb.GeneratedMessage {
   void clearSaveConfiguration() => clearField(2);
 }
 
+class HatConfiguration extends $pb.GeneratedMessage {
+  factory HatConfiguration({
+    $core.bool? rotateImage,
+  }) {
+    final $result = create();
+    if (rotateImage != null) {
+      $result.rotateImage = rotateImage;
+    }
+    return $result;
+  }
+  HatConfiguration._() : super();
+  factory HatConfiguration.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory HatConfiguration.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HatConfiguration', createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'rotateImage', protoName: 'rotateImage')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  HatConfiguration clone() => HatConfiguration()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  HatConfiguration copyWith(void Function(HatConfiguration) updates) => super.copyWith((message) => updates(message as HatConfiguration)) as HatConfiguration;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static HatConfiguration create() => HatConfiguration._();
+  HatConfiguration createEmptyInstance() => create();
+  static $pb.PbList<HatConfiguration> createRepeated() => $pb.PbList<HatConfiguration>();
+  @$core.pragma('dart2js:noInline')
+  static HatConfiguration getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HatConfiguration>(create);
+  static HatConfiguration? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get rotateImage => $_getBF(0);
+  @$pb.TagNumber(1)
+  set rotateImage($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRotateImage() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRotateImage() => clearField(1);
+}
+
+class SetHatConfiguration extends $pb.GeneratedMessage {
+  factory SetHatConfiguration({
+    HatConfiguration? hatConfiguration,
+    $core.bool? saveConfiguration,
+  }) {
+    final $result = create();
+    if (hatConfiguration != null) {
+      $result.hatConfiguration = hatConfiguration;
+    }
+    if (saveConfiguration != null) {
+      $result.saveConfiguration = saveConfiguration;
+    }
+    return $result;
+  }
+  SetHatConfiguration._() : super();
+  factory SetHatConfiguration.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetHatConfiguration.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetHatConfiguration', createEmptyInstance: create)
+    ..aOM<HatConfiguration>(1, _omitFieldNames ? '' : 'hatConfiguration', protoName: 'hatConfiguration', subBuilder: HatConfiguration.create)
+    ..aOB(2, _omitFieldNames ? '' : 'saveConfiguration', protoName: 'saveConfiguration')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SetHatConfiguration clone() => SetHatConfiguration()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SetHatConfiguration copyWith(void Function(SetHatConfiguration) updates) => super.copyWith((message) => updates(message as SetHatConfiguration)) as SetHatConfiguration;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SetHatConfiguration create() => SetHatConfiguration._();
+  SetHatConfiguration createEmptyInstance() => create();
+  static $pb.PbList<SetHatConfiguration> createRepeated() => $pb.PbList<SetHatConfiguration>();
+  @$core.pragma('dart2js:noInline')
+  static SetHatConfiguration getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetHatConfiguration>(create);
+  static SetHatConfiguration? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  HatConfiguration get hatConfiguration => $_getN(0);
+  @$pb.TagNumber(1)
+  set hatConfiguration(HatConfiguration v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasHatConfiguration() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHatConfiguration() => clearField(1);
+  @$pb.TagNumber(1)
+  HatConfiguration ensureHatConfiguration() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.bool get saveConfiguration => $_getBF(1);
+  @$pb.TagNumber(2)
+  set saveConfiguration($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSaveConfiguration() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSaveConfiguration() => clearField(2);
+}
+
 enum MyProjectCommand_Command {
   noArgCommand, 
   showFileImage, 
   setUpdateConfiguration, 
+  setHatConfiguration, 
   notSet
 }
 
@@ -159,6 +276,7 @@ class MyProjectCommand extends $pb.GeneratedMessage {
     NoArgCommands? noArgCommand,
     $core.String? showFileImage,
     SetUpdateConfiguration? setUpdateConfiguration,
+    SetHatConfiguration? setHatConfiguration,
   }) {
     final $result = create();
     if (noArgCommand != null) {
@@ -170,6 +288,9 @@ class MyProjectCommand extends $pb.GeneratedMessage {
     if (setUpdateConfiguration != null) {
       $result.setUpdateConfiguration = setUpdateConfiguration;
     }
+    if (setHatConfiguration != null) {
+      $result.setHatConfiguration = setHatConfiguration;
+    }
     return $result;
   }
   MyProjectCommand._() : super();
@@ -180,13 +301,15 @@ class MyProjectCommand extends $pb.GeneratedMessage {
     1 : MyProjectCommand_Command.noArgCommand,
     2 : MyProjectCommand_Command.showFileImage,
     3 : MyProjectCommand_Command.setUpdateConfiguration,
+    4 : MyProjectCommand_Command.setHatConfiguration,
     0 : MyProjectCommand_Command.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MyProjectCommand', createEmptyInstance: create)
-    ..oo(0, [1, 2, 3])
+    ..oo(0, [1, 2, 3, 4])
     ..e<NoArgCommands>(1, _omitFieldNames ? '' : 'noArgCommand', $pb.PbFieldType.OE, protoName: 'noArgCommand', defaultOrMaker: NoArgCommands.Nac_NotSet, valueOf: NoArgCommands.valueOf, enumValues: NoArgCommands.values)
     ..aOS(2, _omitFieldNames ? '' : 'showFileImage', protoName: 'showFileImage')
     ..aOM<SetUpdateConfiguration>(3, _omitFieldNames ? '' : 'setUpdateConfiguration', protoName: 'setUpdateConfiguration', subBuilder: SetUpdateConfiguration.create)
+    ..aOM<SetHatConfiguration>(4, _omitFieldNames ? '' : 'setHatConfiguration', protoName: 'setHatConfiguration', subBuilder: SetHatConfiguration.create)
     ..hasRequiredFields = false
   ;
 
@@ -242,6 +365,17 @@ class MyProjectCommand extends $pb.GeneratedMessage {
   void clearSetUpdateConfiguration() => clearField(3);
   @$pb.TagNumber(3)
   SetUpdateConfiguration ensureSetUpdateConfiguration() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  SetHatConfiguration get setHatConfiguration => $_getN(3);
+  @$pb.TagNumber(4)
+  set setHatConfiguration(SetHatConfiguration v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasSetHatConfiguration() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSetHatConfiguration() => clearField(4);
+  @$pb.TagNumber(4)
+  SetHatConfiguration ensureSetHatConfiguration() => $_ensure(3);
 }
 
 class InvalidCommandResponse extends $pb.GeneratedMessage {
@@ -296,19 +430,23 @@ class InvalidCommandResponse extends $pb.GeneratedMessage {
 
 class HatDetailsResponse extends $pb.GeneratedMessage {
   factory HatDetailsResponse({
-    $core.bool? isScreenClear,
-    $core.String? activeFileImage,
     UpdateConfiguration? updateConfiguration,
+    HatConfiguration? hatConfiguration,
+    $core.String? activeImageFile,
+    $core.String? activeImageLabel,
   }) {
     final $result = create();
-    if (isScreenClear != null) {
-      $result.isScreenClear = isScreenClear;
-    }
-    if (activeFileImage != null) {
-      $result.activeFileImage = activeFileImage;
-    }
     if (updateConfiguration != null) {
       $result.updateConfiguration = updateConfiguration;
+    }
+    if (hatConfiguration != null) {
+      $result.hatConfiguration = hatConfiguration;
+    }
+    if (activeImageFile != null) {
+      $result.activeImageFile = activeImageFile;
+    }
+    if (activeImageLabel != null) {
+      $result.activeImageLabel = activeImageLabel;
     }
     return $result;
   }
@@ -317,9 +455,10 @@ class HatDetailsResponse extends $pb.GeneratedMessage {
   factory HatDetailsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HatDetailsResponse', createEmptyInstance: create)
-    ..aOB(1, _omitFieldNames ? '' : 'isScreenClear', protoName: 'isScreenClear')
-    ..aOS(2, _omitFieldNames ? '' : 'activeFileImage', protoName: 'activeFileImage')
-    ..aOM<UpdateConfiguration>(3, _omitFieldNames ? '' : 'updateConfiguration', protoName: 'updateConfiguration', subBuilder: UpdateConfiguration.create)
+    ..aOM<UpdateConfiguration>(1, _omitFieldNames ? '' : 'updateConfiguration', protoName: 'updateConfiguration', subBuilder: UpdateConfiguration.create)
+    ..aOM<HatConfiguration>(2, _omitFieldNames ? '' : 'hatConfiguration', protoName: 'hatConfiguration', subBuilder: HatConfiguration.create)
+    ..aOS(3, _omitFieldNames ? '' : 'activeImageFile', protoName: 'activeImageFile')
+    ..aOS(4, _omitFieldNames ? '' : 'activeImageLabel', protoName: 'activeImageLabel')
     ..hasRequiredFields = false
   ;
 
@@ -345,33 +484,108 @@ class HatDetailsResponse extends $pb.GeneratedMessage {
   static HatDetailsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.bool get isScreenClear => $_getBF(0);
+  UpdateConfiguration get updateConfiguration => $_getN(0);
   @$pb.TagNumber(1)
-  set isScreenClear($core.bool v) { $_setBool(0, v); }
+  set updateConfiguration(UpdateConfiguration v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasIsScreenClear() => $_has(0);
+  $core.bool hasUpdateConfiguration() => $_has(0);
   @$pb.TagNumber(1)
-  void clearIsScreenClear() => clearField(1);
+  void clearUpdateConfiguration() => clearField(1);
+  @$pb.TagNumber(1)
+  UpdateConfiguration ensureUpdateConfiguration() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.String get activeFileImage => $_getSZ(1);
+  HatConfiguration get hatConfiguration => $_getN(1);
   @$pb.TagNumber(2)
-  set activeFileImage($core.String v) { $_setString(1, v); }
+  set hatConfiguration(HatConfiguration v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasActiveFileImage() => $_has(1);
+  $core.bool hasHatConfiguration() => $_has(1);
   @$pb.TagNumber(2)
-  void clearActiveFileImage() => clearField(2);
+  void clearHatConfiguration() => clearField(2);
+  @$pb.TagNumber(2)
+  HatConfiguration ensureHatConfiguration() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  UpdateConfiguration get updateConfiguration => $_getN(2);
+  $core.String get activeImageFile => $_getSZ(2);
   @$pb.TagNumber(3)
-  set updateConfiguration(UpdateConfiguration v) { setField(3, v); }
+  set activeImageFile($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasUpdateConfiguration() => $_has(2);
+  $core.bool hasActiveImageFile() => $_has(2);
   @$pb.TagNumber(3)
-  void clearUpdateConfiguration() => clearField(3);
-  @$pb.TagNumber(3)
-  UpdateConfiguration ensureUpdateConfiguration() => $_ensure(2);
+  void clearActiveImageFile() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get activeImageLabel => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set activeImageLabel($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasActiveImageLabel() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearActiveImageLabel() => clearField(4);
+}
+
+class FirmwareDetailsResponse extends $pb.GeneratedMessage {
+  factory FirmwareDetailsResponse({
+    $core.String? version,
+    $core.String? buildTime,
+  }) {
+    final $result = create();
+    if (version != null) {
+      $result.version = version;
+    }
+    if (buildTime != null) {
+      $result.buildTime = buildTime;
+    }
+    return $result;
+  }
+  FirmwareDetailsResponse._() : super();
+  factory FirmwareDetailsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FirmwareDetailsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FirmwareDetailsResponse', createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'version')
+    ..aOS(2, _omitFieldNames ? '' : 'buildTime', protoName: 'buildTime')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FirmwareDetailsResponse clone() => FirmwareDetailsResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FirmwareDetailsResponse copyWith(void Function(FirmwareDetailsResponse) updates) => super.copyWith((message) => updates(message as FirmwareDetailsResponse)) as FirmwareDetailsResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static FirmwareDetailsResponse create() => FirmwareDetailsResponse._();
+  FirmwareDetailsResponse createEmptyInstance() => create();
+  static $pb.PbList<FirmwareDetailsResponse> createRepeated() => $pb.PbList<FirmwareDetailsResponse>();
+  @$core.pragma('dart2js:noInline')
+  static FirmwareDetailsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FirmwareDetailsResponse>(create);
+  static FirmwareDetailsResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get version => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set version($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasVersion() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearVersion() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get buildTime => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set buildTime($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasBuildTime() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearBuildTime() => clearField(2);
 }
 
 class UpdateResponse extends $pb.GeneratedMessage {
@@ -427,6 +641,7 @@ class UpdateResponse extends $pb.GeneratedMessage {
 enum MyProjectResponse_Response {
   invalidCommandResponse, 
   hatDetailsResponse, 
+  firmwareDetailsResponse, 
   updateResponse, 
   notSet
 }
@@ -435,6 +650,7 @@ class MyProjectResponse extends $pb.GeneratedMessage {
   factory MyProjectResponse({
     InvalidCommandResponse? invalidCommandResponse,
     HatDetailsResponse? hatDetailsResponse,
+    FirmwareDetailsResponse? firmwareDetailsResponse,
     UpdateResponse? updateResponse,
   }) {
     final $result = create();
@@ -443,6 +659,9 @@ class MyProjectResponse extends $pb.GeneratedMessage {
     }
     if (hatDetailsResponse != null) {
       $result.hatDetailsResponse = hatDetailsResponse;
+    }
+    if (firmwareDetailsResponse != null) {
+      $result.firmwareDetailsResponse = firmwareDetailsResponse;
     }
     if (updateResponse != null) {
       $result.updateResponse = updateResponse;
@@ -456,14 +675,16 @@ class MyProjectResponse extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, MyProjectResponse_Response> _MyProjectResponse_ResponseByTag = {
     1 : MyProjectResponse_Response.invalidCommandResponse,
     2 : MyProjectResponse_Response.hatDetailsResponse,
-    3 : MyProjectResponse_Response.updateResponse,
+    3 : MyProjectResponse_Response.firmwareDetailsResponse,
+    4 : MyProjectResponse_Response.updateResponse,
     0 : MyProjectResponse_Response.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MyProjectResponse', createEmptyInstance: create)
-    ..oo(0, [1, 2, 3])
+    ..oo(0, [1, 2, 3, 4])
     ..aOM<InvalidCommandResponse>(1, _omitFieldNames ? '' : 'invalidCommandResponse', protoName: 'invalidCommandResponse', subBuilder: InvalidCommandResponse.create)
     ..aOM<HatDetailsResponse>(2, _omitFieldNames ? '' : 'hatDetailsResponse', protoName: 'hatDetailsResponse', subBuilder: HatDetailsResponse.create)
-    ..aOM<UpdateResponse>(3, _omitFieldNames ? '' : 'updateResponse', protoName: 'updateResponse', subBuilder: UpdateResponse.create)
+    ..aOM<FirmwareDetailsResponse>(3, _omitFieldNames ? '' : 'firmwareDetailsResponse', protoName: 'firmwareDetailsResponse', subBuilder: FirmwareDetailsResponse.create)
+    ..aOM<UpdateResponse>(4, _omitFieldNames ? '' : 'updateResponse', protoName: 'updateResponse', subBuilder: UpdateResponse.create)
     ..hasRequiredFields = false
   ;
 
@@ -514,15 +735,26 @@ class MyProjectResponse extends $pb.GeneratedMessage {
   HatDetailsResponse ensureHatDetailsResponse() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  UpdateResponse get updateResponse => $_getN(2);
+  FirmwareDetailsResponse get firmwareDetailsResponse => $_getN(2);
   @$pb.TagNumber(3)
-  set updateResponse(UpdateResponse v) { setField(3, v); }
+  set firmwareDetailsResponse(FirmwareDetailsResponse v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasUpdateResponse() => $_has(2);
+  $core.bool hasFirmwareDetailsResponse() => $_has(2);
   @$pb.TagNumber(3)
-  void clearUpdateResponse() => clearField(3);
+  void clearFirmwareDetailsResponse() => clearField(3);
   @$pb.TagNumber(3)
-  UpdateResponse ensureUpdateResponse() => $_ensure(2);
+  FirmwareDetailsResponse ensureFirmwareDetailsResponse() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  UpdateResponse get updateResponse => $_getN(3);
+  @$pb.TagNumber(4)
+  set updateResponse(UpdateResponse v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasUpdateResponse() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearUpdateResponse() => clearField(4);
+  @$pb.TagNumber(4)
+  UpdateResponse ensureUpdateResponse() => $_ensure(3);
 }
 
 

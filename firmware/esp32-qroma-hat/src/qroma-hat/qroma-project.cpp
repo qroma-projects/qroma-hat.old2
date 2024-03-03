@@ -13,17 +13,7 @@ AppCommandProcessor<
 
 QromaSerialCommApp myQromaApp;
 
-extern UpdateConfiguration updateConfiguration;
-
-
 int vref = 1100;
-
-// HatImageData activeImage = {
-//   .imageWidth = EINK_WIDTH,
-//   .imageHeight = EINK_HEIGHT,
-//   .imageData = NULL,
-//   .imageLabel = "IMAGE NOT SET",
-// };
 
 
 void qromaProjectSetup()
