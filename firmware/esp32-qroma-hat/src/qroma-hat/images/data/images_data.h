@@ -3,6 +3,6 @@
 
 #include "../image_types.h"
 
-extern HatDgsrImageDef * dgsr_image_qroma_hat_def;
+extern HatDgsrImageDef dgsr_image_qroma_hat_def;
 
 #endif

@@ -83,10 +83,10 @@ bool showImageFromInternalDgsrData(HatImageEncoding encoding, HatImagePointer * 
   }
 
   Rect_t area = {
-      .x = 0,
-      .y = 0,
-      .width = hatImageData->imageWidth,
-      .height = hatImageData->imageHeight,
+    .x = 0,
+    .y = 0,
+    .width = hatImageData->imageWidth,
+    .height = hatImageData->imageHeight,
   };
 
   epd_poweron();

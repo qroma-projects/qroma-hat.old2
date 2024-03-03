@@ -57,6 +57,9 @@ bool mapDgsrImageToHatData(HatDgsrImageDef * dgsrImageDef, HatImageData * hatIma
   logInfo("mapDgsrImageToHatData");
   
   if (dgsrImageDef->gsBitsPerPixel != 4) {
+    logError("MUST HAVE 4 GS BITS PER PIXEL");
+    logInfoIntWithDescription("VALUE WAS ", dgsrImageDef->gsBitsPerPixel);
+    logInfo(dgsrImageDef->metadata.imageLabel);
     return false;
   }
 
@@ -88,6 +91,8 @@ bool mapDgsrImageToHatData(HatDgsrImageDef * dgsrImageDef, HatImageData * hatIma
     currentDataPtr += pixelRunResult.bytesConsumed;
     nibbleIndex += pixelRunResult.runLength;
   }
+
+  logInfo("DONE mapDgsrImageToHatData");
 
   return true;
 }

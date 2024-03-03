@@ -5,6 +5,20 @@
   Copyright (c) 2021  Albert Boehmler 
 */
 
+// #include "examples/example1.h"
+
+
+// void setup() {
+//   qromaProjectSetupEx1();
+// }
+
+
+// void loop() {
+//   qromaProjectLoopEx1();
+// }
+
+
+
 #include "qroma-hat/qroma-project.h"
 
 
