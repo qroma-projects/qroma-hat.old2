@@ -5,6 +5,7 @@ import { Grid } from "@mui/material"
 import { DgsrFileDownloadToPc } from "./DgsrFileDownloadToPc"
 import { DgsrFileLoadIntoHat } from "./DgsrFileLoadIntoHat"
 import { DgsrFileInfo } from "./DgsrFileInfo"
+import { createFilepathFromLabelText } from "./upload_filename_utils"
 
 
 export interface IDgsrFileManagerProps {
@@ -17,7 +18,7 @@ export const DgsrFileManager = (props: IDgsrFileManagerProps) => {
 
   const imageDataFileBytes = createDgsrImageFileBytes(props.componentState.grayscaleData);
   const fileNameRoot = "blob";
-
+  const uploadFilePath = createFilepathFromLabelText(props.componentState.gsImageLabel);
   
   return (
     <Grid container spacing={2}>
@@ -26,6 +27,8 @@ export const DgsrFileManager = (props: IDgsrFileManagerProps) => {
           isBusy={isBusy}
           imageDataFileBytes={imageDataFileBytes}
           fileNameRoot={fileNameRoot}
+          uploadFilePath={uploadFilePath}
+          imageLabel={props.componentState.gsImageLabel}
           />
       </Grid>
 

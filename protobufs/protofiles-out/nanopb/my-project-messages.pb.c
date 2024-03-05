@@ -15,7 +15,13 @@ PB_BIND(SetUpdateConfiguration, SetUpdateConfiguration, AUTO)
 PB_BIND(HatConfiguration, HatConfiguration, AUTO)
 
 
-PB_BIND(SetHatConfiguration, SetHatConfiguration, AUTO)
+PB_BIND(SetHatRotateImageCommand, SetHatRotateImageCommand, AUTO)
+
+
+PB_BIND(SetHatImageCommand, SetHatImageCommand, AUTO)
+
+
+PB_BIND(GetDgsrImageValidationResultCommand, GetDgsrImageValidationResultCommand, AUTO)
 
 
 PB_BIND(MyProjectCommand, MyProjectCommand, AUTO)
@@ -24,13 +30,19 @@ PB_BIND(MyProjectCommand, MyProjectCommand, AUTO)
 PB_BIND(InvalidCommandResponse, InvalidCommandResponse, AUTO)
 
 
-PB_BIND(HatDetailsResponse, HatDetailsResponse, AUTO)
+PB_BIND(ConfigurationResponse, ConfigurationResponse, AUTO)
 
 
 PB_BIND(FirmwareDetailsResponse, FirmwareDetailsResponse, AUTO)
 
 
 PB_BIND(UpdateResponse, UpdateResponse, AUTO)
+
+
+PB_BIND(SetHatImageResponse, SetHatImageResponse, AUTO)
+
+
+PB_BIND(GetDgsrImageValidationResultResponse, GetDgsrImageValidationResultResponse, AUTO)
 
 
 PB_BIND(MyProjectResponse, MyProjectResponse, AUTO)

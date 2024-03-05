@@ -18,19 +18,27 @@ message SetUpdateConfiguration {
 }
 
 message HatConfiguration {
+  string imagePath = 1;
+  bool rotateImage = 2;
+}
+
+message SetHatRotateImageCommand {
   bool rotateImage = 1;
 }
 
-message SetHatConfiguration {
-  HatConfiguration hatConfiguration = 1;
-  bool saveConfiguration = 2;
+message SetHatImageCommand {
+  string imagePath = 1;
+}
+
+message GetDgsrImageValidationResultCommand {
+  string imagePath = 1;
 }
 
 enum NoArgCommands {
   Nac_NotSet             = 0;
   Nac_ClearScreenToWhite = 1;
   Nac_ClearScreenToBlack = 2;
-  Nac_GetHatDetails      = 3;
+  Nac_GetConfiguration   = 3;
   Nac_GetFirmwareDetails = 4;
   Nac_RestartDevice      = 5;
 }
@@ -38,23 +46,20 @@ enum NoArgCommands {
 message MyProjectCommand {
   oneof command {
     NoArgCommands noArgCommand = 1;
-    string showFileImage = 2;
-    SetUpdateConfiguration setUpdateConfiguration = 3;
-    SetHatConfiguration setHatConfiguration = 4;
+    SetHatImageCommand setHatImage = 2;
+    SetHatRotateImageCommand setHatRotateImage = 3;
+    GetDgsrImageValidationResultCommand getDgsrImageValidationResult = 4;
   }
 }
-
 
 
 message InvalidCommandResponse {
   string message = 1;
 }
 
-message HatDetailsResponse {
+message ConfigurationResponse {
   UpdateConfiguration updateConfiguration = 1;
   HatConfiguration hatConfiguration = 2;
-  string activeImageFile = 3;
-  string activeImageLabel = 4;
 }
 
 message FirmwareDetailsResponse {
@@ -66,11 +71,25 @@ message UpdateResponse {
   uint32 boardUptimeInMs = 1;
 }
 
+message SetHatImageResponse {
+  string imagePath = 1;
+  bool success = 2;
+  string message = 3;
+}
+
+message GetDgsrImageValidationResultResponse {
+  string imagePath = 1;
+  bool isValid = 2;
+  string message = 3;
+}
+
 message MyProjectResponse {
   oneof response {
     InvalidCommandResponse invalidCommandResponse = 1;
-    HatDetailsResponse hatDetailsResponse = 2;
-    FirmwareDetailsResponse firmwareDetailsResponse = 3;
-    UpdateResponse updateResponse = 4;
+    FirmwareDetailsResponse firmwareDetailsResponse = 2;
+    UpdateResponse updateResponse = 3;
+    ConfigurationResponse configurationResponse = 4;
+    SetHatImageResponse setHatImageResponse = 5;
+    GetDgsrImageValidationResultResponse getDgsrImageValidationResultResponse = 6;
   }
 }

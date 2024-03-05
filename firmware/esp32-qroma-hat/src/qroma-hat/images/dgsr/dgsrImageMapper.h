@@ -14,7 +14,8 @@ typedef struct _PixelRunResult {
 
 bool getPixelRunResult(const uint8_t * dgsrData, PixelRunResult * prr);
 
-bool mapDgsrImageToHatData(HatDgsrImageDef * dgsrImageDef, HatImageData * hatImageDef);
+bool mapDgsrImageToHatData(HatDgsrImageDef * dgsrImageDef, HatImageData * hatImageData);
 
+bool mapLoadedDgsrImageToHatData(LoadedDgsrImage * dgsrImage, const char * filePath, HatImageData * hatImageData);
 
 #endif

@@ -1,5 +1,6 @@
 #include "qroma-project.h"
 #include "qroma-commands.h"
+#include "qroma-config.h"
 #include "qroma/qroma.h"
 #include "images/image_types.h"
 #include "eink/eink-screen.h"
@@ -32,9 +33,9 @@ void qromaProjectSetup()
 
   myQromaApp.startupQroma();
 
-  updateConfiguration.updateIntervalInMs = 10000;
-  // updateConfiguration.updateType = UpdateType_UpdateType_Interval;
-  updateConfiguration.updateType = UpdateType_UpdateType_None;
+  // updateConfiguration.updateIntervalInMs = 10000;
+  // // updateConfiguration.updateType = UpdateType_UpdateType_Interval;
+  // updateConfiguration.updateType = UpdateType_UpdateType_None;
 
   // Correct the ADC reference voltage
   esp_adc_cal_characteristics_t adc_chars;
@@ -75,12 +76,14 @@ void qromaProjectSetup()
   uint8_t * activeImageBuffer = initActiveImageBuffer();
   _activeImage.imageData = activeImageBuffer;
 
-  if (!doesFileExist(QROMA_PROJECT_CONFIG_FILENAME)) {
-    bool saved = savePbToPersistence(&updateConfiguration, QROMA_PROJECT_CONFIG_FILENAME, UpdateConfiguration_fields);
-    if (!saved) {
-      logError("ERROR SAVING INITIAL UPDATE CONFIG");
-    }
-  }
+  saveDefaultConfig();
+
+  // if (!doesFileExist(QROMA_PROJECT_CONFIG_FILENAME)) {
+  //   bool saved = savePbToPersistence(&updateConfiguration, QROMA_PROJECT_CONFIG_FILENAME, UpdateConfiguration_fields);
+  //   if (!saved) {
+  //     logError("ERROR SAVING INITIAL UPDATE CONFIG");
+  //   }
+  // }
 
   HatImagePointer hatImagePointer = {
     .dgsrImage = &dgsr_image_qroma_hat_def,
@@ -105,7 +108,6 @@ void qromaProjectSetup()
 void sendUptimeUpdateResponse() {
   MyProjectResponse myProjectResponse = MyProjectResponse_init_zero;
   myProjectResponse.which_response = MyProjectResponse_updateResponse_tag;
-  // myProjectResponse.response.updateResponse.which_update = UpdateResponse_uptimeUpdateResponse_tag;
   myProjectResponse.response.updateResponse.boardUptimeInMs = millis();
 
   myQromaApp.sendQromaAppResponse<MyProjectResponse, MyProjectResponse_fields>(&myProjectResponse);

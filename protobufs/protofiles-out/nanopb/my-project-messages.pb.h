@@ -20,7 +20,7 @@ typedef enum _NoArgCommands {
     NoArgCommands_Nac_NotSet = 0,
     NoArgCommands_Nac_ClearScreenToWhite = 1,
     NoArgCommands_Nac_ClearScreenToBlack = 2,
-    NoArgCommands_Nac_GetHatDetails = 3,
+    NoArgCommands_Nac_GetConfiguration = 3,
     NoArgCommands_Nac_GetFirmwareDetails = 4,
     NoArgCommands_Nac_RestartDevice = 5
 } NoArgCommands;
@@ -38,22 +38,29 @@ typedef struct _SetUpdateConfiguration {
 } SetUpdateConfiguration;
 
 typedef struct _HatConfiguration {
+    char imagePath[40];
     bool rotateImage;
 } HatConfiguration;
 
-typedef struct _SetHatConfiguration {
-    bool has_hatConfiguration;
-    HatConfiguration hatConfiguration;
-    bool saveConfiguration;
-} SetHatConfiguration;
+typedef struct _SetHatRotateImageCommand {
+    bool rotateImage;
+} SetHatRotateImageCommand;
+
+typedef struct _SetHatImageCommand {
+    char imagePath[40];
+} SetHatImageCommand;
+
+typedef struct _GetDgsrImageValidationResultCommand {
+    char imagePath[40];
+} GetDgsrImageValidationResultCommand;
 
 typedef struct _MyProjectCommand {
     pb_size_t which_command;
     union {
         NoArgCommands noArgCommand;
-        char showFileImage[40];
-        SetUpdateConfiguration setUpdateConfiguration;
-        SetHatConfiguration setHatConfiguration;
+        SetHatImageCommand setHatImage;
+        SetHatRotateImageCommand setHatRotateImage;
+        GetDgsrImageValidationResultCommand getDgsrImageValidationResult;
     } command;
 } MyProjectCommand;
 
@@ -61,14 +68,12 @@ typedef struct _InvalidCommandResponse {
     char message[50];
 } InvalidCommandResponse;
 
-typedef struct _HatDetailsResponse {
+typedef struct _ConfigurationResponse {
     bool has_updateConfiguration;
     UpdateConfiguration updateConfiguration;
     bool has_hatConfiguration;
     HatConfiguration hatConfiguration;
-    char activeImageFile[40];
-    char activeImageLabel[40];
-} HatDetailsResponse;
+} ConfigurationResponse;
 
 typedef struct _FirmwareDetailsResponse {
     char version[30];
@@ -79,13 +84,27 @@ typedef struct _UpdateResponse {
     uint32_t boardUptimeInMs;
 } UpdateResponse;
 
+typedef struct _SetHatImageResponse {
+    char imagePath[40];
+    bool success;
+    char message[100];
+} SetHatImageResponse;
+
+typedef struct _GetDgsrImageValidationResultResponse {
+    char imagePath[40];
+    bool isValid;
+    char message[100];
+} GetDgsrImageValidationResultResponse;
+
 typedef struct _MyProjectResponse {
     pb_size_t which_response;
     union {
         InvalidCommandResponse invalidCommandResponse;
-        HatDetailsResponse hatDetailsResponse;
         FirmwareDetailsResponse firmwareDetailsResponse;
         UpdateResponse updateResponse;
+        ConfigurationResponse configurationResponse;
+        SetHatImageResponse setHatImageResponse;
+        GetDgsrImageValidationResultResponse getDgsrImageValidationResultResponse;
     } response;
 } MyProjectResponse;
 
@@ -108,7 +127,11 @@ extern "C" {
 
 
 
+
+
 #define MyProjectCommand_command_noArgCommand_ENUMTYPE NoArgCommands
+
+
 
 
 
@@ -119,23 +142,31 @@ extern "C" {
 /* Initializer values for message structs */
 #define UpdateConfiguration_init_default         {_UpdateType_MIN, 0}
 #define SetUpdateConfiguration_init_default      {false, UpdateConfiguration_init_default, 0}
-#define HatConfiguration_init_default            {0}
-#define SetHatConfiguration_init_default         {false, HatConfiguration_init_default, 0}
+#define HatConfiguration_init_default            {"", 0}
+#define SetHatRotateImageCommand_init_default    {0}
+#define SetHatImageCommand_init_default          {""}
+#define GetDgsrImageValidationResultCommand_init_default {""}
 #define MyProjectCommand_init_default            {0, {_NoArgCommands_MIN}}
 #define InvalidCommandResponse_init_default      {""}
-#define HatDetailsResponse_init_default          {false, UpdateConfiguration_init_default, false, HatConfiguration_init_default, "", ""}
+#define ConfigurationResponse_init_default       {false, UpdateConfiguration_init_default, false, HatConfiguration_init_default}
 #define FirmwareDetailsResponse_init_default     {"", ""}
 #define UpdateResponse_init_default              {0}
+#define SetHatImageResponse_init_default         {"", 0, ""}
+#define GetDgsrImageValidationResultResponse_init_default {"", 0, ""}
 #define MyProjectResponse_init_default           {0, {InvalidCommandResponse_init_default}}
 #define UpdateConfiguration_init_zero            {_UpdateType_MIN, 0}
 #define SetUpdateConfiguration_init_zero         {false, UpdateConfiguration_init_zero, 0}
-#define HatConfiguration_init_zero               {0}
-#define SetHatConfiguration_init_zero            {false, HatConfiguration_init_zero, 0}
+#define HatConfiguration_init_zero               {"", 0}
+#define SetHatRotateImageCommand_init_zero       {0}
+#define SetHatImageCommand_init_zero             {""}
+#define GetDgsrImageValidationResultCommand_init_zero {""}
 #define MyProjectCommand_init_zero               {0, {_NoArgCommands_MIN}}
 #define InvalidCommandResponse_init_zero         {""}
-#define HatDetailsResponse_init_zero             {false, UpdateConfiguration_init_zero, false, HatConfiguration_init_zero, "", ""}
+#define ConfigurationResponse_init_zero          {false, UpdateConfiguration_init_zero, false, HatConfiguration_init_zero}
 #define FirmwareDetailsResponse_init_zero        {"", ""}
 #define UpdateResponse_init_zero                 {0}
+#define SetHatImageResponse_init_zero            {"", 0, ""}
+#define GetDgsrImageValidationResultResponse_init_zero {"", 0, ""}
 #define MyProjectResponse_init_zero              {0, {InvalidCommandResponse_init_zero}}
 
 /* Field tags (for use in manual encoding/decoding) */
@@ -143,25 +174,33 @@ extern "C" {
 #define UpdateConfiguration_updateIntervalInMs_tag 2
 #define SetUpdateConfiguration_updateConfiguration_tag 1
 #define SetUpdateConfiguration_saveConfiguration_tag 2
-#define HatConfiguration_rotateImage_tag         1
-#define SetHatConfiguration_hatConfiguration_tag 1
-#define SetHatConfiguration_saveConfiguration_tag 2
+#define HatConfiguration_imagePath_tag           1
+#define HatConfiguration_rotateImage_tag         2
+#define SetHatRotateImageCommand_rotateImage_tag 1
+#define SetHatImageCommand_imagePath_tag         1
+#define GetDgsrImageValidationResultCommand_imagePath_tag 1
 #define MyProjectCommand_noArgCommand_tag        1
-#define MyProjectCommand_showFileImage_tag       2
-#define MyProjectCommand_setUpdateConfiguration_tag 3
-#define MyProjectCommand_setHatConfiguration_tag 4
+#define MyProjectCommand_setHatImage_tag         2
+#define MyProjectCommand_setHatRotateImage_tag   3
+#define MyProjectCommand_getDgsrImageValidationResult_tag 4
 #define InvalidCommandResponse_message_tag       1
-#define HatDetailsResponse_updateConfiguration_tag 1
-#define HatDetailsResponse_hatConfiguration_tag  2
-#define HatDetailsResponse_activeImageFile_tag   3
-#define HatDetailsResponse_activeImageLabel_tag  4
+#define ConfigurationResponse_updateConfiguration_tag 1
+#define ConfigurationResponse_hatConfiguration_tag 2
 #define FirmwareDetailsResponse_version_tag      1
 #define FirmwareDetailsResponse_buildTime_tag    2
 #define UpdateResponse_boardUptimeInMs_tag       1
+#define SetHatImageResponse_imagePath_tag        1
+#define SetHatImageResponse_success_tag          2
+#define SetHatImageResponse_message_tag          3
+#define GetDgsrImageValidationResultResponse_imagePath_tag 1
+#define GetDgsrImageValidationResultResponse_isValid_tag 2
+#define GetDgsrImageValidationResultResponse_message_tag 3
 #define MyProjectResponse_invalidCommandResponse_tag 1
-#define MyProjectResponse_hatDetailsResponse_tag 2
-#define MyProjectResponse_firmwareDetailsResponse_tag 3
-#define MyProjectResponse_updateResponse_tag     4
+#define MyProjectResponse_firmwareDetailsResponse_tag 2
+#define MyProjectResponse_updateResponse_tag     3
+#define MyProjectResponse_configurationResponse_tag 4
+#define MyProjectResponse_setHatImageResponse_tag 5
+#define MyProjectResponse_getDgsrImageValidationResultResponse_tag 6
 
 /* Struct field encoding specification for nanopb */
 #define UpdateConfiguration_FIELDLIST(X, a) \
@@ -178,41 +217,49 @@ X(a, STATIC,   SINGULAR, BOOL,     saveConfiguration,   2)
 #define SetUpdateConfiguration_updateConfiguration_MSGTYPE UpdateConfiguration
 
 #define HatConfiguration_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, BOOL,     rotateImage,       1)
+X(a, STATIC,   SINGULAR, STRING,   imagePath,         1) \
+X(a, STATIC,   SINGULAR, BOOL,     rotateImage,       2)
 #define HatConfiguration_CALLBACK NULL
 #define HatConfiguration_DEFAULT NULL
 
-#define SetHatConfiguration_FIELDLIST(X, a) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  hatConfiguration,   1) \
-X(a, STATIC,   SINGULAR, BOOL,     saveConfiguration,   2)
-#define SetHatConfiguration_CALLBACK NULL
-#define SetHatConfiguration_DEFAULT NULL
-#define SetHatConfiguration_hatConfiguration_MSGTYPE HatConfiguration
+#define SetHatRotateImageCommand_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, BOOL,     rotateImage,       1)
+#define SetHatRotateImageCommand_CALLBACK NULL
+#define SetHatRotateImageCommand_DEFAULT NULL
+
+#define SetHatImageCommand_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, STRING,   imagePath,         1)
+#define SetHatImageCommand_CALLBACK NULL
+#define SetHatImageCommand_DEFAULT NULL
+
+#define GetDgsrImageValidationResultCommand_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, STRING,   imagePath,         1)
+#define GetDgsrImageValidationResultCommand_CALLBACK NULL
+#define GetDgsrImageValidationResultCommand_DEFAULT NULL
 
 #define MyProjectCommand_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    UENUM,    (command,noArgCommand,command.noArgCommand),   1) \
-X(a, STATIC,   ONEOF,    STRING,   (command,showFileImage,command.showFileImage),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (command,setUpdateConfiguration,command.setUpdateConfiguration),   3) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (command,setHatConfiguration,command.setHatConfiguration),   4)
+X(a, STATIC,   ONEOF,    MESSAGE,  (command,setHatImage,command.setHatImage),   2) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (command,setHatRotateImage,command.setHatRotateImage),   3) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (command,getDgsrImageValidationResult,command.getDgsrImageValidationResult),   4)
 #define MyProjectCommand_CALLBACK NULL
 #define MyProjectCommand_DEFAULT NULL
-#define MyProjectCommand_command_setUpdateConfiguration_MSGTYPE SetUpdateConfiguration
-#define MyProjectCommand_command_setHatConfiguration_MSGTYPE SetHatConfiguration
+#define MyProjectCommand_command_setHatImage_MSGTYPE SetHatImageCommand
+#define MyProjectCommand_command_setHatRotateImage_MSGTYPE SetHatRotateImageCommand
+#define MyProjectCommand_command_getDgsrImageValidationResult_MSGTYPE GetDgsrImageValidationResultCommand
 
 #define InvalidCommandResponse_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, STRING,   message,           1)
 #define InvalidCommandResponse_CALLBACK NULL
 #define InvalidCommandResponse_DEFAULT NULL
 
-#define HatDetailsResponse_FIELDLIST(X, a) \
+#define ConfigurationResponse_FIELDLIST(X, a) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  updateConfiguration,   1) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  hatConfiguration,   2) \
-X(a, STATIC,   SINGULAR, STRING,   activeImageFile,   3) \
-X(a, STATIC,   SINGULAR, STRING,   activeImageLabel,   4)
-#define HatDetailsResponse_CALLBACK NULL
-#define HatDetailsResponse_DEFAULT NULL
-#define HatDetailsResponse_updateConfiguration_MSGTYPE UpdateConfiguration
-#define HatDetailsResponse_hatConfiguration_MSGTYPE HatConfiguration
+X(a, STATIC,   OPTIONAL, MESSAGE,  hatConfiguration,   2)
+#define ConfigurationResponse_CALLBACK NULL
+#define ConfigurationResponse_DEFAULT NULL
+#define ConfigurationResponse_updateConfiguration_MSGTYPE UpdateConfiguration
+#define ConfigurationResponse_hatConfiguration_MSGTYPE HatConfiguration
 
 #define FirmwareDetailsResponse_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, STRING,   version,           1) \
@@ -225,50 +272,80 @@ X(a, STATIC,   SINGULAR, UINT32,   boardUptimeInMs,   1)
 #define UpdateResponse_CALLBACK NULL
 #define UpdateResponse_DEFAULT NULL
 
+#define SetHatImageResponse_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, STRING,   imagePath,         1) \
+X(a, STATIC,   SINGULAR, BOOL,     success,           2) \
+X(a, STATIC,   SINGULAR, STRING,   message,           3)
+#define SetHatImageResponse_CALLBACK NULL
+#define SetHatImageResponse_DEFAULT NULL
+
+#define GetDgsrImageValidationResultResponse_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, STRING,   imagePath,         1) \
+X(a, STATIC,   SINGULAR, BOOL,     isValid,           2) \
+X(a, STATIC,   SINGULAR, STRING,   message,           3)
+#define GetDgsrImageValidationResultResponse_CALLBACK NULL
+#define GetDgsrImageValidationResultResponse_DEFAULT NULL
+
 #define MyProjectResponse_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (response,invalidCommandResponse,response.invalidCommandResponse),   1) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (response,hatDetailsResponse,response.hatDetailsResponse),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (response,firmwareDetailsResponse,response.firmwareDetailsResponse),   3) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (response,updateResponse,response.updateResponse),   4)
+X(a, STATIC,   ONEOF,    MESSAGE,  (response,firmwareDetailsResponse,response.firmwareDetailsResponse),   2) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (response,updateResponse,response.updateResponse),   3) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (response,configurationResponse,response.configurationResponse),   4) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (response,setHatImageResponse,response.setHatImageResponse),   5) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (response,getDgsrImageValidationResultResponse,response.getDgsrImageValidationResultResponse),   6)
 #define MyProjectResponse_CALLBACK NULL
 #define MyProjectResponse_DEFAULT NULL
 #define MyProjectResponse_response_invalidCommandResponse_MSGTYPE InvalidCommandResponse
-#define MyProjectResponse_response_hatDetailsResponse_MSGTYPE HatDetailsResponse
 #define MyProjectResponse_response_firmwareDetailsResponse_MSGTYPE FirmwareDetailsResponse
 #define MyProjectResponse_response_updateResponse_MSGTYPE UpdateResponse
+#define MyProjectResponse_response_configurationResponse_MSGTYPE ConfigurationResponse
+#define MyProjectResponse_response_setHatImageResponse_MSGTYPE SetHatImageResponse
+#define MyProjectResponse_response_getDgsrImageValidationResultResponse_MSGTYPE GetDgsrImageValidationResultResponse
 
 extern const pb_msgdesc_t UpdateConfiguration_msg;
 extern const pb_msgdesc_t SetUpdateConfiguration_msg;
 extern const pb_msgdesc_t HatConfiguration_msg;
-extern const pb_msgdesc_t SetHatConfiguration_msg;
+extern const pb_msgdesc_t SetHatRotateImageCommand_msg;
+extern const pb_msgdesc_t SetHatImageCommand_msg;
+extern const pb_msgdesc_t GetDgsrImageValidationResultCommand_msg;
 extern const pb_msgdesc_t MyProjectCommand_msg;
 extern const pb_msgdesc_t InvalidCommandResponse_msg;
-extern const pb_msgdesc_t HatDetailsResponse_msg;
+extern const pb_msgdesc_t ConfigurationResponse_msg;
 extern const pb_msgdesc_t FirmwareDetailsResponse_msg;
 extern const pb_msgdesc_t UpdateResponse_msg;
+extern const pb_msgdesc_t SetHatImageResponse_msg;
+extern const pb_msgdesc_t GetDgsrImageValidationResultResponse_msg;
 extern const pb_msgdesc_t MyProjectResponse_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define UpdateConfiguration_fields &UpdateConfiguration_msg
 #define SetUpdateConfiguration_fields &SetUpdateConfiguration_msg
 #define HatConfiguration_fields &HatConfiguration_msg
-#define SetHatConfiguration_fields &SetHatConfiguration_msg
+#define SetHatRotateImageCommand_fields &SetHatRotateImageCommand_msg
+#define SetHatImageCommand_fields &SetHatImageCommand_msg
+#define GetDgsrImageValidationResultCommand_fields &GetDgsrImageValidationResultCommand_msg
 #define MyProjectCommand_fields &MyProjectCommand_msg
 #define InvalidCommandResponse_fields &InvalidCommandResponse_msg
-#define HatDetailsResponse_fields &HatDetailsResponse_msg
+#define ConfigurationResponse_fields &ConfigurationResponse_msg
 #define FirmwareDetailsResponse_fields &FirmwareDetailsResponse_msg
 #define UpdateResponse_fields &UpdateResponse_msg
+#define SetHatImageResponse_fields &SetHatImageResponse_msg
+#define GetDgsrImageValidationResultResponse_fields &GetDgsrImageValidationResultResponse_msg
 #define MyProjectResponse_fields &MyProjectResponse_msg
 
 /* Maximum encoded size of messages (where known) */
+#define ConfigurationResponse_size               55
 #define FirmwareDetailsResponse_size             62
-#define HatConfiguration_size                    2
-#define HatDetailsResponse_size                  96
+#define GetDgsrImageValidationResultCommand_size 41
+#define GetDgsrImageValidationResultResponse_size 144
+#define HatConfiguration_size                    43
 #define InvalidCommandResponse_size              51
 #define MY_PROJECT_MESSAGES_PB_H_MAX_SIZE        MyProjectResponse_size
-#define MyProjectCommand_size                    41
-#define MyProjectResponse_size                   98
-#define SetHatConfiguration_size                 6
+#define MyProjectCommand_size                    43
+#define MyProjectResponse_size                   147
+#define SetHatImageCommand_size                  41
+#define SetHatImageResponse_size                 144
+#define SetHatRotateImageCommand_size            2
 #define SetUpdateConfiguration_size              12
 #define UpdateConfiguration_size                 8
 #define UpdateResponse_size                      6

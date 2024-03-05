@@ -17,8 +17,9 @@ typedef struct _HatImageData {
   uint32_t imageWidth;
   uint32_t imageHeight;
   uint8_t * imageData;
-  const char * imageFile;
-  const char * imageLabel;
+  char imageLabel[100];
+  // const char * imageFile;
+  // const char * imageLabel;
 } HatImageData;
 
 
@@ -39,6 +40,16 @@ typedef struct _HatDgsrImageDef {
 
   const uint8_t * dgrsData;
 } HatDgsrImageDef;
+
+
+typedef struct _LoadedDgsrImage {
+  uint32_t imageWidth;      // image width in pixels (BE)
+  uint32_t imageHeight;     // image height in pixels (BE)
+
+  uint32_t dgsrDataByteCount;
+  uint8_t dgsrData[100000]; // 100k should be enough for now
+
+} LoadedDgsrImage;
 
 
 enum HatImageEncoding {

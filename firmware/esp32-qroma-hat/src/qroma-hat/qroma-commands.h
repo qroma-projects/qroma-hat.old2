@@ -5,10 +5,12 @@
 
 void onMyProjectCommand(MyProjectCommand * message, MyProjectResponse * response);
 
-void populateGetHatDetailsResponse(HatDetailsResponse * response);
 void populateGetFirmwareDetailsResponse(FirmwareDetailsResponse * response);
+void populateConfigurationResponse(ConfigurationResponse * response);
+void populateGetDgsrImageValidationResultResponse(GetDgsrImageValidationResultResponse * response);
 
-extern UpdateConfiguration updateConfiguration;
-extern HatConfiguration hatConfiguration;
+void handleSetHatImageCommand(SetHatImageCommand * message, MyProjectResponse * response);
+void handleSetHatRotateImageCommand(SetHatRotateImageCommand * message, MyProjectResponse * response);
+void handleGetDgsrImageValidationResultCommand(GetDgsrImageValidationResultCommand * message, MyProjectResponse * response);
 
 #endif

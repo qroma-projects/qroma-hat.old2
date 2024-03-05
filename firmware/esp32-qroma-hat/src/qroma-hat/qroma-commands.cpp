@@ -1,16 +1,15 @@
 #include <Esp.h>
 #include <fs.h>
 #include "qroma-commands.h"
+#include "qroma-config.h"
 #include "qroma/qroma.h"
 #include "qroma-project.h"
 #include "eink/eink-screen.h"
 #include "lib_ver.h"
+#include "images/dgsr/dgsrImageValidator.h"
 
 
-UpdateConfiguration updateConfiguration = UpdateConfiguration_init_zero; 
-HatConfiguration hatConfiguration = {
-  .rotateImage = true,
-};
+HatImageData workingHatImageData; // this should be OK to share since only one command should be processed at a time
 
 
 void handleNoArgCommand(NoArgCommands noArgCommand, MyProjectResponse * response) {
@@ -27,9 +26,9 @@ void handleNoArgCommand(NoArgCommands noArgCommand, MyProjectResponse * response
       clearScreenToBlack();
       break;
 
-    case NoArgCommands_Nac_GetHatDetails:
-      response->which_response = MyProjectResponse_hatDetailsResponse_tag;
-      populateGetHatDetailsResponse(&(response->response.hatDetailsResponse));
+    case NoArgCommands_Nac_GetConfiguration:
+      response->which_response = MyProjectResponse_configurationResponse_tag;
+      populateConfigurationResponse(&(response->response.configurationResponse));
       break;
 
     case NoArgCommands_Nac_GetFirmwareDetails:
@@ -61,6 +60,18 @@ void onMyProjectCommand(MyProjectCommand * message, MyProjectResponse * response
       handleNoArgCommand(message->command.noArgCommand, response);
       break;
 
+    case MyProjectCommand_setHatImage_tag:
+      handleSetHatImageCommand(&(message->command.setHatImage), response);
+      break;
+
+    case MyProjectCommand_setHatRotateImage_tag:
+      handleSetHatRotateImageCommand(&(message->command.setHatRotateImage), response);
+      break;
+
+    case MyProjectCommand_getDgsrImageValidationResult_tag:
+      handleSetHatRotateImageCommand(&(message->command.setHatRotateImage), response);
+      break;
+
     default:
       logError("Unrecognized MyProjectCommand command");
       logError(message->which_command);
@@ -75,16 +86,14 @@ void onMyProjectCommand(MyProjectCommand * message, MyProjectResponse * response
 }
 
 
-void populateGetHatDetailsResponse(HatDetailsResponse * response) {
+void populateConfigurationResponse(ConfigurationResponse * response) {
   response->has_updateConfiguration = true;
   response->updateConfiguration.updateIntervalInMs = updateConfiguration.updateIntervalInMs;
   response->updateConfiguration.updateType = updateConfiguration.updateType;
 
   response->has_hatConfiguration = true;
   response->hatConfiguration.rotateImage = hatConfiguration.rotateImage;
-
-  strncpy(response->activeImageFile, LIB_VER, sizeof(response->activeImageFile));
-  strncpy(response->activeImageLabel, __DATE__ " " __TIME__, sizeof(response->activeImageLabel));
+  strncpy(response->hatConfiguration.imagePath, hatConfiguration.imagePath, sizeof(response->hatConfiguration.imagePath));
 }
 
 
@@ -92,3 +101,75 @@ void populateGetFirmwareDetailsResponse(FirmwareDetailsResponse * response) {
   strncpy(response->version, LIB_VER, sizeof(response->version));
   strncpy(response->buildTime, __DATE__ " " __TIME__, sizeof(response->buildTime));
 }
+
+
+void populateGetDgsrImageValidationResultResponse(GetDgsrImageValidationResultResponse * response) {
+
+  if (!isValidDgsrFile(message->imagePath, &workingHatImageData)) {
+    response->response.setHatImageResponse.success = false;
+    strncpy(response->response.setHatImageResponse.message, "Invalid hat image file: ", 
+      sizeof(response->response.setHatImageResponse.message));
+    strncat(response->response.setHatImageResponse.message, message->imagePath, 
+      sizeof(response->response.setHatImageResponse.message));
+    return;
+  }
+  
+  // response->has_updateConfiguration = true;
+  // response->updateConfiguration.updateIntervalInMs = updateConfiguration.updateIntervalInMs;
+  // response->updateConfiguration.updateType = updateConfiguration.updateType;
+
+  // response->has_hatConfiguration = true;
+  // response->hatConfiguration.rotateImage = hatConfiguration.rotateImage;
+  // strncpy(response->hatConfiguration.imagePath, hatConfiguration.imagePath, sizeof(response->hatConfiguration.imagePath));
+}
+
+
+void handleSetHatImageCommand(SetHatImageCommand * message, MyProjectResponse * response) {
+
+  response->which_response = MyProjectResponse_setHatImageResponse_tag;
+
+  // validate image is a valid DGSR file we can show
+  if (!isValidDgsrFile(message->imagePath, &workingHatImageData)) {
+    response->response.setHatImageResponse.success = false;
+    strncpy(response->response.setHatImageResponse.message, "Invalid hat image file: ", 
+      sizeof(response->response.setHatImageResponse.message));
+    strncat(response->response.setHatImageResponse.message, message->imagePath, 
+      sizeof(response->response.setHatImageResponse.message));
+    return;
+  }
+
+  strncpy(hatConfiguration.imagePath, message->imagePath, 
+    sizeof(response->response.setHatImageResponse.imagePath));
+  bool saveSuccess = saveHatConfig(&hatConfiguration);
+
+  if (!saveSuccess) {
+    response->response.setHatImageResponse.success = false;
+    strncpy(response->response.setHatImageResponse.message, "Error saving hat config with image file: ", 
+      sizeof(response->response.setHatImageResponse.message));
+    strncat(response->response.setHatImageResponse.message, message->imagePath, 
+      sizeof(response->response.setHatImageResponse.message));
+    return;
+  }
+
+  response->response.setHatImageResponse.success = true;
+  strncpy(response->response.setHatImageResponse.message, "Setting as hat image: ", 
+    sizeof(response->response.setHatImageResponse.message));
+  strncat(response->response.setHatImageResponse.message, message->imagePath, 
+    sizeof(response->response.setHatImageResponse.message));
+}
+
+
+void handleSetHatRotateImageCommand(SetHatRotateImageCommand * message, MyProjectResponse * response) {
+  hatConfiguration.rotateImage = message->rotateImage;
+  saveHatConfig(&hatConfiguration);
+
+  response->which_response = MyProjectResponse_configurationResponse_tag;
+  populateConfigurationResponse(&(response->response.configurationResponse));
+}
+
+
+void handleGetDgsrImageValidationResultCommand(GetDgsrImageValidationResultCommand * message, MyProjectResponse * response) {
+  response->which_response = MyProjectResponse_getDgsrImageValidationResultResponse_tag;
+  populateGetDgsrImageValidationResultResponse(&(response->response.getDgsrImageValidationResultResponse));
+}
+

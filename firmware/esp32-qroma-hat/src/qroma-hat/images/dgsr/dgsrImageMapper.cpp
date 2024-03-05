@@ -1,4 +1,3 @@
-
 #include <qroma/qroma.h>
 #include "dgsrImageMapper.h"
 #include "dgsrImageOps.h"
@@ -6,21 +5,14 @@
 
 
 void setHighNibbleValue(uint8_t * imageData, uint32_t byteIndex, uint8_t gsValue) {
-  // logInfo("setHighNibbleValue");
-  // logInfoInt((int)imageData);
-
   uint8_t byteToSet = imageData[byteIndex];
-  // logInfoInt(byteToSet);
   byteToSet &= 0b00001111;
   byteToSet |= (gsValue << 4);
-  // logInfoInt(byteToSet);
   imageData[byteIndex] = byteToSet;
-  // logInfo("Done - setHighNibbleValue");
 }
 
 
 void setLowNibbleValue(uint8_t * imageData, uint32_t byteIndex, uint8_t gsValue) {
-  // logInfo("setLowNibbleValue");
   uint8_t byteToSet = imageData[byteIndex];
   byteToSet &= 0b11110000;
   byteToSet |= gsValue;
@@ -39,10 +31,6 @@ void setNibbleValue(uint8_t * imageData, uint32_t nibbleIndex, uint8_t gsValue) 
 
 
 void setImageNibbleValues(uint8_t * imageData, uint32_t nibbleStartIndex, uint8_t gsValue, uint32_t runLength) {
-  // logInfo("setImageNibbleValues");
-  // logInfoInt(nibbleStartIndex);
-  // logInfoInt(gsValue);
-  // logInfoInt(runLength);
 
   uint32_t nibbleStart = nibbleStartIndex;
   uint32_t nibbleEnd = nibbleStartIndex + runLength;
@@ -65,7 +53,8 @@ bool mapDgsrImageToHatData(HatDgsrImageDef * dgsrImageDef, HatImageData * hatIma
 
   hatImageData->imageHeight = dgsrImageDef->imageHeight;
   hatImageData->imageWidth = dgsrImageDef->imageWidth;
-  hatImageData->imageLabel = dgsrImageDef->metadata.imageLabel;
+  // hatImageData->imageLabel = dgsrImageDef->metadata.imageLabel;
+  strncpy(hatImageData->imageLabel, dgsrImageDef->metadata.imageLabel, sizeof(hatImageData->imageLabel));
 
   logInfo("MAPPING DGSR IMAGE");
   logInfo(hatImageData->imageLabel);
@@ -90,6 +79,56 @@ bool mapDgsrImageToHatData(HatDgsrImageDef * dgsrImageDef, HatImageData * hatIma
     dgsrDataByteIndex += pixelRunResult.bytesConsumed;
     currentDataPtr += pixelRunResult.bytesConsumed;
     nibbleIndex += pixelRunResult.runLength;
+  }
+
+  logInfo("DONE mapDgsrImageToHatData");
+
+  return true;
+}
+
+
+bool mapLoadedDgsrImageToHatData(LoadedDgsrImage * dgsrImage, const char * filePath, HatImageData * hatImageData) {
+  logInfo("mapLoadedDgsrImageToHatData");
+  
+  hatImageData->imageHeight = dgsrImage->imageHeight;
+  hatImageData->imageWidth = dgsrImage->imageWidth;
+  strncpy(hatImageData->imageLabel, filePath, sizeof(hatImageData->imageLabel));
+
+  logInfo("MAPPING DGSR IMAGE");
+  logInfo(hatImageData->imageLabel);
+
+  uint32_t nibbleIndex = 0;
+  uint32_t nibbleArea = dgsrImage->imageHeight * dgsrImage->imageWidth;
+
+  uint32_t dgsrDataByteIndex = 0;
+  const uint8_t * currentDataPtr = dgsrImage->dgsrData;
+
+  PixelRunResult pixelRunResult;
+  uint8_t maxPixelGs = 0;
+
+  while (dgsrDataByteIndex < dgsrImage->dgsrDataByteCount) {
+    bool success = getPixelRunResult(currentDataPtr, &pixelRunResult);
+    if (!success) {
+      logError("PIXEL RUN RESULT ERROR");
+      return false;
+    }
+
+    if (pixelRunResult.pixelGs > maxPixelGs) {
+      maxPixelGs = pixelRunResult.pixelGs;
+    }
+
+    setImageNibbleValues(hatImageData->imageData, nibbleIndex, pixelRunResult.pixelGs, pixelRunResult.runLength);
+
+    dgsrDataByteIndex += pixelRunResult.bytesConsumed;
+    currentDataPtr += pixelRunResult.bytesConsumed;
+    nibbleIndex += pixelRunResult.runLength;
+  }
+  
+  if (maxPixelGs > 15) {
+    logError("MAX OF 4 GS BITS PER PIXEL REQUIRED");
+    logInfoIntWithDescription("MAX COUND VALUE WAS ", maxPixelGs);
+    logInfo(filePath);
+    return false;
   }
 
   logInfo("DONE mapDgsrImageToHatData");

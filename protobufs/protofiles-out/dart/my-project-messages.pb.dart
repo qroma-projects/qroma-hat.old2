@@ -149,9 +149,13 @@ class SetUpdateConfiguration extends $pb.GeneratedMessage {
 
 class HatConfiguration extends $pb.GeneratedMessage {
   factory HatConfiguration({
+    $core.String? imagePath,
     $core.bool? rotateImage,
   }) {
     final $result = create();
+    if (imagePath != null) {
+      $result.imagePath = imagePath;
+    }
     if (rotateImage != null) {
       $result.rotateImage = rotateImage;
     }
@@ -162,7 +166,8 @@ class HatConfiguration extends $pb.GeneratedMessage {
   factory HatConfiguration.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HatConfiguration', createEmptyInstance: create)
-    ..aOB(1, _omitFieldNames ? '' : 'rotateImage', protoName: 'rotateImage')
+    ..aOS(1, _omitFieldNames ? '' : 'imagePath', protoName: 'imagePath')
+    ..aOB(2, _omitFieldNames ? '' : 'rotateImage', protoName: 'rotateImage')
     ..hasRequiredFields = false
   ;
 
@@ -188,6 +193,65 @@ class HatConfiguration extends $pb.GeneratedMessage {
   static HatConfiguration? _defaultInstance;
 
   @$pb.TagNumber(1)
+  $core.String get imagePath => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set imagePath($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasImagePath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearImagePath() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get rotateImage => $_getBF(1);
+  @$pb.TagNumber(2)
+  set rotateImage($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRotateImage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRotateImage() => clearField(2);
+}
+
+class SetHatRotateImageCommand extends $pb.GeneratedMessage {
+  factory SetHatRotateImageCommand({
+    $core.bool? rotateImage,
+  }) {
+    final $result = create();
+    if (rotateImage != null) {
+      $result.rotateImage = rotateImage;
+    }
+    return $result;
+  }
+  SetHatRotateImageCommand._() : super();
+  factory SetHatRotateImageCommand.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetHatRotateImageCommand.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetHatRotateImageCommand', createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'rotateImage', protoName: 'rotateImage')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SetHatRotateImageCommand clone() => SetHatRotateImageCommand()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SetHatRotateImageCommand copyWith(void Function(SetHatRotateImageCommand) updates) => super.copyWith((message) => updates(message as SetHatRotateImageCommand)) as SetHatRotateImageCommand;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SetHatRotateImageCommand create() => SetHatRotateImageCommand._();
+  SetHatRotateImageCommand createEmptyInstance() => create();
+  static $pb.PbList<SetHatRotateImageCommand> createRepeated() => $pb.PbList<SetHatRotateImageCommand>();
+  @$core.pragma('dart2js:noInline')
+  static SetHatRotateImageCommand getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetHatRotateImageCommand>(create);
+  static SetHatRotateImageCommand? _defaultInstance;
+
+  @$pb.TagNumber(1)
   $core.bool get rotateImage => $_getBF(0);
   @$pb.TagNumber(1)
   set rotateImage($core.bool v) { $_setBool(0, v); }
@@ -197,27 +261,22 @@ class HatConfiguration extends $pb.GeneratedMessage {
   void clearRotateImage() => clearField(1);
 }
 
-class SetHatConfiguration extends $pb.GeneratedMessage {
-  factory SetHatConfiguration({
-    HatConfiguration? hatConfiguration,
-    $core.bool? saveConfiguration,
+class SetHatImageCommand extends $pb.GeneratedMessage {
+  factory SetHatImageCommand({
+    $core.String? imagePath,
   }) {
     final $result = create();
-    if (hatConfiguration != null) {
-      $result.hatConfiguration = hatConfiguration;
-    }
-    if (saveConfiguration != null) {
-      $result.saveConfiguration = saveConfiguration;
+    if (imagePath != null) {
+      $result.imagePath = imagePath;
     }
     return $result;
   }
-  SetHatConfiguration._() : super();
-  factory SetHatConfiguration.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SetHatConfiguration.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  SetHatImageCommand._() : super();
+  factory SetHatImageCommand.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetHatImageCommand.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetHatConfiguration', createEmptyInstance: create)
-    ..aOM<HatConfiguration>(1, _omitFieldNames ? '' : 'hatConfiguration', protoName: 'hatConfiguration', subBuilder: HatConfiguration.create)
-    ..aOB(2, _omitFieldNames ? '' : 'saveConfiguration', protoName: 'saveConfiguration')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetHatImageCommand', createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'imagePath', protoName: 'imagePath')
     ..hasRequiredFields = false
   ;
 
@@ -225,71 +284,110 @@ class SetHatConfiguration extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  SetHatConfiguration clone() => SetHatConfiguration()..mergeFromMessage(this);
+  SetHatImageCommand clone() => SetHatImageCommand()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetHatConfiguration copyWith(void Function(SetHatConfiguration) updates) => super.copyWith((message) => updates(message as SetHatConfiguration)) as SetHatConfiguration;
+  SetHatImageCommand copyWith(void Function(SetHatImageCommand) updates) => super.copyWith((message) => updates(message as SetHatImageCommand)) as SetHatImageCommand;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static SetHatConfiguration create() => SetHatConfiguration._();
-  SetHatConfiguration createEmptyInstance() => create();
-  static $pb.PbList<SetHatConfiguration> createRepeated() => $pb.PbList<SetHatConfiguration>();
+  static SetHatImageCommand create() => SetHatImageCommand._();
+  SetHatImageCommand createEmptyInstance() => create();
+  static $pb.PbList<SetHatImageCommand> createRepeated() => $pb.PbList<SetHatImageCommand>();
   @$core.pragma('dart2js:noInline')
-  static SetHatConfiguration getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetHatConfiguration>(create);
-  static SetHatConfiguration? _defaultInstance;
+  static SetHatImageCommand getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetHatImageCommand>(create);
+  static SetHatImageCommand? _defaultInstance;
 
   @$pb.TagNumber(1)
-  HatConfiguration get hatConfiguration => $_getN(0);
+  $core.String get imagePath => $_getSZ(0);
   @$pb.TagNumber(1)
-  set hatConfiguration(HatConfiguration v) { setField(1, v); }
+  set imagePath($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasHatConfiguration() => $_has(0);
+  $core.bool hasImagePath() => $_has(0);
   @$pb.TagNumber(1)
-  void clearHatConfiguration() => clearField(1);
-  @$pb.TagNumber(1)
-  HatConfiguration ensureHatConfiguration() => $_ensure(0);
+  void clearImagePath() => clearField(1);
+}
 
-  @$pb.TagNumber(2)
-  $core.bool get saveConfiguration => $_getBF(1);
-  @$pb.TagNumber(2)
-  set saveConfiguration($core.bool v) { $_setBool(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasSaveConfiguration() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearSaveConfiguration() => clearField(2);
+class GetDgsrImageValidationResultCommand extends $pb.GeneratedMessage {
+  factory GetDgsrImageValidationResultCommand({
+    $core.String? imagePath,
+  }) {
+    final $result = create();
+    if (imagePath != null) {
+      $result.imagePath = imagePath;
+    }
+    return $result;
+  }
+  GetDgsrImageValidationResultCommand._() : super();
+  factory GetDgsrImageValidationResultCommand.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetDgsrImageValidationResultCommand.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetDgsrImageValidationResultCommand', createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'imagePath', protoName: 'imagePath')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetDgsrImageValidationResultCommand clone() => GetDgsrImageValidationResultCommand()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetDgsrImageValidationResultCommand copyWith(void Function(GetDgsrImageValidationResultCommand) updates) => super.copyWith((message) => updates(message as GetDgsrImageValidationResultCommand)) as GetDgsrImageValidationResultCommand;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetDgsrImageValidationResultCommand create() => GetDgsrImageValidationResultCommand._();
+  GetDgsrImageValidationResultCommand createEmptyInstance() => create();
+  static $pb.PbList<GetDgsrImageValidationResultCommand> createRepeated() => $pb.PbList<GetDgsrImageValidationResultCommand>();
+  @$core.pragma('dart2js:noInline')
+  static GetDgsrImageValidationResultCommand getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetDgsrImageValidationResultCommand>(create);
+  static GetDgsrImageValidationResultCommand? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get imagePath => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set imagePath($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasImagePath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearImagePath() => clearField(1);
 }
 
 enum MyProjectCommand_Command {
   noArgCommand, 
-  showFileImage, 
-  setUpdateConfiguration, 
-  setHatConfiguration, 
+  setHatImage, 
+  setHatRotateImage, 
+  getDgsrImageValidationResult, 
   notSet
 }
 
 class MyProjectCommand extends $pb.GeneratedMessage {
   factory MyProjectCommand({
     NoArgCommands? noArgCommand,
-    $core.String? showFileImage,
-    SetUpdateConfiguration? setUpdateConfiguration,
-    SetHatConfiguration? setHatConfiguration,
+    SetHatImageCommand? setHatImage,
+    SetHatRotateImageCommand? setHatRotateImage,
+    GetDgsrImageValidationResultCommand? getDgsrImageValidationResult,
   }) {
     final $result = create();
     if (noArgCommand != null) {
       $result.noArgCommand = noArgCommand;
     }
-    if (showFileImage != null) {
-      $result.showFileImage = showFileImage;
+    if (setHatImage != null) {
+      $result.setHatImage = setHatImage;
     }
-    if (setUpdateConfiguration != null) {
-      $result.setUpdateConfiguration = setUpdateConfiguration;
+    if (setHatRotateImage != null) {
+      $result.setHatRotateImage = setHatRotateImage;
     }
-    if (setHatConfiguration != null) {
-      $result.setHatConfiguration = setHatConfiguration;
+    if (getDgsrImageValidationResult != null) {
+      $result.getDgsrImageValidationResult = getDgsrImageValidationResult;
     }
     return $result;
   }
@@ -299,17 +397,17 @@ class MyProjectCommand extends $pb.GeneratedMessage {
 
   static const $core.Map<$core.int, MyProjectCommand_Command> _MyProjectCommand_CommandByTag = {
     1 : MyProjectCommand_Command.noArgCommand,
-    2 : MyProjectCommand_Command.showFileImage,
-    3 : MyProjectCommand_Command.setUpdateConfiguration,
-    4 : MyProjectCommand_Command.setHatConfiguration,
+    2 : MyProjectCommand_Command.setHatImage,
+    3 : MyProjectCommand_Command.setHatRotateImage,
+    4 : MyProjectCommand_Command.getDgsrImageValidationResult,
     0 : MyProjectCommand_Command.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MyProjectCommand', createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4])
     ..e<NoArgCommands>(1, _omitFieldNames ? '' : 'noArgCommand', $pb.PbFieldType.OE, protoName: 'noArgCommand', defaultOrMaker: NoArgCommands.Nac_NotSet, valueOf: NoArgCommands.valueOf, enumValues: NoArgCommands.values)
-    ..aOS(2, _omitFieldNames ? '' : 'showFileImage', protoName: 'showFileImage')
-    ..aOM<SetUpdateConfiguration>(3, _omitFieldNames ? '' : 'setUpdateConfiguration', protoName: 'setUpdateConfiguration', subBuilder: SetUpdateConfiguration.create)
-    ..aOM<SetHatConfiguration>(4, _omitFieldNames ? '' : 'setHatConfiguration', protoName: 'setHatConfiguration', subBuilder: SetHatConfiguration.create)
+    ..aOM<SetHatImageCommand>(2, _omitFieldNames ? '' : 'setHatImage', protoName: 'setHatImage', subBuilder: SetHatImageCommand.create)
+    ..aOM<SetHatRotateImageCommand>(3, _omitFieldNames ? '' : 'setHatRotateImage', protoName: 'setHatRotateImage', subBuilder: SetHatRotateImageCommand.create)
+    ..aOM<GetDgsrImageValidationResultCommand>(4, _omitFieldNames ? '' : 'getDgsrImageValidationResult', protoName: 'getDgsrImageValidationResult', subBuilder: GetDgsrImageValidationResultCommand.create)
     ..hasRequiredFields = false
   ;
 
@@ -347,35 +445,37 @@ class MyProjectCommand extends $pb.GeneratedMessage {
   void clearNoArgCommand() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get showFileImage => $_getSZ(1);
+  SetHatImageCommand get setHatImage => $_getN(1);
   @$pb.TagNumber(2)
-  set showFileImage($core.String v) { $_setString(1, v); }
+  set setHatImage(SetHatImageCommand v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasShowFileImage() => $_has(1);
+  $core.bool hasSetHatImage() => $_has(1);
   @$pb.TagNumber(2)
-  void clearShowFileImage() => clearField(2);
+  void clearSetHatImage() => clearField(2);
+  @$pb.TagNumber(2)
+  SetHatImageCommand ensureSetHatImage() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  SetUpdateConfiguration get setUpdateConfiguration => $_getN(2);
+  SetHatRotateImageCommand get setHatRotateImage => $_getN(2);
   @$pb.TagNumber(3)
-  set setUpdateConfiguration(SetUpdateConfiguration v) { setField(3, v); }
+  set setHatRotateImage(SetHatRotateImageCommand v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasSetUpdateConfiguration() => $_has(2);
+  $core.bool hasSetHatRotateImage() => $_has(2);
   @$pb.TagNumber(3)
-  void clearSetUpdateConfiguration() => clearField(3);
+  void clearSetHatRotateImage() => clearField(3);
   @$pb.TagNumber(3)
-  SetUpdateConfiguration ensureSetUpdateConfiguration() => $_ensure(2);
+  SetHatRotateImageCommand ensureSetHatRotateImage() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  SetHatConfiguration get setHatConfiguration => $_getN(3);
+  GetDgsrImageValidationResultCommand get getDgsrImageValidationResult => $_getN(3);
   @$pb.TagNumber(4)
-  set setHatConfiguration(SetHatConfiguration v) { setField(4, v); }
+  set getDgsrImageValidationResult(GetDgsrImageValidationResultCommand v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasSetHatConfiguration() => $_has(3);
+  $core.bool hasGetDgsrImageValidationResult() => $_has(3);
   @$pb.TagNumber(4)
-  void clearSetHatConfiguration() => clearField(4);
+  void clearGetDgsrImageValidationResult() => clearField(4);
   @$pb.TagNumber(4)
-  SetHatConfiguration ensureSetHatConfiguration() => $_ensure(3);
+  GetDgsrImageValidationResultCommand ensureGetDgsrImageValidationResult() => $_ensure(3);
 }
 
 class InvalidCommandResponse extends $pb.GeneratedMessage {
@@ -428,12 +528,10 @@ class InvalidCommandResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 }
 
-class HatDetailsResponse extends $pb.GeneratedMessage {
-  factory HatDetailsResponse({
+class ConfigurationResponse extends $pb.GeneratedMessage {
+  factory ConfigurationResponse({
     UpdateConfiguration? updateConfiguration,
     HatConfiguration? hatConfiguration,
-    $core.String? activeImageFile,
-    $core.String? activeImageLabel,
   }) {
     final $result = create();
     if (updateConfiguration != null) {
@@ -442,23 +540,15 @@ class HatDetailsResponse extends $pb.GeneratedMessage {
     if (hatConfiguration != null) {
       $result.hatConfiguration = hatConfiguration;
     }
-    if (activeImageFile != null) {
-      $result.activeImageFile = activeImageFile;
-    }
-    if (activeImageLabel != null) {
-      $result.activeImageLabel = activeImageLabel;
-    }
     return $result;
   }
-  HatDetailsResponse._() : super();
-  factory HatDetailsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory HatDetailsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ConfigurationResponse._() : super();
+  factory ConfigurationResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ConfigurationResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HatDetailsResponse', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ConfigurationResponse', createEmptyInstance: create)
     ..aOM<UpdateConfiguration>(1, _omitFieldNames ? '' : 'updateConfiguration', protoName: 'updateConfiguration', subBuilder: UpdateConfiguration.create)
     ..aOM<HatConfiguration>(2, _omitFieldNames ? '' : 'hatConfiguration', protoName: 'hatConfiguration', subBuilder: HatConfiguration.create)
-    ..aOS(3, _omitFieldNames ? '' : 'activeImageFile', protoName: 'activeImageFile')
-    ..aOS(4, _omitFieldNames ? '' : 'activeImageLabel', protoName: 'activeImageLabel')
     ..hasRequiredFields = false
   ;
 
@@ -466,22 +556,22 @@ class HatDetailsResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  HatDetailsResponse clone() => HatDetailsResponse()..mergeFromMessage(this);
+  ConfigurationResponse clone() => ConfigurationResponse()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  HatDetailsResponse copyWith(void Function(HatDetailsResponse) updates) => super.copyWith((message) => updates(message as HatDetailsResponse)) as HatDetailsResponse;
+  ConfigurationResponse copyWith(void Function(ConfigurationResponse) updates) => super.copyWith((message) => updates(message as ConfigurationResponse)) as ConfigurationResponse;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static HatDetailsResponse create() => HatDetailsResponse._();
-  HatDetailsResponse createEmptyInstance() => create();
-  static $pb.PbList<HatDetailsResponse> createRepeated() => $pb.PbList<HatDetailsResponse>();
+  static ConfigurationResponse create() => ConfigurationResponse._();
+  ConfigurationResponse createEmptyInstance() => create();
+  static $pb.PbList<ConfigurationResponse> createRepeated() => $pb.PbList<ConfigurationResponse>();
   @$core.pragma('dart2js:noInline')
-  static HatDetailsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HatDetailsResponse>(create);
-  static HatDetailsResponse? _defaultInstance;
+  static ConfigurationResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ConfigurationResponse>(create);
+  static ConfigurationResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   UpdateConfiguration get updateConfiguration => $_getN(0);
@@ -504,24 +594,6 @@ class HatDetailsResponse extends $pb.GeneratedMessage {
   void clearHatConfiguration() => clearField(2);
   @$pb.TagNumber(2)
   HatConfiguration ensureHatConfiguration() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  $core.String get activeImageFile => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set activeImageFile($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasActiveImageFile() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearActiveImageFile() => clearField(3);
-
-  @$pb.TagNumber(4)
-  $core.String get activeImageLabel => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set activeImageLabel($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasActiveImageLabel() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearActiveImageLabel() => clearField(4);
 }
 
 class FirmwareDetailsResponse extends $pb.GeneratedMessage {
@@ -638,33 +710,199 @@ class UpdateResponse extends $pb.GeneratedMessage {
   void clearBoardUptimeInMs() => clearField(1);
 }
 
+class SetHatImageResponse extends $pb.GeneratedMessage {
+  factory SetHatImageResponse({
+    $core.String? imagePath,
+    $core.bool? success,
+    $core.String? message,
+  }) {
+    final $result = create();
+    if (imagePath != null) {
+      $result.imagePath = imagePath;
+    }
+    if (success != null) {
+      $result.success = success;
+    }
+    if (message != null) {
+      $result.message = message;
+    }
+    return $result;
+  }
+  SetHatImageResponse._() : super();
+  factory SetHatImageResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetHatImageResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetHatImageResponse', createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'imagePath', protoName: 'imagePath')
+    ..aOB(2, _omitFieldNames ? '' : 'success')
+    ..aOS(3, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SetHatImageResponse clone() => SetHatImageResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SetHatImageResponse copyWith(void Function(SetHatImageResponse) updates) => super.copyWith((message) => updates(message as SetHatImageResponse)) as SetHatImageResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SetHatImageResponse create() => SetHatImageResponse._();
+  SetHatImageResponse createEmptyInstance() => create();
+  static $pb.PbList<SetHatImageResponse> createRepeated() => $pb.PbList<SetHatImageResponse>();
+  @$core.pragma('dart2js:noInline')
+  static SetHatImageResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetHatImageResponse>(create);
+  static SetHatImageResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get imagePath => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set imagePath($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasImagePath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearImagePath() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get success => $_getBF(1);
+  @$pb.TagNumber(2)
+  set success($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSuccess() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSuccess() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get message => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set message($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMessage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMessage() => clearField(3);
+}
+
+class GetDgsrImageValidationResultResponse extends $pb.GeneratedMessage {
+  factory GetDgsrImageValidationResultResponse({
+    $core.String? imagePath,
+    $core.bool? isValid,
+    $core.String? message,
+  }) {
+    final $result = create();
+    if (imagePath != null) {
+      $result.imagePath = imagePath;
+    }
+    if (isValid != null) {
+      $result.isValid = isValid;
+    }
+    if (message != null) {
+      $result.message = message;
+    }
+    return $result;
+  }
+  GetDgsrImageValidationResultResponse._() : super();
+  factory GetDgsrImageValidationResultResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetDgsrImageValidationResultResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetDgsrImageValidationResultResponse', createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'imagePath', protoName: 'imagePath')
+    ..aOB(2, _omitFieldNames ? '' : 'isValid', protoName: 'isValid')
+    ..aOS(3, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetDgsrImageValidationResultResponse clone() => GetDgsrImageValidationResultResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetDgsrImageValidationResultResponse copyWith(void Function(GetDgsrImageValidationResultResponse) updates) => super.copyWith((message) => updates(message as GetDgsrImageValidationResultResponse)) as GetDgsrImageValidationResultResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetDgsrImageValidationResultResponse create() => GetDgsrImageValidationResultResponse._();
+  GetDgsrImageValidationResultResponse createEmptyInstance() => create();
+  static $pb.PbList<GetDgsrImageValidationResultResponse> createRepeated() => $pb.PbList<GetDgsrImageValidationResultResponse>();
+  @$core.pragma('dart2js:noInline')
+  static GetDgsrImageValidationResultResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetDgsrImageValidationResultResponse>(create);
+  static GetDgsrImageValidationResultResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get imagePath => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set imagePath($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasImagePath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearImagePath() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get isValid => $_getBF(1);
+  @$pb.TagNumber(2)
+  set isValid($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasIsValid() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearIsValid() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get message => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set message($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMessage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMessage() => clearField(3);
+}
+
 enum MyProjectResponse_Response {
   invalidCommandResponse, 
-  hatDetailsResponse, 
   firmwareDetailsResponse, 
   updateResponse, 
+  configurationResponse, 
+  setHatImageResponse, 
+  getDgsrImageValidationResultResponse, 
   notSet
 }
 
 class MyProjectResponse extends $pb.GeneratedMessage {
   factory MyProjectResponse({
     InvalidCommandResponse? invalidCommandResponse,
-    HatDetailsResponse? hatDetailsResponse,
     FirmwareDetailsResponse? firmwareDetailsResponse,
     UpdateResponse? updateResponse,
+    ConfigurationResponse? configurationResponse,
+    SetHatImageResponse? setHatImageResponse,
+    GetDgsrImageValidationResultResponse? getDgsrImageValidationResultResponse,
   }) {
     final $result = create();
     if (invalidCommandResponse != null) {
       $result.invalidCommandResponse = invalidCommandResponse;
-    }
-    if (hatDetailsResponse != null) {
-      $result.hatDetailsResponse = hatDetailsResponse;
     }
     if (firmwareDetailsResponse != null) {
       $result.firmwareDetailsResponse = firmwareDetailsResponse;
     }
     if (updateResponse != null) {
       $result.updateResponse = updateResponse;
+    }
+    if (configurationResponse != null) {
+      $result.configurationResponse = configurationResponse;
+    }
+    if (setHatImageResponse != null) {
+      $result.setHatImageResponse = setHatImageResponse;
+    }
+    if (getDgsrImageValidationResultResponse != null) {
+      $result.getDgsrImageValidationResultResponse = getDgsrImageValidationResultResponse;
     }
     return $result;
   }
@@ -674,17 +912,21 @@ class MyProjectResponse extends $pb.GeneratedMessage {
 
   static const $core.Map<$core.int, MyProjectResponse_Response> _MyProjectResponse_ResponseByTag = {
     1 : MyProjectResponse_Response.invalidCommandResponse,
-    2 : MyProjectResponse_Response.hatDetailsResponse,
-    3 : MyProjectResponse_Response.firmwareDetailsResponse,
-    4 : MyProjectResponse_Response.updateResponse,
+    2 : MyProjectResponse_Response.firmwareDetailsResponse,
+    3 : MyProjectResponse_Response.updateResponse,
+    4 : MyProjectResponse_Response.configurationResponse,
+    5 : MyProjectResponse_Response.setHatImageResponse,
+    6 : MyProjectResponse_Response.getDgsrImageValidationResultResponse,
     0 : MyProjectResponse_Response.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MyProjectResponse', createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4])
+    ..oo(0, [1, 2, 3, 4, 5, 6])
     ..aOM<InvalidCommandResponse>(1, _omitFieldNames ? '' : 'invalidCommandResponse', protoName: 'invalidCommandResponse', subBuilder: InvalidCommandResponse.create)
-    ..aOM<HatDetailsResponse>(2, _omitFieldNames ? '' : 'hatDetailsResponse', protoName: 'hatDetailsResponse', subBuilder: HatDetailsResponse.create)
-    ..aOM<FirmwareDetailsResponse>(3, _omitFieldNames ? '' : 'firmwareDetailsResponse', protoName: 'firmwareDetailsResponse', subBuilder: FirmwareDetailsResponse.create)
-    ..aOM<UpdateResponse>(4, _omitFieldNames ? '' : 'updateResponse', protoName: 'updateResponse', subBuilder: UpdateResponse.create)
+    ..aOM<FirmwareDetailsResponse>(2, _omitFieldNames ? '' : 'firmwareDetailsResponse', protoName: 'firmwareDetailsResponse', subBuilder: FirmwareDetailsResponse.create)
+    ..aOM<UpdateResponse>(3, _omitFieldNames ? '' : 'updateResponse', protoName: 'updateResponse', subBuilder: UpdateResponse.create)
+    ..aOM<ConfigurationResponse>(4, _omitFieldNames ? '' : 'configurationResponse', protoName: 'configurationResponse', subBuilder: ConfigurationResponse.create)
+    ..aOM<SetHatImageResponse>(5, _omitFieldNames ? '' : 'setHatImageResponse', protoName: 'setHatImageResponse', subBuilder: SetHatImageResponse.create)
+    ..aOM<GetDgsrImageValidationResultResponse>(6, _omitFieldNames ? '' : 'getDgsrImageValidationResultResponse', protoName: 'getDgsrImageValidationResultResponse', subBuilder: GetDgsrImageValidationResultResponse.create)
     ..hasRequiredFields = false
   ;
 
@@ -724,37 +966,59 @@ class MyProjectResponse extends $pb.GeneratedMessage {
   InvalidCommandResponse ensureInvalidCommandResponse() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  HatDetailsResponse get hatDetailsResponse => $_getN(1);
+  FirmwareDetailsResponse get firmwareDetailsResponse => $_getN(1);
   @$pb.TagNumber(2)
-  set hatDetailsResponse(HatDetailsResponse v) { setField(2, v); }
+  set firmwareDetailsResponse(FirmwareDetailsResponse v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasHatDetailsResponse() => $_has(1);
+  $core.bool hasFirmwareDetailsResponse() => $_has(1);
   @$pb.TagNumber(2)
-  void clearHatDetailsResponse() => clearField(2);
+  void clearFirmwareDetailsResponse() => clearField(2);
   @$pb.TagNumber(2)
-  HatDetailsResponse ensureHatDetailsResponse() => $_ensure(1);
+  FirmwareDetailsResponse ensureFirmwareDetailsResponse() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  FirmwareDetailsResponse get firmwareDetailsResponse => $_getN(2);
+  UpdateResponse get updateResponse => $_getN(2);
   @$pb.TagNumber(3)
-  set firmwareDetailsResponse(FirmwareDetailsResponse v) { setField(3, v); }
+  set updateResponse(UpdateResponse v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasFirmwareDetailsResponse() => $_has(2);
+  $core.bool hasUpdateResponse() => $_has(2);
   @$pb.TagNumber(3)
-  void clearFirmwareDetailsResponse() => clearField(3);
+  void clearUpdateResponse() => clearField(3);
   @$pb.TagNumber(3)
-  FirmwareDetailsResponse ensureFirmwareDetailsResponse() => $_ensure(2);
+  UpdateResponse ensureUpdateResponse() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  UpdateResponse get updateResponse => $_getN(3);
+  ConfigurationResponse get configurationResponse => $_getN(3);
   @$pb.TagNumber(4)
-  set updateResponse(UpdateResponse v) { setField(4, v); }
+  set configurationResponse(ConfigurationResponse v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasUpdateResponse() => $_has(3);
+  $core.bool hasConfigurationResponse() => $_has(3);
   @$pb.TagNumber(4)
-  void clearUpdateResponse() => clearField(4);
+  void clearConfigurationResponse() => clearField(4);
   @$pb.TagNumber(4)
-  UpdateResponse ensureUpdateResponse() => $_ensure(3);
+  ConfigurationResponse ensureConfigurationResponse() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  SetHatImageResponse get setHatImageResponse => $_getN(4);
+  @$pb.TagNumber(5)
+  set setHatImageResponse(SetHatImageResponse v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasSetHatImageResponse() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearSetHatImageResponse() => clearField(5);
+  @$pb.TagNumber(5)
+  SetHatImageResponse ensureSetHatImageResponse() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  GetDgsrImageValidationResultResponse get getDgsrImageValidationResultResponse => $_getN(5);
+  @$pb.TagNumber(6)
+  set getDgsrImageValidationResultResponse(GetDgsrImageValidationResultResponse v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasGetDgsrImageValidationResultResponse() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearGetDgsrImageValidationResultResponse() => clearField(6);
+  @$pb.TagNumber(6)
+  GetDgsrImageValidationResultResponse ensureGetDgsrImageValidationResultResponse() => $_ensure(5);
 }
 
 

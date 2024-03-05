@@ -2,6 +2,7 @@
 #include "logo.h"
 #include <qroma/qroma.h>
 #include "../qroma-commands.h"
+#include "../qroma-config.h"
 #include "rotateHatImage.h"
 
 
@@ -9,7 +10,8 @@ HatImageData _activeImage = {
   .imageWidth = EINK_WIDTH,
   .imageHeight = EINK_HEIGHT,
   .imageData = NULL,
-  .imageLabel = "IMAGE NOT SET",
+  // added 99 - 13 (strlen) of /0 chars for initialization
+  .imageLabel = "IMAGE NOT SET\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0",
 };
 
 

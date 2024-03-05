@@ -41,22 +41,40 @@ export interface SetUpdateConfiguration {
  */
 export interface HatConfiguration {
     /**
+     * @generated from protobuf field: string imagePath = 1;
+     */
+    imagePath: string;
+    /**
+     * @generated from protobuf field: bool rotateImage = 2;
+     */
+    rotateImage: boolean;
+}
+/**
+ * @generated from protobuf message SetHatRotateImageCommand
+ */
+export interface SetHatRotateImageCommand {
+    /**
      * @generated from protobuf field: bool rotateImage = 1;
      */
     rotateImage: boolean;
 }
 /**
- * @generated from protobuf message SetHatConfiguration
+ * @generated from protobuf message SetHatImageCommand
  */
-export interface SetHatConfiguration {
+export interface SetHatImageCommand {
     /**
-     * @generated from protobuf field: HatConfiguration hatConfiguration = 1;
+     * @generated from protobuf field: string imagePath = 1;
      */
-    hatConfiguration?: HatConfiguration;
+    imagePath: string;
+}
+/**
+ * @generated from protobuf message GetDgsrImageValidationResultCommand
+ */
+export interface GetDgsrImageValidationResultCommand {
     /**
-     * @generated from protobuf field: bool saveConfiguration = 2;
+     * @generated from protobuf field: string imagePath = 1;
      */
-    saveConfiguration: boolean;
+    imagePath: string;
 }
 /**
  * @generated from protobuf message MyProjectCommand
@@ -72,23 +90,23 @@ export interface MyProjectCommand {
          */
         noArgCommand: NoArgCommands;
     } | {
-        oneofKind: "showFileImage";
+        oneofKind: "setHatImage";
         /**
-         * @generated from protobuf field: string showFileImage = 2;
+         * @generated from protobuf field: SetHatImageCommand setHatImage = 2;
          */
-        showFileImage: string;
+        setHatImage: SetHatImageCommand;
     } | {
-        oneofKind: "setUpdateConfiguration";
+        oneofKind: "setHatRotateImage";
         /**
-         * @generated from protobuf field: SetUpdateConfiguration setUpdateConfiguration = 3;
+         * @generated from protobuf field: SetHatRotateImageCommand setHatRotateImage = 3;
          */
-        setUpdateConfiguration: SetUpdateConfiguration;
+        setHatRotateImage: SetHatRotateImageCommand;
     } | {
-        oneofKind: "setHatConfiguration";
+        oneofKind: "getDgsrImageValidationResult";
         /**
-         * @generated from protobuf field: SetHatConfiguration setHatConfiguration = 4;
+         * @generated from protobuf field: GetDgsrImageValidationResultCommand getDgsrImageValidationResult = 4;
          */
-        setHatConfiguration: SetHatConfiguration;
+        getDgsrImageValidationResult: GetDgsrImageValidationResultCommand;
     } | {
         oneofKind: undefined;
     };
@@ -103,9 +121,9 @@ export interface InvalidCommandResponse {
     message: string;
 }
 /**
- * @generated from protobuf message HatDetailsResponse
+ * @generated from protobuf message ConfigurationResponse
  */
-export interface HatDetailsResponse {
+export interface ConfigurationResponse {
     /**
      * @generated from protobuf field: UpdateConfiguration updateConfiguration = 1;
      */
@@ -114,14 +132,6 @@ export interface HatDetailsResponse {
      * @generated from protobuf field: HatConfiguration hatConfiguration = 2;
      */
     hatConfiguration?: HatConfiguration;
-    /**
-     * @generated from protobuf field: string activeImageFile = 3;
-     */
-    activeImageFile: string;
-    /**
-     * @generated from protobuf field: string activeImageLabel = 4;
-     */
-    activeImageLabel: string;
 }
 /**
  * @generated from protobuf message FirmwareDetailsResponse
@@ -146,6 +156,40 @@ export interface UpdateResponse {
     boardUptimeInMs: number;
 }
 /**
+ * @generated from protobuf message SetHatImageResponse
+ */
+export interface SetHatImageResponse {
+    /**
+     * @generated from protobuf field: string imagePath = 1;
+     */
+    imagePath: string;
+    /**
+     * @generated from protobuf field: bool success = 2;
+     */
+    success: boolean;
+    /**
+     * @generated from protobuf field: string message = 3;
+     */
+    message: string;
+}
+/**
+ * @generated from protobuf message GetDgsrImageValidationResultResponse
+ */
+export interface GetDgsrImageValidationResultResponse {
+    /**
+     * @generated from protobuf field: string imagePath = 1;
+     */
+    imagePath: string;
+    /**
+     * @generated from protobuf field: bool isValid = 2;
+     */
+    isValid: boolean;
+    /**
+     * @generated from protobuf field: string message = 3;
+     */
+    message: string;
+}
+/**
  * @generated from protobuf message MyProjectResponse
  */
 export interface MyProjectResponse {
@@ -159,23 +203,35 @@ export interface MyProjectResponse {
          */
         invalidCommandResponse: InvalidCommandResponse;
     } | {
-        oneofKind: "hatDetailsResponse";
-        /**
-         * @generated from protobuf field: HatDetailsResponse hatDetailsResponse = 2;
-         */
-        hatDetailsResponse: HatDetailsResponse;
-    } | {
         oneofKind: "firmwareDetailsResponse";
         /**
-         * @generated from protobuf field: FirmwareDetailsResponse firmwareDetailsResponse = 3;
+         * @generated from protobuf field: FirmwareDetailsResponse firmwareDetailsResponse = 2;
          */
         firmwareDetailsResponse: FirmwareDetailsResponse;
     } | {
         oneofKind: "updateResponse";
         /**
-         * @generated from protobuf field: UpdateResponse updateResponse = 4;
+         * @generated from protobuf field: UpdateResponse updateResponse = 3;
          */
         updateResponse: UpdateResponse;
+    } | {
+        oneofKind: "configurationResponse";
+        /**
+         * @generated from protobuf field: ConfigurationResponse configurationResponse = 4;
+         */
+        configurationResponse: ConfigurationResponse;
+    } | {
+        oneofKind: "setHatImageResponse";
+        /**
+         * @generated from protobuf field: SetHatImageResponse setHatImageResponse = 5;
+         */
+        setHatImageResponse: SetHatImageResponse;
+    } | {
+        oneofKind: "getDgsrImageValidationResultResponse";
+        /**
+         * @generated from protobuf field: GetDgsrImageValidationResultResponse getDgsrImageValidationResultResponse = 6;
+         */
+        getDgsrImageValidationResultResponse: GetDgsrImageValidationResultResponse;
     } | {
         oneofKind: undefined;
     };
@@ -214,9 +270,9 @@ export enum NoArgCommands {
      */
     Nac_ClearScreenToBlack = 2,
     /**
-     * @generated from protobuf enum value: Nac_GetHatDetails = 3;
+     * @generated from protobuf enum value: Nac_GetConfiguration = 3;
      */
-    Nac_GetHatDetails = 3,
+    Nac_GetConfiguration = 3,
     /**
      * @generated from protobuf enum value: Nac_GetFirmwareDetails = 4;
      */
@@ -339,17 +395,72 @@ export const SetUpdateConfiguration = new SetUpdateConfiguration$Type();
 class HatConfiguration$Type extends MessageType<HatConfiguration> {
     constructor() {
         super("HatConfiguration", [
-            { no: 1, name: "rotateImage", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 1, name: "imagePath", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "rotateImage", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<HatConfiguration>): HatConfiguration {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.imagePath = "";
         message.rotateImage = false;
         if (value !== undefined)
             reflectionMergePartial<HatConfiguration>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HatConfiguration): HatConfiguration {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string imagePath */ 1:
+                    message.imagePath = reader.string();
+                    break;
+                case /* bool rotateImage */ 2:
+                    message.rotateImage = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HatConfiguration, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string imagePath = 1; */
+        if (message.imagePath !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.imagePath);
+        /* bool rotateImage = 2; */
+        if (message.rotateImage !== false)
+            writer.tag(2, WireType.Varint).bool(message.rotateImage);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message HatConfiguration
+ */
+export const HatConfiguration = new HatConfiguration$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SetHatRotateImageCommand$Type extends MessageType<SetHatRotateImageCommand> {
+    constructor() {
+        super("SetHatRotateImageCommand", [
+            { no: 1, name: "rotateImage", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SetHatRotateImageCommand>): SetHatRotateImageCommand {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.rotateImage = false;
+        if (value !== undefined)
+            reflectionMergePartial<SetHatRotateImageCommand>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SetHatRotateImageCommand): SetHatRotateImageCommand {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -368,7 +479,7 @@ class HatConfiguration$Type extends MessageType<HatConfiguration> {
         }
         return message;
     }
-    internalBinaryWrite(message: HatConfiguration, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: SetHatRotateImageCommand, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* bool rotateImage = 1; */
         if (message.rotateImage !== false)
             writer.tag(1, WireType.Varint).bool(message.rotateImage);
@@ -379,34 +490,30 @@ class HatConfiguration$Type extends MessageType<HatConfiguration> {
     }
 }
 /**
- * @generated MessageType for protobuf message HatConfiguration
+ * @generated MessageType for protobuf message SetHatRotateImageCommand
  */
-export const HatConfiguration = new HatConfiguration$Type();
+export const SetHatRotateImageCommand = new SetHatRotateImageCommand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class SetHatConfiguration$Type extends MessageType<SetHatConfiguration> {
+class SetHatImageCommand$Type extends MessageType<SetHatImageCommand> {
     constructor() {
-        super("SetHatConfiguration", [
-            { no: 1, name: "hatConfiguration", kind: "message", T: () => HatConfiguration },
-            { no: 2, name: "saveConfiguration", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        super("SetHatImageCommand", [
+            { no: 1, name: "imagePath", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<SetHatConfiguration>): SetHatConfiguration {
+    create(value?: PartialMessage<SetHatImageCommand>): SetHatImageCommand {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.saveConfiguration = false;
+        message.imagePath = "";
         if (value !== undefined)
-            reflectionMergePartial<SetHatConfiguration>(this, message, value);
+            reflectionMergePartial<SetHatImageCommand>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SetHatConfiguration): SetHatConfiguration {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SetHatImageCommand): SetHatImageCommand {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* HatConfiguration hatConfiguration */ 1:
-                    message.hatConfiguration = HatConfiguration.internalBinaryRead(reader, reader.uint32(), options, message.hatConfiguration);
-                    break;
-                case /* bool saveConfiguration */ 2:
-                    message.saveConfiguration = reader.bool();
+                case /* string imagePath */ 1:
+                    message.imagePath = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -419,13 +526,10 @@ class SetHatConfiguration$Type extends MessageType<SetHatConfiguration> {
         }
         return message;
     }
-    internalBinaryWrite(message: SetHatConfiguration, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* HatConfiguration hatConfiguration = 1; */
-        if (message.hatConfiguration)
-            HatConfiguration.internalBinaryWrite(message.hatConfiguration, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* bool saveConfiguration = 2; */
-        if (message.saveConfiguration !== false)
-            writer.tag(2, WireType.Varint).bool(message.saveConfiguration);
+    internalBinaryWrite(message: SetHatImageCommand, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string imagePath = 1; */
+        if (message.imagePath !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.imagePath);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -433,17 +537,64 @@ class SetHatConfiguration$Type extends MessageType<SetHatConfiguration> {
     }
 }
 /**
- * @generated MessageType for protobuf message SetHatConfiguration
+ * @generated MessageType for protobuf message SetHatImageCommand
  */
-export const SetHatConfiguration = new SetHatConfiguration$Type();
+export const SetHatImageCommand = new SetHatImageCommand$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetDgsrImageValidationResultCommand$Type extends MessageType<GetDgsrImageValidationResultCommand> {
+    constructor() {
+        super("GetDgsrImageValidationResultCommand", [
+            { no: 1, name: "imagePath", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<GetDgsrImageValidationResultCommand>): GetDgsrImageValidationResultCommand {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.imagePath = "";
+        if (value !== undefined)
+            reflectionMergePartial<GetDgsrImageValidationResultCommand>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetDgsrImageValidationResultCommand): GetDgsrImageValidationResultCommand {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string imagePath */ 1:
+                    message.imagePath = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetDgsrImageValidationResultCommand, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string imagePath = 1; */
+        if (message.imagePath !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.imagePath);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetDgsrImageValidationResultCommand
+ */
+export const GetDgsrImageValidationResultCommand = new GetDgsrImageValidationResultCommand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MyProjectCommand$Type extends MessageType<MyProjectCommand> {
     constructor() {
         super("MyProjectCommand", [
             { no: 1, name: "noArgCommand", kind: "enum", oneof: "command", T: () => ["NoArgCommands", NoArgCommands] },
-            { no: 2, name: "showFileImage", kind: "scalar", oneof: "command", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "setUpdateConfiguration", kind: "message", oneof: "command", T: () => SetUpdateConfiguration },
-            { no: 4, name: "setHatConfiguration", kind: "message", oneof: "command", T: () => SetHatConfiguration }
+            { no: 2, name: "setHatImage", kind: "message", oneof: "command", T: () => SetHatImageCommand },
+            { no: 3, name: "setHatRotateImage", kind: "message", oneof: "command", T: () => SetHatRotateImageCommand },
+            { no: 4, name: "getDgsrImageValidationResult", kind: "message", oneof: "command", T: () => GetDgsrImageValidationResultCommand }
         ]);
     }
     create(value?: PartialMessage<MyProjectCommand>): MyProjectCommand {
@@ -464,22 +615,22 @@ class MyProjectCommand$Type extends MessageType<MyProjectCommand> {
                         noArgCommand: reader.int32()
                     };
                     break;
-                case /* string showFileImage */ 2:
+                case /* SetHatImageCommand setHatImage */ 2:
                     message.command = {
-                        oneofKind: "showFileImage",
-                        showFileImage: reader.string()
+                        oneofKind: "setHatImage",
+                        setHatImage: SetHatImageCommand.internalBinaryRead(reader, reader.uint32(), options, (message.command as any).setHatImage)
                     };
                     break;
-                case /* SetUpdateConfiguration setUpdateConfiguration */ 3:
+                case /* SetHatRotateImageCommand setHatRotateImage */ 3:
                     message.command = {
-                        oneofKind: "setUpdateConfiguration",
-                        setUpdateConfiguration: SetUpdateConfiguration.internalBinaryRead(reader, reader.uint32(), options, (message.command as any).setUpdateConfiguration)
+                        oneofKind: "setHatRotateImage",
+                        setHatRotateImage: SetHatRotateImageCommand.internalBinaryRead(reader, reader.uint32(), options, (message.command as any).setHatRotateImage)
                     };
                     break;
-                case /* SetHatConfiguration setHatConfiguration */ 4:
+                case /* GetDgsrImageValidationResultCommand getDgsrImageValidationResult */ 4:
                     message.command = {
-                        oneofKind: "setHatConfiguration",
-                        setHatConfiguration: SetHatConfiguration.internalBinaryRead(reader, reader.uint32(), options, (message.command as any).setHatConfiguration)
+                        oneofKind: "getDgsrImageValidationResult",
+                        getDgsrImageValidationResult: GetDgsrImageValidationResultCommand.internalBinaryRead(reader, reader.uint32(), options, (message.command as any).getDgsrImageValidationResult)
                     };
                     break;
                 default:
@@ -497,15 +648,15 @@ class MyProjectCommand$Type extends MessageType<MyProjectCommand> {
         /* NoArgCommands noArgCommand = 1; */
         if (message.command.oneofKind === "noArgCommand")
             writer.tag(1, WireType.Varint).int32(message.command.noArgCommand);
-        /* string showFileImage = 2; */
-        if (message.command.oneofKind === "showFileImage")
-            writer.tag(2, WireType.LengthDelimited).string(message.command.showFileImage);
-        /* SetUpdateConfiguration setUpdateConfiguration = 3; */
-        if (message.command.oneofKind === "setUpdateConfiguration")
-            SetUpdateConfiguration.internalBinaryWrite(message.command.setUpdateConfiguration, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* SetHatConfiguration setHatConfiguration = 4; */
-        if (message.command.oneofKind === "setHatConfiguration")
-            SetHatConfiguration.internalBinaryWrite(message.command.setHatConfiguration, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* SetHatImageCommand setHatImage = 2; */
+        if (message.command.oneofKind === "setHatImage")
+            SetHatImageCommand.internalBinaryWrite(message.command.setHatImage, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* SetHatRotateImageCommand setHatRotateImage = 3; */
+        if (message.command.oneofKind === "setHatRotateImage")
+            SetHatRotateImageCommand.internalBinaryWrite(message.command.setHatRotateImage, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* GetDgsrImageValidationResultCommand getDgsrImageValidationResult = 4; */
+        if (message.command.oneofKind === "getDgsrImageValidationResult")
+            GetDgsrImageValidationResultCommand.internalBinaryWrite(message.command.getDgsrImageValidationResult, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -564,24 +715,20 @@ class InvalidCommandResponse$Type extends MessageType<InvalidCommandResponse> {
  */
 export const InvalidCommandResponse = new InvalidCommandResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HatDetailsResponse$Type extends MessageType<HatDetailsResponse> {
+class ConfigurationResponse$Type extends MessageType<ConfigurationResponse> {
     constructor() {
-        super("HatDetailsResponse", [
+        super("ConfigurationResponse", [
             { no: 1, name: "updateConfiguration", kind: "message", T: () => UpdateConfiguration },
-            { no: 2, name: "hatConfiguration", kind: "message", T: () => HatConfiguration },
-            { no: 3, name: "activeImageFile", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "activeImageLabel", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "hatConfiguration", kind: "message", T: () => HatConfiguration }
         ]);
     }
-    create(value?: PartialMessage<HatDetailsResponse>): HatDetailsResponse {
+    create(value?: PartialMessage<ConfigurationResponse>): ConfigurationResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.activeImageFile = "";
-        message.activeImageLabel = "";
         if (value !== undefined)
-            reflectionMergePartial<HatDetailsResponse>(this, message, value);
+            reflectionMergePartial<ConfigurationResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HatDetailsResponse): HatDetailsResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ConfigurationResponse): ConfigurationResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -591,12 +738,6 @@ class HatDetailsResponse$Type extends MessageType<HatDetailsResponse> {
                     break;
                 case /* HatConfiguration hatConfiguration */ 2:
                     message.hatConfiguration = HatConfiguration.internalBinaryRead(reader, reader.uint32(), options, message.hatConfiguration);
-                    break;
-                case /* string activeImageFile */ 3:
-                    message.activeImageFile = reader.string();
-                    break;
-                case /* string activeImageLabel */ 4:
-                    message.activeImageLabel = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -609,19 +750,13 @@ class HatDetailsResponse$Type extends MessageType<HatDetailsResponse> {
         }
         return message;
     }
-    internalBinaryWrite(message: HatDetailsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ConfigurationResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* UpdateConfiguration updateConfiguration = 1; */
         if (message.updateConfiguration)
             UpdateConfiguration.internalBinaryWrite(message.updateConfiguration, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* HatConfiguration hatConfiguration = 2; */
         if (message.hatConfiguration)
             HatConfiguration.internalBinaryWrite(message.hatConfiguration, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* string activeImageFile = 3; */
-        if (message.activeImageFile !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.activeImageFile);
-        /* string activeImageLabel = 4; */
-        if (message.activeImageLabel !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.activeImageLabel);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -629,9 +764,9 @@ class HatDetailsResponse$Type extends MessageType<HatDetailsResponse> {
     }
 }
 /**
- * @generated MessageType for protobuf message HatDetailsResponse
+ * @generated MessageType for protobuf message ConfigurationResponse
  */
-export const HatDetailsResponse = new HatDetailsResponse$Type();
+export const ConfigurationResponse = new ConfigurationResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class FirmwareDetailsResponse$Type extends MessageType<FirmwareDetailsResponse> {
     constructor() {
@@ -735,13 +870,141 @@ class UpdateResponse$Type extends MessageType<UpdateResponse> {
  */
 export const UpdateResponse = new UpdateResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class SetHatImageResponse$Type extends MessageType<SetHatImageResponse> {
+    constructor() {
+        super("SetHatImageResponse", [
+            { no: 1, name: "imagePath", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 3, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SetHatImageResponse>): SetHatImageResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.imagePath = "";
+        message.success = false;
+        message.message = "";
+        if (value !== undefined)
+            reflectionMergePartial<SetHatImageResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SetHatImageResponse): SetHatImageResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string imagePath */ 1:
+                    message.imagePath = reader.string();
+                    break;
+                case /* bool success */ 2:
+                    message.success = reader.bool();
+                    break;
+                case /* string message */ 3:
+                    message.message = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SetHatImageResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string imagePath = 1; */
+        if (message.imagePath !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.imagePath);
+        /* bool success = 2; */
+        if (message.success !== false)
+            writer.tag(2, WireType.Varint).bool(message.success);
+        /* string message = 3; */
+        if (message.message !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.message);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message SetHatImageResponse
+ */
+export const SetHatImageResponse = new SetHatImageResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetDgsrImageValidationResultResponse$Type extends MessageType<GetDgsrImageValidationResultResponse> {
+    constructor() {
+        super("GetDgsrImageValidationResultResponse", [
+            { no: 1, name: "imagePath", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "isValid", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 3, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<GetDgsrImageValidationResultResponse>): GetDgsrImageValidationResultResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.imagePath = "";
+        message.isValid = false;
+        message.message = "";
+        if (value !== undefined)
+            reflectionMergePartial<GetDgsrImageValidationResultResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetDgsrImageValidationResultResponse): GetDgsrImageValidationResultResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string imagePath */ 1:
+                    message.imagePath = reader.string();
+                    break;
+                case /* bool isValid */ 2:
+                    message.isValid = reader.bool();
+                    break;
+                case /* string message */ 3:
+                    message.message = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetDgsrImageValidationResultResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string imagePath = 1; */
+        if (message.imagePath !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.imagePath);
+        /* bool isValid = 2; */
+        if (message.isValid !== false)
+            writer.tag(2, WireType.Varint).bool(message.isValid);
+        /* string message = 3; */
+        if (message.message !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.message);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetDgsrImageValidationResultResponse
+ */
+export const GetDgsrImageValidationResultResponse = new GetDgsrImageValidationResultResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class MyProjectResponse$Type extends MessageType<MyProjectResponse> {
     constructor() {
         super("MyProjectResponse", [
             { no: 1, name: "invalidCommandResponse", kind: "message", oneof: "response", T: () => InvalidCommandResponse },
-            { no: 2, name: "hatDetailsResponse", kind: "message", oneof: "response", T: () => HatDetailsResponse },
-            { no: 3, name: "firmwareDetailsResponse", kind: "message", oneof: "response", T: () => FirmwareDetailsResponse },
-            { no: 4, name: "updateResponse", kind: "message", oneof: "response", T: () => UpdateResponse }
+            { no: 2, name: "firmwareDetailsResponse", kind: "message", oneof: "response", T: () => FirmwareDetailsResponse },
+            { no: 3, name: "updateResponse", kind: "message", oneof: "response", T: () => UpdateResponse },
+            { no: 4, name: "configurationResponse", kind: "message", oneof: "response", T: () => ConfigurationResponse },
+            { no: 5, name: "setHatImageResponse", kind: "message", oneof: "response", T: () => SetHatImageResponse },
+            { no: 6, name: "getDgsrImageValidationResultResponse", kind: "message", oneof: "response", T: () => GetDgsrImageValidationResultResponse }
         ]);
     }
     create(value?: PartialMessage<MyProjectResponse>): MyProjectResponse {
@@ -762,22 +1025,34 @@ class MyProjectResponse$Type extends MessageType<MyProjectResponse> {
                         invalidCommandResponse: InvalidCommandResponse.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).invalidCommandResponse)
                     };
                     break;
-                case /* HatDetailsResponse hatDetailsResponse */ 2:
-                    message.response = {
-                        oneofKind: "hatDetailsResponse",
-                        hatDetailsResponse: HatDetailsResponse.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).hatDetailsResponse)
-                    };
-                    break;
-                case /* FirmwareDetailsResponse firmwareDetailsResponse */ 3:
+                case /* FirmwareDetailsResponse firmwareDetailsResponse */ 2:
                     message.response = {
                         oneofKind: "firmwareDetailsResponse",
                         firmwareDetailsResponse: FirmwareDetailsResponse.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).firmwareDetailsResponse)
                     };
                     break;
-                case /* UpdateResponse updateResponse */ 4:
+                case /* UpdateResponse updateResponse */ 3:
                     message.response = {
                         oneofKind: "updateResponse",
                         updateResponse: UpdateResponse.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).updateResponse)
+                    };
+                    break;
+                case /* ConfigurationResponse configurationResponse */ 4:
+                    message.response = {
+                        oneofKind: "configurationResponse",
+                        configurationResponse: ConfigurationResponse.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).configurationResponse)
+                    };
+                    break;
+                case /* SetHatImageResponse setHatImageResponse */ 5:
+                    message.response = {
+                        oneofKind: "setHatImageResponse",
+                        setHatImageResponse: SetHatImageResponse.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).setHatImageResponse)
+                    };
+                    break;
+                case /* GetDgsrImageValidationResultResponse getDgsrImageValidationResultResponse */ 6:
+                    message.response = {
+                        oneofKind: "getDgsrImageValidationResultResponse",
+                        getDgsrImageValidationResultResponse: GetDgsrImageValidationResultResponse.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getDgsrImageValidationResultResponse)
                     };
                     break;
                 default:
@@ -795,15 +1070,21 @@ class MyProjectResponse$Type extends MessageType<MyProjectResponse> {
         /* InvalidCommandResponse invalidCommandResponse = 1; */
         if (message.response.oneofKind === "invalidCommandResponse")
             InvalidCommandResponse.internalBinaryWrite(message.response.invalidCommandResponse, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* HatDetailsResponse hatDetailsResponse = 2; */
-        if (message.response.oneofKind === "hatDetailsResponse")
-            HatDetailsResponse.internalBinaryWrite(message.response.hatDetailsResponse, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* FirmwareDetailsResponse firmwareDetailsResponse = 3; */
+        /* FirmwareDetailsResponse firmwareDetailsResponse = 2; */
         if (message.response.oneofKind === "firmwareDetailsResponse")
-            FirmwareDetailsResponse.internalBinaryWrite(message.response.firmwareDetailsResponse, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* UpdateResponse updateResponse = 4; */
+            FirmwareDetailsResponse.internalBinaryWrite(message.response.firmwareDetailsResponse, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* UpdateResponse updateResponse = 3; */
         if (message.response.oneofKind === "updateResponse")
-            UpdateResponse.internalBinaryWrite(message.response.updateResponse, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+            UpdateResponse.internalBinaryWrite(message.response.updateResponse, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* ConfigurationResponse configurationResponse = 4; */
+        if (message.response.oneofKind === "configurationResponse")
+            ConfigurationResponse.internalBinaryWrite(message.response.configurationResponse, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* SetHatImageResponse setHatImageResponse = 5; */
+        if (message.response.oneofKind === "setHatImageResponse")
+            SetHatImageResponse.internalBinaryWrite(message.response.setHatImageResponse, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* GetDgsrImageValidationResultResponse getDgsrImageValidationResultResponse = 6; */
+        if (message.response.oneofKind === "getDgsrImageValidationResultResponse")
+            GetDgsrImageValidationResultResponse.internalBinaryWrite(message.response.getDgsrImageValidationResultResponse, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

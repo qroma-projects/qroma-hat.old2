@@ -1,6 +1,5 @@
 import { convert4bitGrayscaleToDgsr } from "./Dgsr4bitConverter";
-import { GrayscaleConversionOutput } from "./GrayscaleConverter"
-import { ISvgTemplateInputs } from "./svgTemplates/ISvgToGrayscaleTemplate";
+import { GrayscaleConversionOutput } from "./GrayscaleConverter";
 
 
 export const createDgsrImageFileBytes = (gsData: GrayscaleConversionOutput): Uint8Array => {
