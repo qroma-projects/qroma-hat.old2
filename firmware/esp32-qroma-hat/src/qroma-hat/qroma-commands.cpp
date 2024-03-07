@@ -69,7 +69,7 @@ void onMyProjectCommand(MyProjectCommand * message, MyProjectResponse * response
       break;
 
     case MyProjectCommand_getDgsrImageValidationResult_tag:
-      handleSetHatRotateImageCommand(&(message->command.setHatRotateImage), response);
+      handleGetDgsrImageValidationResultCommand(&(message->command.getDgsrImageValidationResult), response);
       break;
 
     default:
@@ -103,37 +103,21 @@ void populateGetFirmwareDetailsResponse(FirmwareDetailsResponse * response) {
 }
 
 
-void populateGetDgsrImageValidationResultResponse(GetDgsrImageValidationResultResponse * response) {
-
-  if (!isValidDgsrFile(message->imagePath, &workingHatImageData)) {
-    response->response.setHatImageResponse.success = false;
-    strncpy(response->response.setHatImageResponse.message, "Invalid hat image file: ", 
-      sizeof(response->response.setHatImageResponse.message));
-    strncat(response->response.setHatImageResponse.message, message->imagePath, 
-      sizeof(response->response.setHatImageResponse.message));
-    return;
-  }
-  
-  // response->has_updateConfiguration = true;
-  // response->updateConfiguration.updateIntervalInMs = updateConfiguration.updateIntervalInMs;
-  // response->updateConfiguration.updateType = updateConfiguration.updateType;
-
-  // response->has_hatConfiguration = true;
-  // response->hatConfiguration.rotateImage = hatConfiguration.rotateImage;
-  // strncpy(response->hatConfiguration.imagePath, hatConfiguration.imagePath, sizeof(response->hatConfiguration.imagePath));
-}
-
-
 void handleSetHatImageCommand(SetHatImageCommand * message, MyProjectResponse * response) {
 
   response->which_response = MyProjectResponse_setHatImageResponse_tag;
 
   // validate image is a valid DGSR file we can show
-  if (!isValidDgsrFile(message->imagePath, &workingHatImageData)) {
+  if (!isValidDgsrFile(message->imagePath, &workingHatImageData, response->response.getDgsrImageValidationResultResponse.message)) {
     response->response.setHatImageResponse.success = false;
-    strncpy(response->response.setHatImageResponse.message, "Invalid hat image file: ", 
+    strncpy(response->response.setHatImageResponse.message, 
+      "Invalid hat image file: ", 
       sizeof(response->response.setHatImageResponse.message));
-    strncat(response->response.setHatImageResponse.message, message->imagePath, 
+    strncat(response->response.setHatImageResponse.message, 
+      message->imagePath, 
+      sizeof(response->response.setHatImageResponse.message));
+    strncat(response->response.setHatImageResponse.message, 
+      response->response.getDgsrImageValidationResultResponse.message, 
       sizeof(response->response.setHatImageResponse.message));
     return;
   }
@@ -144,9 +128,11 @@ void handleSetHatImageCommand(SetHatImageCommand * message, MyProjectResponse * 
 
   if (!saveSuccess) {
     response->response.setHatImageResponse.success = false;
-    strncpy(response->response.setHatImageResponse.message, "Error saving hat config with image file: ", 
+    strncpy(response->response.setHatImageResponse.message, 
+      "Error saving hat config with image file: ", 
       sizeof(response->response.setHatImageResponse.message));
-    strncat(response->response.setHatImageResponse.message, message->imagePath, 
+    strncat(response->response.setHatImageResponse.message, 
+      message->imagePath, 
       sizeof(response->response.setHatImageResponse.message));
     return;
   }
@@ -170,6 +156,17 @@ void handleSetHatRotateImageCommand(SetHatRotateImageCommand * message, MyProjec
 
 void handleGetDgsrImageValidationResultCommand(GetDgsrImageValidationResultCommand * message, MyProjectResponse * response) {
   response->which_response = MyProjectResponse_getDgsrImageValidationResultResponse_tag;
-  populateGetDgsrImageValidationResultResponse(&(response->response.getDgsrImageValidationResultResponse));
-}
 
+  logInfo("handleGetDgsrImageValidationResultCommand()");
+
+  bool isValid = isValidDgsrFile(message->imagePath, &workingHatImageData, response->response.getDgsrImageValidationResultResponse.message);
+  
+  logInfo("VALIDATION RESULT");
+  logInfo(isValid);
+  logInfo(message->imagePath);
+
+  response->response.getDgsrImageValidationResultResponse.isValid = isValid;
+  strncpy(response->response.getDgsrImageValidationResultResponse.imagePath,
+    message->imagePath, 
+    sizeof(response->response.getDgsrImageValidationResultResponse.imagePath));
+}

@@ -4,7 +4,7 @@
 #include <qroma-hat/images/image_types.h>
 
 
-bool loadFileIntoDgsrImage(const char * filePath, LoadedDgsrImage * loadedImage);
+bool loadFileIntoDgsrImage(const char * filePath, LoadedDgsrImage * loadedImage, char * reasonInvalid);
 
 
 #endif

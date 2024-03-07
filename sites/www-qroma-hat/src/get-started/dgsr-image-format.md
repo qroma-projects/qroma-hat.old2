@@ -120,23 +120,23 @@ enum OpCodeType : u8 {
 
 
 bitfield OpCodePlacePixel {
-  tag : 2;
+  opcode : 2;
   grayscale: 6;
 };
 
 bitfield OpCodeShortRun {
-  tag : 2;
-  runLength: 6;
+  opcode : 2;
+  shortRunLength: 6;
 };
 
 bitfield OpCodeMediumRun {
-  tag : 2;
-  runLength: 14;
+  opcode : 2;
+  mediumRunLength: 14;
 };
 
 bitfield OpCodeLongRun {
-  tag : 2;
-  runLength: 30;
+  opcode : 2;
+  longRunLength: 30;
 };
 
 

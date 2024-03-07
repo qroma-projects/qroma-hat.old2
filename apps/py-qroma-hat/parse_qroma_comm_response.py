@@ -4,7 +4,7 @@ from qroma_proto import my_project_messages_pb2
 
 
 RESPONSE_BASE64 = """
-Ch8aHQoFMC4wLjESFE1hciAgMyAyMDI0IDA3OjUyOjA4
+ChkyFwoPL3Fyb21hX2hhdC5kZ3NyGgQE/T8Q
 """
 
 b = base64.b64decode(RESPONSE_BASE64.strip())
@@ -17,6 +17,7 @@ print(qc_response)
 
 
 app_response_bytes = qc_response.appResponseBytes
+print(app_response_bytes)
 
 app_response = my_project_messages_pb2.MyProjectResponse()
 app_response.ParseFromString(app_response_bytes)
