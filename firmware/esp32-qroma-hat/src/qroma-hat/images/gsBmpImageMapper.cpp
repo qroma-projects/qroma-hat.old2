@@ -12,7 +12,7 @@ bool mapGsBmpImageToHatData(HatGsBmpImageDef * gsBmpImageDef, HatImageData * hat
 
   uint32_t imageMemSize = (gsBmpImageDef->imageWidth * gsBmpImageDef->imageHeight) / 2;
 
-  memcpy(hatImageData->imageData, gsBmpImageDef->imageData, imageMemSize);
+  memcpy(hatImageData->imagePixels, gsBmpImageDef->imageData, imageMemSize);
 
   return true;
 }

@@ -27,16 +27,22 @@ async def monitor(com_port: str):
 
     await qcio.is_ready()
 
-    print("MONITOR READY")
-    i = 0
-    while i < 5:
-        if i % 2 == 0:
-            msg_bytes = create_validate_dgsr_file_command("/qroma_hat.dgsr")
-            await qcio.send_app_command_bytes(msg_bytes)
+    # print("MONITOR READY")
+    # i = 0
+    # while i < 5:
+    #     if i % 2 == 0:
+    #         msg_bytes = create_validate_dgsr_file_command("/qroma_hat.dgsr")
+    #         await qcio.send_app_command_bytes(msg_bytes)
+    #
+    #     data = await qcio.read_bytes_until_timeout(1.0)
+    #     print(f"LINE RECEIVED: {data}")
+    #     i = i + 1
 
-        data = await qcio.read_bytes_until_timeout(1.0)
-        print(f"LINE RECEIVED: {data}")
-        i = i + 1
+    msg_bytes = create_validate_dgsr_file_command("/qroma_hat.dgsr")
+    await qcio.send_app_command_bytes(msg_bytes)
+
+    data = await qcio.read_bytes_until_timeout(10.0)
+    print(f"LINE RECEIVED: {data}")
 
     print("STOPPING MONITOR")
     qcio.stop()

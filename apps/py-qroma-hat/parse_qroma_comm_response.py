@@ -4,7 +4,7 @@ from qroma_proto import my_project_messages_pb2
 
 
 RESPONSE_BASE64 = """
-ChkyFwoPL3Fyb21hX2hhdC5kZ3NyGgQE/T8Q
+EgcSBQjAARAB
 """
 
 b = base64.b64decode(RESPONSE_BASE64.strip())

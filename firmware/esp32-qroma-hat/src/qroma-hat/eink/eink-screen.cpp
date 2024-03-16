@@ -9,7 +9,7 @@
 HatImageData _activeImage = {
   .imageWidth = EINK_WIDTH,
   .imageHeight = EINK_HEIGHT,
-  .imageData = NULL,
+  .imagePixels = NULL,
   // added 99 - 13 (strlen) of /0 chars for initialization
   .imageLabel = "IMAGE NOT SET\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0",
 };
@@ -99,7 +99,7 @@ bool showImageFromInternalDgsrData(HatImageEncoding encoding, HatImagePointer * 
 
   epd_poweron();
   epd_clear();
-  epd_draw_grayscale_image(area, (uint8_t *)hatImageData->imageData);
+  epd_draw_grayscale_image(area, (uint8_t *)hatImageData->imagePixels);
   // epd_draw_image(area, (uint8_t *)activeImage.imageData, BLACK_ON_WHITE);
   
   delay(500);

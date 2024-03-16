@@ -1,3 +1,4 @@
+#include <qroma/util/constants.h>
 #include "qroma-project.h"
 #include "qroma-commands.h"
 #include "qroma-config.h"
@@ -21,14 +22,43 @@ void qromaProjectSetup()
 {
   myQromaApp.setAppCommandProcessor(&myAppCommandProcessor);
 
-  myQromaApp.configureSerialCommIo([](QromaCommSerialIoConfig * config) {
-    config->baudRate = 115200;
-    config->rxBufferSize = 1000;
-    config->txBufferSize = 1000;
-  });
+  // myQromaApp.configureSerialCommIo([](QromaCommSerialIoConfig * config) {
+  //   config->baudRate = 115200;
+  //   config->rxBufferSize = 1000;
+  //   config->txBufferSize = 1000;
+  // });
 
-  myQromaApp.configureQromaApp([](QromaAppConfig * config) {
-    config->loggerConfig.logLevel = Qroma_LogLevel_LogLevel_Info;
+  // myQromaApp.configureQromaApp([](QromaAppConfig * config) {
+  //   config->loggerConfig.logLevel = Qroma_LogLevel_LogLevel_Info;
+  // });
+
+  myQromaApp.configureQromaCore([](QromaCoreConfig * config) {
+    config->has_serialIoConfig = true;
+    config->serialIoConfig = {
+      .baudRate = 115200,
+      .rxBufferSize = 1000,
+      .txBufferSize = 1000,
+    };
+
+    config->has_serialProcessingConfig = true;
+    config->serialProcessingConfig = {
+      .msDelayInProcessingLoop = 10,
+    };
+
+    config->has_loggingConfig = true;
+    config->loggingConfig = {
+      .logLevel = Qroma_LogLevel_LogLevel_Info,
+    };
+
+    config->has_projectConfiguration = true;
+    config->projectConfiguration = {
+      .projectLoopDelayInMs = 100,
+      .has_heartbeatConfiguration = true,
+      .heartbeatConfiguration = {
+        .heartbeatType = HeartbeatType_HeartbeatType_Interval,
+        .heartbeatIntervalInMs = 1000,
+      },
+    };
   });
 
   myQromaApp.startupQroma();
@@ -74,7 +104,7 @@ void qromaProjectSetup()
   logInfo("POST-EPDINIT");
 
   uint8_t * activeImageBuffer = initActiveImageBuffer();
-  _activeImage.imageData = activeImageBuffer;
+  _activeImage.imagePixels = activeImageBuffer;
 
   saveDefaultConfig();
 
@@ -120,7 +150,7 @@ void qromaProjectLoop()
 {
   delay(updateConfiguration.updateIntervalInMs);
 
-  logInfoIntWithDescription("qroma-hat loop >> ", millis());
+  // logInfoIntWithDescription("qroma-hat loop >> ", millis());
 
   switch (updateConfiguration.updateType) {
     case UpdateType_UpdateType_Interval:

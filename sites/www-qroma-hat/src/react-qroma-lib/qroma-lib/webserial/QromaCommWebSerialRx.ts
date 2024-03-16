@@ -42,7 +42,7 @@ export const useQromaCommWebSerialRx = (
   }
 
   const onData = (newData: Uint8Array) => {
-    console.log("QromaCommWebSerial RX - onData - " + newData.length + " bytes");
+    console.log("QromaCommWebSerial RX - onData - " + newData.length + " bytes - " + String.fromCharCode(...newData));
     console.log(_qromaCommRxHandler)
     // console.log(newData);
 

@@ -11,6 +11,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { HeartbeatType } from "./qroma-types";
 import { Qroma_LogLevel } from "./qroma-types";
 /**
  * @generated from protobuf message QromaCommSerialIoConfig
@@ -30,30 +31,48 @@ export interface QromaCommSerialIoConfig {
     txBufferSize: number;
 }
 /**
- * @generated from protobuf message QromaCommReportingConfig
+ * @generated from protobuf message QromaCoreLoggingConfig
  */
-export interface QromaCommReportingConfig {
+export interface QromaCoreLoggingConfig {
     /**
      * @generated from protobuf field: Qroma_LogLevel logLevel = 1;
      */
     logLevel: Qroma_LogLevel;
+}
+/**
+ * @generated from protobuf message HeartbeatConfiguration
+ */
+export interface HeartbeatConfiguration {
+    /**
+     * @generated from protobuf field: HeartbeatType heartbeatType = 1;
+     */
+    heartbeatType: HeartbeatType;
     /**
      * @generated from protobuf field: uint32 heartbeatIntervalInMs = 2;
      */
     heartbeatIntervalInMs: number;
 }
+// message QromaCommConfig {
+//   QromaCommSerialIoConfig serialIoConfig = 1;
+//   QromaCommReportingConfig reportingConfig = 2;
+// }
+
 /**
- * @generated from protobuf message QromaCommConfig
+ * @generated from protobuf message QromaCoreConfig
  */
-export interface QromaCommConfig {
+export interface QromaCoreConfig {
     /**
      * @generated from protobuf field: QromaCommSerialIoConfig serialIoConfig = 1;
      */
     serialIoConfig?: QromaCommSerialIoConfig;
     /**
-     * @generated from protobuf field: QromaCommReportingConfig reportingConfig = 2;
+     * @generated from protobuf field: QromaCoreLoggingConfig loggingConfig = 2;
      */
-    reportingConfig?: QromaCommReportingConfig;
+    loggingConfig?: QromaCoreLoggingConfig;
+    /**
+     * @generated from protobuf field: HeartbeatConfiguration heartbeatConfiguration = 3;
+     */
+    heartbeatConfiguration?: HeartbeatConfiguration;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class QromaCommSerialIoConfig$Type extends MessageType<QromaCommSerialIoConfig> {
@@ -117,27 +136,74 @@ class QromaCommSerialIoConfig$Type extends MessageType<QromaCommSerialIoConfig> 
  */
 export const QromaCommSerialIoConfig = new QromaCommSerialIoConfig$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class QromaCommReportingConfig$Type extends MessageType<QromaCommReportingConfig> {
+class QromaCoreLoggingConfig$Type extends MessageType<QromaCoreLoggingConfig> {
     constructor() {
-        super("QromaCommReportingConfig", [
-            { no: 1, name: "logLevel", kind: "enum", T: () => ["Qroma_LogLevel", Qroma_LogLevel] },
-            { no: 2, name: "heartbeatIntervalInMs", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        super("QromaCoreLoggingConfig", [
+            { no: 1, name: "logLevel", kind: "enum", T: () => ["Qroma_LogLevel", Qroma_LogLevel] }
         ]);
     }
-    create(value?: PartialMessage<QromaCommReportingConfig>): QromaCommReportingConfig {
-        const message = { logLevel: 0, heartbeatIntervalInMs: 0 };
+    create(value?: PartialMessage<QromaCoreLoggingConfig>): QromaCoreLoggingConfig {
+        const message = { logLevel: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<QromaCommReportingConfig>(this, message, value);
+            reflectionMergePartial<QromaCoreLoggingConfig>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: QromaCommReportingConfig): QromaCommReportingConfig {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: QromaCoreLoggingConfig): QromaCoreLoggingConfig {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
                 case /* Qroma_LogLevel logLevel */ 1:
                     message.logLevel = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: QromaCoreLoggingConfig, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* Qroma_LogLevel logLevel = 1; */
+        if (message.logLevel !== 0)
+            writer.tag(1, WireType.Varint).int32(message.logLevel);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message QromaCoreLoggingConfig
+ */
+export const QromaCoreLoggingConfig = new QromaCoreLoggingConfig$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HeartbeatConfiguration$Type extends MessageType<HeartbeatConfiguration> {
+    constructor() {
+        super("HeartbeatConfiguration", [
+            { no: 1, name: "heartbeatType", kind: "enum", T: () => ["HeartbeatType", HeartbeatType] },
+            { no: 2, name: "heartbeatIntervalInMs", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HeartbeatConfiguration>): HeartbeatConfiguration {
+        const message = { heartbeatType: 0, heartbeatIntervalInMs: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HeartbeatConfiguration>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HeartbeatConfiguration): HeartbeatConfiguration {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* HeartbeatType heartbeatType */ 1:
+                    message.heartbeatType = reader.int32();
                     break;
                 case /* uint32 heartbeatIntervalInMs */ 2:
                     message.heartbeatIntervalInMs = reader.uint32();
@@ -153,10 +219,10 @@ class QromaCommReportingConfig$Type extends MessageType<QromaCommReportingConfig
         }
         return message;
     }
-    internalBinaryWrite(message: QromaCommReportingConfig, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* Qroma_LogLevel logLevel = 1; */
-        if (message.logLevel !== 0)
-            writer.tag(1, WireType.Varint).int32(message.logLevel);
+    internalBinaryWrite(message: HeartbeatConfiguration, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* HeartbeatType heartbeatType = 1; */
+        if (message.heartbeatType !== 0)
+            writer.tag(1, WireType.Varint).int32(message.heartbeatType);
         /* uint32 heartbeatIntervalInMs = 2; */
         if (message.heartbeatIntervalInMs !== 0)
             writer.tag(2, WireType.Varint).uint32(message.heartbeatIntervalInMs);
@@ -167,25 +233,26 @@ class QromaCommReportingConfig$Type extends MessageType<QromaCommReportingConfig
     }
 }
 /**
- * @generated MessageType for protobuf message QromaCommReportingConfig
+ * @generated MessageType for protobuf message HeartbeatConfiguration
  */
-export const QromaCommReportingConfig = new QromaCommReportingConfig$Type();
+export const HeartbeatConfiguration = new HeartbeatConfiguration$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class QromaCommConfig$Type extends MessageType<QromaCommConfig> {
+class QromaCoreConfig$Type extends MessageType<QromaCoreConfig> {
     constructor() {
-        super("QromaCommConfig", [
+        super("QromaCoreConfig", [
             { no: 1, name: "serialIoConfig", kind: "message", T: () => QromaCommSerialIoConfig },
-            { no: 2, name: "reportingConfig", kind: "message", T: () => QromaCommReportingConfig }
+            { no: 2, name: "loggingConfig", kind: "message", T: () => QromaCoreLoggingConfig },
+            { no: 3, name: "heartbeatConfiguration", kind: "message", T: () => HeartbeatConfiguration }
         ]);
     }
-    create(value?: PartialMessage<QromaCommConfig>): QromaCommConfig {
+    create(value?: PartialMessage<QromaCoreConfig>): QromaCoreConfig {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<QromaCommConfig>(this, message, value);
+            reflectionMergePartial<QromaCoreConfig>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: QromaCommConfig): QromaCommConfig {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: QromaCoreConfig): QromaCoreConfig {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -193,8 +260,11 @@ class QromaCommConfig$Type extends MessageType<QromaCommConfig> {
                 case /* QromaCommSerialIoConfig serialIoConfig */ 1:
                     message.serialIoConfig = QromaCommSerialIoConfig.internalBinaryRead(reader, reader.uint32(), options, message.serialIoConfig);
                     break;
-                case /* QromaCommReportingConfig reportingConfig */ 2:
-                    message.reportingConfig = QromaCommReportingConfig.internalBinaryRead(reader, reader.uint32(), options, message.reportingConfig);
+                case /* QromaCoreLoggingConfig loggingConfig */ 2:
+                    message.loggingConfig = QromaCoreLoggingConfig.internalBinaryRead(reader, reader.uint32(), options, message.loggingConfig);
+                    break;
+                case /* HeartbeatConfiguration heartbeatConfiguration */ 3:
+                    message.heartbeatConfiguration = HeartbeatConfiguration.internalBinaryRead(reader, reader.uint32(), options, message.heartbeatConfiguration);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -207,13 +277,16 @@ class QromaCommConfig$Type extends MessageType<QromaCommConfig> {
         }
         return message;
     }
-    internalBinaryWrite(message: QromaCommConfig, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: QromaCoreConfig, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* QromaCommSerialIoConfig serialIoConfig = 1; */
         if (message.serialIoConfig)
             QromaCommSerialIoConfig.internalBinaryWrite(message.serialIoConfig, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* QromaCommReportingConfig reportingConfig = 2; */
-        if (message.reportingConfig)
-            QromaCommReportingConfig.internalBinaryWrite(message.reportingConfig, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* QromaCoreLoggingConfig loggingConfig = 2; */
+        if (message.loggingConfig)
+            QromaCoreLoggingConfig.internalBinaryWrite(message.loggingConfig, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* HeartbeatConfiguration heartbeatConfiguration = 3; */
+        if (message.heartbeatConfiguration)
+            HeartbeatConfiguration.internalBinaryWrite(message.heartbeatConfiguration, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -221,6 +294,6 @@ class QromaCommConfig$Type extends MessageType<QromaCommConfig> {
     }
 }
 /**
- * @generated MessageType for protobuf message QromaCommConfig
+ * @generated MessageType for protobuf message QromaCoreConfig
  */
-export const QromaCommConfig = new QromaCommConfig$Type();
+export const QromaCoreConfig = new QromaCoreConfig$Type();

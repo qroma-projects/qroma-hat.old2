@@ -74,7 +74,7 @@ bool mapDgsrImageToHatData(HatDgsrImageDef * dgsrImageDef, HatImageData * hatIma
       return false;
     }
 
-    setImageNibbleValues(hatImageData->imageData, nibbleIndex, pixelRunResult.pixelGs, pixelRunResult.runLength);
+    setImageNibbleValues(hatImageData->imagePixels, nibbleIndex, pixelRunResult.pixelGs, pixelRunResult.runLength);
 
     dgsrDataByteIndex += pixelRunResult.bytesConsumed;
     currentDataPtr += pixelRunResult.bytesConsumed;
@@ -117,7 +117,7 @@ bool mapLoadedDgsrImageToHatData(LoadedDgsrImage * dgsrImage, const char * fileP
       maxPixelGs = pixelRunResult.pixelGs;
     }
 
-    setImageNibbleValues(hatImageData->imageData, nibbleIndex, pixelRunResult.pixelGs, pixelRunResult.runLength);
+    setImageNibbleValues(hatImageData->imagePixels, nibbleIndex, pixelRunResult.pixelGs, pixelRunResult.runLength);
 
     dgsrDataByteIndex += pixelRunResult.bytesConsumed;
     currentDataPtr += pixelRunResult.bytesConsumed;
@@ -135,6 +135,55 @@ bool mapLoadedDgsrImageToHatData(LoadedDgsrImage * dgsrImage, const char * fileP
 
   return true;
 }
+
+// bool mapDgsrDataToPixelData(MapDgsrDataInputs * inputs, MapDgsrDataOutputs * outputs) {
+//   logInfo("mapDgsrDataToPixelData");
+  
+//   // hatImageData->imageHeight = dgsrImage->imageHeight;
+//   // hatImageData->imageWidth = dgsrImage->imageWidth;
+//   // strncpy(hatImageData->imageLabel, filePath, sizeof(hatImageData->imageLabel));
+
+//   logInfo("MAPPING DGSR IMAGE");
+//   logInfo(inputs->imageLabel);
+
+//   uint32_t nibbleIndex = 0;
+//   uint32_t nibbleArea = inputs->imageHeight *inputs->imageWidth;
+
+//   uint32_t dgsrDataByteIndex = 0;
+//   const uint8_t * currentDataPtr = inputs->dgsrData;
+
+//   PixelRunResult pixelRunResult;
+//   uint8_t maxPixelGs = 0;
+
+//   while (dgsrDataByteIndex < inputs->dgsrDataByteCount) {
+//     bool success = getPixelRunResult(currentDataPtr, &pixelRunResult);
+//     if (!success) {
+//       logError("PIXEL RUN RESULT ERROR");
+//       return false;
+//     }
+
+//     if (pixelRunResult.pixelGs > maxPixelGs) {
+//       maxPixelGs = pixelRunResult.pixelGs;
+//     }
+
+//     setImageNibbleValues(outputs->mappedImagePixels, nibbleIndex, pixelRunResult.pixelGs, pixelRunResult.runLength);
+
+//     dgsrDataByteIndex += pixelRunResult.bytesConsumed;
+//     currentDataPtr += pixelRunResult.bytesConsumed;
+//     nibbleIndex += pixelRunResult.runLength;
+//   }
+  
+//   if (maxPixelGs > 15) {
+//     logError("MAX OF 4 GS BITS PER PIXEL REQUIRED");
+//     logInfoIntWithDescription("MAX COUND VALUE WAS ", maxPixelGs);
+//     logInfo(inputs->imageLabel);
+//     return false;
+//   }
+
+//   logInfo("DONE mapDgsrDataToPixelData");
+
+//   return true;
+// }
 
 
 bool getPixelRunResult(const uint8_t * dgsrData, PixelRunResult * prr) {

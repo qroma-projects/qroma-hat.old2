@@ -136,11 +136,13 @@ def load_dgsr_file(filename: os.PathLike) -> DgsrData:
         end_bytes_index = len(bytes_data) - 8
 
         image_grayscale_values = []
+        dgsr_op_count = 0
 
         current_bytes_index = start_bytes_index
         while current_bytes_index < end_bytes_index:
             grayscale, run_length, num_bytes_consumed = _get_next_grayscale_value_and_run_length_and_num_bytes_consumed(bytes_data, current_bytes_index)
             # print(f">> {grayscale} x {run_length}")
+            dgsr_op_count += 1
 
             current_bytes_index += num_bytes_consumed
 
@@ -150,6 +152,7 @@ def load_dgsr_file(filename: os.PathLike) -> DgsrData:
         print(f"TOTAL LENGTH: {len(image_grayscale_values)}")
         print(f"IMAGE SIZE: {image_width} x {image_height}")
         print(f"IMAGE AREA: {image_width * image_height}")
+        print(f"DGSR OP COUNT: {dgsr_op_count}")
 
         retval = DgsrData()
         retval.image_height = image_height
